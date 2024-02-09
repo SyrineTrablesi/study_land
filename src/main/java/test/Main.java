@@ -1,9 +1,11 @@
 package test;
 
 import entities.Admin;
+import entities.Apprenant;
 import entities.Formateur;
 import entities.User;
 import services.ServiceAdmin;
+import services.ServiceApprenant;
 import services.ServiceFormateur;
 import utils.MyBD;
 
@@ -15,43 +17,44 @@ public class Main {
         MyBD db = MyBD.getInstance();
        /* Admin adminUser= new Admin(3,"trabelsi", "syrine", "syrinet6@gmail.com", "hama123");
         Formateur formateurUser = new Formateur(12,"5", "henda", "syrinet6@gmail.com", "henda");
-        ServiceAdmin serviceAdmin = new ServiceAdmin();
+         Apprenant ApprenantUser= new Apprenant(19,"sara","saroura","Sara@gmail.com","degla");
         ServiceFormateur serviceFormateur= new ServiceFormateur();
+        ServiceApprenant serviceApprenant=new ServiceApprenant();
+         ServiceAdmin serviceAdmin =new ServiceAdmin();
 
-        /*try {
-            serviceFormateur.ajouter(formateurUser);
+
+        */
+      /*
+      AJOUTER
+      try {
+            serviceApprenant.ajouter(ApprenantUser);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }*/
 
-        /* try{
+        /*
+        AFFICHAGE
+
+        try{
             System.out.println(serviceFormateur.afficher());
             }
         catch (SQLException e){
             System.out.println(e.getMessage());
         }*/
 
-
-       /* try {
-            serviceAdmin.ajouter(adminUser);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }*/
-      /* try {
+      /*
+      SUPPRIMER
+      try {
             serviceAdmin.supprimer(adminUser);
             System.out.println("delete");
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }*/
-       /* try {
+       /*
+       MODIFIER
+       try {
             serviceAdmin.modifier(adminUser);
         }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }*/
-      /*  try{
-            System.out.println(serviceAdmin.afficher());
-            }
-        catch (SQLException e){
             System.out.println(e.getMessage());
         }*/
 }
