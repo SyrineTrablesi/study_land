@@ -96,7 +96,7 @@ public class User {
     public User(String nom, String prenom, String email, String password, String role) {
         this.nom = nom;
         this.prenom = prenom;
-        this.email = email;
+        setEmail(email);
         this.password = password;
         role = this.role;
     }
@@ -114,6 +114,7 @@ public class User {
     public User(String nom, String prenom, String email, String password) {
         this.nom = nom;
         this.prenom = prenom;
+        setEmail(email);
         this.email = email;
         this.password = password;
     }
