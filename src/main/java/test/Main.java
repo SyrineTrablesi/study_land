@@ -2,6 +2,7 @@ package test;
 
 import entities.Favoris;
 import entities.Panier;
+import services.ServiceFavoris;
 import services.ServicePanier;
 import utils.MyDB;
 
@@ -16,9 +17,9 @@ public class Main {
 
 
 
-
-        Panier p1 = new Panier(1,1,4,new Date(2023 , 5, 6));
-        Panier p2 = new Panier(2,6,9,new Date(2000 , 11, 11));
+/*
+       Panier p1 = new Panier(1,1,4,new Date(2023 , 5, 6));
+       Panier p2 = new Panier(2,6,9,new Date(2000 , 11, 11));
 
         ServicePanier services = new ServicePanier();
 
@@ -30,10 +31,6 @@ public class Main {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-
-
-
 
 
         //Affichage
@@ -52,10 +49,6 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-
-
-
-
         //supprimer
 
         try {
@@ -63,6 +56,58 @@ public class Main {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+ */
+
+/*
+        //Favoris
+        ServiceFavoris service = new ServiceFavoris();
+        Favoris f1 = new Favoris(3);
+        Favoris f2 = new Favoris(2,5);
+
+
+        // ajouter
+        try {
+            service.ajouterFavoris(f1);
+            service.ajouterFavoris(f2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+
+        //Affichage
+
+        try{
+            System.out.println(service.afficherFavoris());
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        // modification
+        try {
+            service.modifieFavoris(f2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+        //supprimer
+
+        try {
+            service.supprimerFavoris(f2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+ */
+
+
+
+
 
 
 
