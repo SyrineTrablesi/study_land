@@ -63,11 +63,12 @@ public class User {
         this.prenom = prenom;
     }
 
-    private boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email) {
         Pattern pattern = Pattern.compile(validationEmail);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
 
     public void setEmail(String email) {
         if (isEmailValid(email)) {
@@ -103,18 +104,26 @@ public class User {
     public User() {
     }
 
-    ;
 
     //Constructeur sans id
-    public User(String nom, String prenom, String email, String password, String role) {
+    public User(String nom, String prenom, String email, String password, String role, String confirmerPassword) {
         this.nom = nom;
         this.prenom = prenom;
         setEmail(email);
         this.password = password;
-        //setConfirmerPassword(confirmerPassword);
+        setConfirmerPassword(confirmerPassword);
         this.role = role;
     }
-
+    public User(int id ,String nom, String prenom, String email, String password, String role, String confirmerPassword) {
+        this.id=id;
+        this.nom = nom;
+        this.prenom = prenom;
+        setEmail(email);
+        this.password = password;
+        setConfirmerPassword(confirmerPassword);
+        this.role = role;
+    }
+//Constructeur Admin+Formateur (sans confirmerpass ==> pas de regeter))
     //constructeur avec id
     public User(int id, String nom, String prenom, String email, String password, String role) {
         this.nom = nom;
@@ -124,12 +133,13 @@ public class User {
         this.role = role;
         this.id = id;
     }
-
-    public User(String nom, String prenom, String email, String password) {
+//Constructeur Admin+Formateur (sans confirmerpass ==> pas de regeter))
+    public User(String nom, String prenom, String email, String password,String role) {
         this.nom = nom;
         this.prenom = prenom;
         setEmail(email);
         this.email = email;
+        this.role=role;
         this.password = password;
     }
 

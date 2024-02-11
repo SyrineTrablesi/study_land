@@ -17,11 +17,22 @@ public class ServiceApprenant implements IUserService<Apprenant> {
 
     @Override
     public void ajouter(Apprenant apprenant) throws SQLException {
-        String req = "INSERT INTO user (nom, prenom, email, password, Role) " +
-                "VALUES ('" + apprenant.getNom() + "', '" + apprenant.getPrenom() + "', '" + apprenant.getEmail() + "', '" + apprenant.getPassword() + "', 'Apprenant')";
-        Statement ste = connection.createStatement();
-        ste.executeUpdate(req);
+        if (apprenant.isEmailValid(apprenant.getEmail())&& apprenant.getConfirmerPassword().equals(apprenant.getPassword())) {
+            String req = "INSERT INTO user (nom, prenom, email, password, confirmer_password, Role) " +
+                    "VALUES (?, ?, ?, ?, ?, 'Apprenant')"; // Utilisation de PreparedStatement pour les valeurs paramétrées
+            PreparedStatement preparedStatement = connection.prepareStatement(req);
+            preparedStatement.setString(1, apprenant.getNom());
+            preparedStatement.setString(2, apprenant.getPrenom());
+            preparedStatement.setString(3, apprenant.getEmail());
+            preparedStatement.setString(4, apprenant.getPassword());
+            preparedStatement.setString(5, apprenant.getConfirmerPassword());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } else {
+            System.out.println("L'e-mail n'est pas valide ou le mot de passe ne correspond pas au mot de passe de confirmation.");
+        }
     }
+
 
     @Override
     public void modifier(Apprenant apprenant) throws SQLException {

@@ -9,7 +9,7 @@ public class Apprenant extends User{
         super(id,nom, prenom, email, password, "Apprenant");
     }
     //sansID
-    public Apprenant(String nom, String prenom, String email, String password){
-        super(nom, prenom, email, password, "Apprenant");
+    public Apprenant(String nom, String prenom, String email, String password,String confirmer_password){
+        super(nom, prenom, email, password, "Apprenant",confirmer_password);
     }
 }

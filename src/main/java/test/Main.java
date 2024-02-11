@@ -17,7 +17,6 @@ public class Main {
         MyBD db = MyBD.getInstance();
        /* Admin adminUser= new Admin(3,"trabelsi", "syrine", "syrinet6@gmail.com", "hama123");
         Formateur formateurUser = new Formateur(12,"5", "henda", "syrinet6@gmail.com", "henda");
-         Apprenant ApprenantUser= new Apprenant(19,"sara","saroura","Sara@gmail.com","degla");
         ServiceFormateur serviceFormateur= new ServiceFormateur();
         ServiceApprenant serviceApprenant=new ServiceApprenant();
          ServiceAdmin serviceAdmin =new ServiceAdmin();
@@ -84,6 +83,14 @@ public class Main {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }*/
+        ServiceApprenant serviceApprenant= new ServiceApprenant();
+        Apprenant ApprenantUser= new Apprenant("hmemch","hamaa","hama@gmail.com","degla","degla");
+        try {
+            serviceApprenant.ajouter(ApprenantUser);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
 
     }}
 
