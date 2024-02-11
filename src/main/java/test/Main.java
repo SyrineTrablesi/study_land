@@ -83,14 +83,14 @@ public class Main {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }*/
-        ServiceApprenant serviceApprenant= new ServiceApprenant();
+     /*   ServiceApprenant serviceApprenant= new ServiceApprenant();
         Apprenant ApprenantUser= new Apprenant("hmemch","hamaa","hama@gmail.com","degla","degla");
         try {
             serviceApprenant.ajouter(ApprenantUser);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
+*/
 
     }}
 
