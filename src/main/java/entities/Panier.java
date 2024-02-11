@@ -11,6 +11,7 @@ public class Panier {
     int id_panier , id_user , id_formation;
     Date date_ajout;
     List<Favoris> favorisList;
+    List<Inscrit> inscritList;
 
     public int getId_panier() {
         return id_panier;
@@ -51,6 +52,14 @@ public class Panier {
         this.date_ajout = date_ajout;
     }
 
+    public List<Inscrit> getInscritList() {
+        return inscritList;
+    }
+
+    public void setInscritList(List<Inscrit> inscritList) {
+        this.inscritList = inscritList;
+    }
+
     @Override
     public String toString() {
         return "Panier{" +
@@ -59,6 +68,7 @@ public class Panier {
                 ", id_formation=" + id_formation +
                 ", date_ajout=" + date_ajout +
                 ", favorisList=" + favorisList +
+                ", inscritList=" + inscritList +
                 '}';
     }
 

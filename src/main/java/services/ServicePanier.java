@@ -26,6 +26,7 @@ public class ServicePanier implements IPanier<Panier> {
         pstmt.setInt(2, panier.getId_formation());
         pstmt.setDate(3, new java.sql.Date(panier.getDate_ajout().getTime()));
         //pstmt.setArray(4, (Array) panier.getFavorisList());
+       // pstmt.setArray(5, (Array) panier.getInscritList());
 
 // Exécution de la requête
         pstmt.executeUpdate();
@@ -37,7 +38,8 @@ public class ServicePanier implements IPanier<Panier> {
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setInt(1, panier.getId_user());
         pre.setInt(2, panier.getId_formation());
-       // pre.setArray(3, (Array) panier.getFavorisList());
+        //pre.setArray(5, (Array) panier.getFavorisList());
+        //pre.setArray(6, (Array) panier.getInscritList());
         pre.setDate(3, new java.sql.Date(panier.getDate_ajout().getTime()));
         pre.setInt(4, panier.getId_panier()); // Définition du sixième paramètre
 
@@ -72,6 +74,7 @@ public class ServicePanier implements IPanier<Panier> {
                 p.setId_formation(res.getInt(3));
                 p.setDate_ajout(res.getDate(4));
                 //p.setFavorisList((List<Favoris>) res.getArray(5));
+                //p.setInscritList((List<Inscrit>) res.getArray(6));
                 list.add(p);
             }
         } // Les ressources seront fermées automatiquement ici

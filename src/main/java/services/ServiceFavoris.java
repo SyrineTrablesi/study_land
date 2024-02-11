@@ -56,11 +56,11 @@ public class ServiceFavoris implements IFavoris<Favoris> {
         ResultSet res = ste.executeQuery(req);
         List<Favoris> list =new ArrayList<>();
         while (res.next()){
-            Favoris p = new Favoris();
-            p.setId_favoris(res.getInt(1));
-            p.setId_panier(res.getInt(2));
+            Favoris f = new Favoris();
+            f.setId_favoris(res.getInt(1));
+            f.setId_panier(res.getInt(2));
 
-            list.add(p);
+            list.add(f);
         }
         return list;
     }

@@ -1,8 +1,10 @@
 package test;
 
 import entities.Favoris;
+import entities.Inscrit;
 import entities.Panier;
 import services.ServiceFavoris;
+import services.ServiceInscrit;
 import services.ServicePanier;
 import utils.MyDB;
 
@@ -106,7 +108,52 @@ public class Main {
  */
 
 
+        //Inscrit
+        ServiceInscrit srv = new ServiceInscrit();
+        Inscrit i1 = new Inscrit(1,6,10,2);
+        Inscrit i2 = new Inscrit(2,5,20,3);
 
+/*
+        // ajouter
+        try {
+            srv.ajouterInscrit(i1);
+            srv.ajouterInscrit(i2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+ */
+
+
+
+
+        //Affichage
+
+        try{
+            System.out.println(srv.afficherInscrit());
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+      /*  // modification
+        try {
+            srv.modifierInscrit(i2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+       */
+
+
+
+      //supprimer
+
+        try {
+            srv.supprimerInscrit(i2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
 
 
