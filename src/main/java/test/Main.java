@@ -2,8 +2,12 @@ package test;
 
 import entities.Categorie;
 import entities.Formation;
+import entities.Cours;
 //import services.ServiceCategorie;
+import services.ServiceCategorie;
 import services.ServiceFormation;
+import services.ServiceCours;
+
 import utils.MyDB;
 
 import java.sql.SQLException;
@@ -25,19 +29,19 @@ public class Main {
         Calendar calFin = Calendar.getInstance();
         calFin.set(2023, Calendar.DECEMBER, 31); // Année, Mois (indexé à partir de 0), Jour
         Date dateFin = calFin.getTime();
-        Formation f1 = new Formation("java","khouloud",6,dateDebut,dateFin,1650,"bac");
-        Formation f2 = new Formation("symfony","chaabi",8,dateDebut,dateFin,1650,"intermediaire");
-        Formation f3 = new Formation("java","tanena",3,dateDebut,dateFin,1650,"bac");
+        Formation f1 = new Formation("pascal","java","anis",6,dateDebut,dateFin,1650,"bac");
+//        Formation f2 = new Formation("symfony","mehdi",8,dateDebut,dateFin,1650,"intermediaire");
+//        Formation f3 = new Formation("java","sami",3,dateDebut,dateFin,1650,"bac");
 
 
         ServiceFormation services =new ServiceFormation();
-//        try {
-//            services.ajouter(f1);
+        try {
+            services.ajouter(f1);
 //            services.ajouter(f2);
 //            services.ajouter(f3);
-//
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());}
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());}
 
         //affichage
 //        try {
@@ -119,7 +123,33 @@ public class Main {
 //        } catch (SQLException e) {
 //            System.out.println(e.getMessage());
 //        }
+        Categorie c1 = new Categorie(2,"pascal");
+        ServiceCategorie service = new ServiceCategorie();
+//        try {
+//            service.ajouter(c1); // Use the correct service object and Categorie object
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+        // ***modifier categorie
+        // try {
+        // service.modifier(c1);
+        // } catch (SQLException e) {
+        // System.out.println(e.getMessage()); }
 
+        // ****supprimer un categorie
+        // try {
+        // service.supprimer(c1);
+        // } catch (SQLException e) {
+        // System.out.println(e.getMessage());
+        // }
+
+
+
+        //********************cours***************************************
+//        Categorie c1 = new Categorie(2,"pascal");
+//        ServiceCategorie service = new ServiceCategorie();
+//
+//        Cours cr1
 
     }
 }

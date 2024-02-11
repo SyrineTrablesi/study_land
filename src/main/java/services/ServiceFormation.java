@@ -18,15 +18,16 @@ public class ServiceFormation implements IService<Formation> {
 
     @Override
     public void ajouter(Formation formation) throws SQLException {
-        String req = "INSERT INTO formation(titre, description, duree, dateDebut, dateFin, prix, niveau) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String req = "INSERT INTO formation(nomCategorie,titre, description, duree, dateDebut, dateFin, prix, niveau) VALUES (?, ?, ?, ?, ?, ?,?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(req);
-        preparedStatement.setString(1, formation.getTitre());
-        preparedStatement.setString(2, formation.getDescription());
-        preparedStatement.setInt(3, formation.getDuree());
-        preparedStatement.setDate(4, new java.sql.Date(formation.getDateDebut().getTime()));
-        preparedStatement.setDate(5, new java.sql.Date(formation.getDateFin().getTime()));
-        preparedStatement.setFloat(6, formation.getPrix());
-        preparedStatement.setString(7, formation.getNiveau());
+        preparedStatement.setString(1, formation.getNomCategorie());
+        preparedStatement.setString(2, formation.getTitre());
+        preparedStatement.setString(3, formation.getDescription());
+        preparedStatement.setInt(4, formation.getDuree());
+        preparedStatement.setDate(5, new java.sql.Date(formation.getDateDebut().getTime()));
+        preparedStatement.setDate(6, new java.sql.Date(formation.getDateFin().getTime()));
+        preparedStatement.setFloat(7, formation.getPrix());
+        preparedStatement.setString(8, formation.getNiveau());
 
         preparedStatement.executeUpdate();
     }

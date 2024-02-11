@@ -12,6 +12,15 @@ public class Formation {
     private Date dateFin;
     private float prix;
     private String niveau;
+    private String nomCategorie;
+
+    public String getNomCategorie() {
+        return nomCategorie;
+    }
+
+    public void setNomCategorie(String nomCategorie) {
+        this.nomCategorie = nomCategorie;
+    }
 
     public int getIdFormation() {
         return idFormation;
@@ -87,14 +96,15 @@ public class Formation {
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 ", prix=" + prix +
-                ", niveau='" + niveau + '\'' +
+                ", niveau='" + niveau  +
+                ", nomCategorie='" + nomCategorie + '\'' +
                 '}';
     }
 
     public Formation() {
     }
 
-    public Formation(int idFormation, String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau) {
+    public Formation(int idFormation,String nomCategorie, String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau) {
         this.idFormation = idFormation;
         this.titre = titre;
         this.description = description;
@@ -103,9 +113,13 @@ public class Formation {
         this.dateFin = dateFin;
         this.prix = prix;
         this.niveau = niveau;
+        this.nomCategorie = nomCategorie;
+
     }
 
-    public Formation(String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau) {
+    public Formation(String nomCategorie,String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau) {
+        this.nomCategorie = nomCategorie;
+
         this.titre = titre;
         this.description = description;
         this.duree = duree;
