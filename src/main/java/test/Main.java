@@ -57,5 +57,34 @@ public class Main {
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }*/
-}
-}
+        //RechercheMétode par Email
+       /* Apprenant apprenantUser = new Apprenant(19, "sara", "saroura", "Sara@gmail.com", "degla");
+        ServiceApprenant serviceApprenant = new ServiceApprenant();
+        String email = "Sara@gmail.com";
+        try {
+            Apprenant apprenant = serviceApprenant.rechercheApprenantParEmail(email);
+            if (apprenant != null) {
+                System.out.println("Apprenant trouvé : " + apprenant);
+            } else {
+                System.out.println("Aucun apprenant trouvé avec l'e-mail : " + email);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        ServiceFormateur serviceFormateur = new ServiceFormateur();
+        String emailFormateur = "syrinet6@gmail.com";
+        try {
+            Formateur formateur = serviceFormateur.rechercheFormateurParEmail(emailFormateur);
+            if (formateur != null) {
+                System.out.println("Apprenant trouvé : " + formateur);
+            } else {
+                System.out.println("Aucun apprenant trouvé avec l'e-mail : " + email);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }*/
+
+    }}
+
+

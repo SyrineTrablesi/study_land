@@ -11,11 +11,24 @@ public class User {
     private String prenom;
     private String email;
     private String password;
+    private  String  confirmerPassword;
     private String role;
 
     // Get et set
     public String getNom() {
         return nom;
+    }
+
+    public String getConfirmerPassword() {
+        return confirmerPassword;
+    }
+
+    public void setConfirmerPassword(String confirmerPassword) {
+        if (confirmerPassword.equals(password)) {
+            this.confirmerPassword = confirmerPassword;
+        } else {
+            System.out.println("Le mot de passe de confirmation ne correspond pas au mot de passe.");
+        }
     }
 
     public String getPrenom() {
@@ -98,7 +111,8 @@ public class User {
         this.prenom = prenom;
         setEmail(email);
         this.password = password;
-        role = this.role;
+        //setConfirmerPassword(confirmerPassword);
+        this.role = role;
     }
 
     //constructeur avec id

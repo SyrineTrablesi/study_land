@@ -1,6 +1,7 @@
 package services;
 
 import entities.Admin;
+import entities.Apprenant;
 import entities.Formateur;
 import utils.MyBD;
 
@@ -74,4 +75,23 @@ public class ServiceFormateur implements IUserService<Formateur>{
             formateurList.add(formateur);
         }        return formateurList;
     }
+
+    //rechercheFormateurParEmail
+    public Formateur rechercheFormateurParEmail(String email) throws SQLException {
+        String req = "SELECT * FROM user WHERE role = 'Formateur' AND email = ?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, email);
+        ResultSet result = pre.executeQuery();
+        if (result.next()) {
+            int id = result.getInt("id_user");
+            String nom = result.getString("nom");
+            String prenom = result.getString("prenom");
+            String adresseEmail = result.getString("email");
+            String password = result.getString("password");
+            return new Formateur(id, nom, prenom, adresseEmail, password);
+        } else {
+            return null;
+        }
+    }
+
 }

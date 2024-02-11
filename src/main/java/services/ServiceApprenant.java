@@ -9,15 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceApprenant implements IUserService<Apprenant> {
-    private Connection connection;
-    public ServiceApprenant(){
-        connection= MyBD.getInstance().getConnection();
+    private static Connection connection;
+
+    public ServiceApprenant() {
+        connection = MyBD.getInstance().getConnection();
     }
+
     @Override
     public void ajouter(Apprenant apprenant) throws SQLException {
         String req = "INSERT INTO user (nom, prenom, email, password, Role) " +
                 "VALUES ('" + apprenant.getNom() + "', '" + apprenant.getPrenom() + "', '" + apprenant.getEmail() + "', '" + apprenant.getPassword() + "', 'Apprenant')";
-        Statement ste =connection.createStatement();
+        Statement ste = connection.createStatement();
         ste.executeUpdate(req);
     }
 
@@ -34,9 +36,9 @@ public class ServiceApprenant implements IUserService<Apprenant> {
 
     @Override
     public void supprimer(Apprenant apprenant) throws SQLException {
-        String req ="delete from user where id_user=?";
-        PreparedStatement pre=connection.prepareStatement(req);
-        pre.setInt(1,apprenant.getId());
+        String req = "delete from user where id_user=?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setInt(1, apprenant.getId());
         pre.executeUpdate();
     }
 
@@ -60,6 +62,23 @@ public class ServiceApprenant implements IUserService<Apprenant> {
             ApprenatList.add(apprenant);
         }
         return ApprenatList;
+    }
+//Rechercher  rechercheApprenantParEmail
+    public Apprenant rechercheApprenantParEmail(String email) throws SQLException {
+        String req = "SELECT * FROM user WHERE role = 'Apprenant' AND email = ?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, email);
+        ResultSet result = pre.executeQuery();
+        if (result.next()) {
+            int id = result.getInt("id_user");
+            String nom = result.getString("nom");
+            String prenom = result.getString("prenom");
+            String adresseEmail = result.getString("email");
+            String password=result.getString("password");
+            return new Apprenant(id, nom, prenom, adresseEmail,password);
+        } else {
+            return null;
+        }
     }
 
 }

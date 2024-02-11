@@ -62,5 +62,4 @@ public class ServiceAdmin implements IUserService<Admin>{
         }
         return adminList;
     }
-
 }
