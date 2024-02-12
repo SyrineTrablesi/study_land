@@ -10,6 +10,11 @@ import services.ServiceCours;
 
 import utils.MyDB;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Date;
@@ -18,7 +23,7 @@ import java.util.List;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //    MyDB db1= MyDB.getInstance();
         // Date de début spécifique
         Calendar calDebut = Calendar.getInstance();
@@ -29,19 +34,20 @@ public class Main {
         Calendar calFin = Calendar.getInstance();
         calFin.set(2023, Calendar.DECEMBER, 31); // Année, Mois (indexé à partir de 0), Jour
         Date dateFin = calFin.getTime();
-        Formation f1 = new Formation("pascal","java","anis",6,dateDebut,dateFin,1650,"bac");
+        Formation f1 = new Formation("pascal", "java", "anis", 6, dateDebut, dateFin, 1650, "bac");
 //        Formation f2 = new Formation("symfony","mehdi",8,dateDebut,dateFin,1650,"intermediaire");
 //        Formation f3 = new Formation("java","sami",3,dateDebut,dateFin,1650,"bac");
 
 
-        ServiceFormation services =new ServiceFormation();
-        try {
-            services.ajouter(f1);
-//            services.ajouter(f2);
-//            services.ajouter(f3);
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());}
+        ServiceFormation services = new ServiceFormation();
+//        try {
+//            services.ajouter(f1);
+////            services.ajouter(f2);
+////            services.ajouter(f3);
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
 
         //affichage
 //        try {
@@ -123,7 +129,7 @@ public class Main {
 //        } catch (SQLException e) {
 //            System.out.println(e.getMessage());
 //        }
-        Categorie c1 = new Categorie(2,"pascal");
+        Categorie c1 = new Categorie(2, "pascal");
         ServiceCategorie service = new ServiceCategorie();
 //        try {
 //            service.ajouter(c1); // Use the correct service object and Categorie object
@@ -144,12 +150,30 @@ public class Main {
         // }
 
 
-
         //********************cours***************************************
-//        Categorie c1 = new Categorie(2,"pascal");
-//        ServiceCategorie service = new ServiceCategorie();
-//
-//        Cours cr1
+        Connection connection = null; // Initialize your connection object here
+
+        // Read the PDF file and convert it to a byte array for the course description
+        byte[] descriptionBytes = null;
+        try {
+            File pdfFile = new File("C:\\Users\\mohamed salah bedoui\\Desktop\\poly2013.pdf"); // Update with the actual path to your PDF file
+            descriptionBytes = Files.readAllBytes(pdfFile.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return; // Exit the method if an error occurs
+        }
+
+        // Create a new course instance
+        Cours cr = new Cours("java", descriptionBytes, 9);
+        ServiceCours serviceC = new ServiceCours();
+
+        // Call the method to add the course to the database
+        try {
+            serviceC.ajouter(cr);
+            System.out.println("Course added successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error adding course: " + e.getMessage());
+        }
 
     }
 }

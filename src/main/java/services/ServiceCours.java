@@ -16,18 +16,18 @@ public class ServiceCours implements IService<Cours>{
     }
     @Override
     public void ajouter(Cours cours) throws SQLException {
-// Préparer la requête SQL
-        String sql = "INSERT INTO cour_formation (Nom_Cours, Description_Cours) VALUES (?, ?)";
+        // Préparer la requête SQL
+        String sql = "INSERT INTO cour_formation (Nom_Cours, Description_Cours, idFormation) VALUES (?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
 
         // Définir les valeurs des paramètres
-        statement.setString(1, cours.getNomCours());
+        statement.setString(1, cours.getNom_Cours());
         statement.setBytes(2, cours.getDescription_Cours());
+        statement.setInt(3, cours.getIdFormation());
 
         // Exécuter la requête
         statement.executeUpdate();
     }
-
     @Override
     public void modifier(Cours cours) throws SQLException {
 
