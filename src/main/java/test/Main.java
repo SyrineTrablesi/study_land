@@ -171,7 +171,7 @@ public class Main {
         try {
             serviceC.ajouter(cr);
             System.out.println("Course added successfully!");
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             System.out.println("Error adding course: " + e.getMessage());
         }
 

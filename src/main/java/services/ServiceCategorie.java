@@ -27,11 +27,21 @@ public class ServiceCategorie implements IService<Categorie> {
 
     @Override
     public void modifier(Categorie categorie) throws SQLException {
+        String req = "UPDATE categorie SET nomCategorie=? WHERE idCategorie=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setString(1, categorie.getNomCategorie());
+            pre.setInt(2, categorie.getIdCategorie());
 
+            pre.executeUpdate();
+        }
     }
 
     @Override
     public void supprimer(Categorie categorie) throws SQLException {
+        String req ="delete from categorie where idCategorie=?";
+        PreparedStatement pre =connection.prepareStatement(req);
+        pre.setInt(1,categorie.getIdCategorie());
+        pre.executeUpdate();
 
     }
 
