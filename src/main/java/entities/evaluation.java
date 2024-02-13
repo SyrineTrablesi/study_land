@@ -1,8 +1,12 @@
 package entities;
 
-import java.sql.Time;
-import java.sql.Timestamp;
+import utils.MyDB;
+
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import entities.question;
 
 public class evaluation {
     public int id_evaluation;
@@ -16,9 +20,17 @@ public class evaluation {
     public Date testDate;
     public String createur;
     public float prix;
+    public String domaine;
+    public List<question> question;
+    public Connection connection;
+    public List<response> reponses;
 
 
-    public evaluation(int id_evaluation, String titre_evaluation, String description, String difficulte, int nb_questions, Time duree, float resultat, Date testDate, String createur, float prix) {
+
+
+
+
+    public evaluation(int id_evaluation, String titre_evaluation, String description, String difficulte, int nb_questions, Time duree, float resultat, Date testDate, String createur, float prix ,String domaine) {
         this.id_evaluation = id_evaluation;
         this.titre_evaluation = titre_evaluation;
         this.description = description;
@@ -29,9 +41,10 @@ public class evaluation {
         this.testDate = testDate;
         this.createur = createur;
         this.prix = prix;
+        this.domaine= domaine;
     }
 
-    public evaluation(String titre_evaluation, String description, String difficulte, int nb_questions, Time duree, float resultat, Date testDate, String createur , float prix) {
+    public evaluation(String titre_evaluation, String description, String difficulte, int nb_questions, Time duree, float resultat, Date testDate, String createur , float prix,String domaine) {
         this.titre_evaluation = titre_evaluation;
         this.description = description;
         Difficulte = difficulte;
@@ -41,9 +54,12 @@ public class evaluation {
         this.testDate = testDate;
        this.createur=createur;
        this.prix=prix;
+        this.domaine= domaine;
     }
 
     public evaluation( ) {
+        connection = MyDB.getInstance().getConnection();
+
     }
 
     public int getId_evaluation() {
@@ -126,6 +142,18 @@ public class evaluation {
         this.createur = createur;
     }
 
+    public String getDomaine() {
+        return domaine;
+    }
+
+    public void setDomaine(String domaine) {
+        this.domaine = domaine;
+    }
+
+    public evaluation(List<response> reponses) {
+        this.reponses = reponses;
+    }
+
     @Override
     public String toString() {
         return "evaluation{" +
@@ -139,8 +167,69 @@ public class evaluation {
                 ", testDate=" + testDate +
                 ", createur='" + createur + '\'' +
                 ", prix=" + prix +
+                ", domaine='" + domaine + '\'' +
+                ", question=" + question +
                 '}';
     }
+
+    public void loadQuestionsAndResponsesFromDatabase(Connection connection) {
+
+        List<question> matchingQuestions = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM question WHERE domaine = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, this.domaine);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int idQuestion = resultSet.getInt("idQuestion");
+                        String enonce = resultSet.getString("enonce");
+                        String domaine = resultSet.getString("domaine");
+
+                        question q = new question(idQuestion, enonce, domaine);
+
+                        matchingQuestions.add(q);
+q.loadResponses(connection);
+
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.question = matchingQuestions;  // Assign the matching questions to the instance variable
+    }
+
+
+    public void loadResponses(question q, List<response> allResponses) {
+        for (response response : allResponses) {
+            if (response.getIdQuestion() == q.getIdQuestion()) {
+                q.getReponses().add(response);
+            }
+        }}
+    public void displayQuestionsAndResponses() {
+        if (question != null && !question.isEmpty()) {
+            System.out.println("Questions for Evaluation " + id_evaluation + ":");
+            for (question question : question) {
+                System.out.println("  - Question ID: " + question.getIdQuestion());
+                System.out.println("    Enonce: " + question.getEnonce());
+                System.out.println("    Domaine: " + question.getDomaine());
+
+                // Display responses for the question
+
+                question.displayResponses();
+
+            }
+        } else {
+            System.out.println("No questions available for Evaluation " + id_evaluation);
+        }
+
+    }
+
+
 }
 
 

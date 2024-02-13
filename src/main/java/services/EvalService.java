@@ -19,9 +19,9 @@ public class EvalService implements EvaluationService<evaluation> {
 
     @Override
     public void ajouter(evaluation evaluation) throws SQLException {
-        String req = "insert into evaluation (titre_evaluation,description,difficulte,nb_questions,duree,resultat,testDate,createur,prix) values('" +
+        String req = "insert into evaluation (titre_evaluation,description,difficulte,nb_questions,duree,resultat,testDate,createur,prix,domaine) values('" +
                 evaluation.getTitre_evaluation() + "','" + evaluation.getDescription() + "','" + evaluation.getDescription()+ "','" +
-                evaluation.getNb_questions() + "','" + evaluation.getDuree() + "','" + evaluation.getResultat() + "','" + evaluation.getTestDate() +"','"+evaluation.getCreateur()+ "','"  +evaluation.getPrix()+"')";
+                evaluation.getNb_questions() + "','" + evaluation.getDuree() + "','" + evaluation.getResultat() + "','" + evaluation.getTestDate() +"','"+evaluation.getCreateur()+ "','"  +evaluation.getPrix()+"','"  +evaluation.getDomaine()+"')";
 
 
         Statement st = connection.createStatement();
@@ -32,7 +32,7 @@ public class EvalService implements EvaluationService<evaluation> {
 
     @Override
     public void modifier(evaluation evaluation) throws SQLException {
-        String req="UPDATE  evaluation SET  titre_evaluation=? ,description=?,difficulte=? ,nb_questions=?,duree=?,resultat=?,testDate=?,createur=?,prix=? WHERE id_evaluation=?";
+        String req="UPDATE  evaluation SET  titre_evaluation=? ,description=?,difficulte=? ,nb_questions=?,duree=?,resultat=?,testDate=?,createur=?,prix=?,domaine=? WHERE id_evaluation=?";
 PreparedStatement pre=connection.prepareStatement(req);
 pre.setString(1,evaluation.getTitre_evaluation());
 pre.setString(2, evaluation.getDescription());
@@ -43,7 +43,10 @@ pre.setFloat(6,evaluation.getResultat());
 pre.setDate(7,new java.sql.Date(evaluation.getTestDate().getTime()));
 pre.setString(8,evaluation.getCreateur());
 pre.setFloat(9,evaluation.getPrix());
-        pre.setInt(10,evaluation.getId_evaluation());
+        pre.setInt(11,evaluation.getId_evaluation());
+        pre.setString(10,evaluation.getDomaine());
+
+
 
 pre.executeUpdate(  );
         System.out.println("modification avec succée");
@@ -66,7 +69,6 @@ pre.executeUpdate(  );
         ResultSet res = st.executeQuery(req);
         List<evaluation> list = new ArrayList<>();
 
-        int rowCount = 0; // Variable to track the number of rows processed
         while (res.next()) {
             evaluation f = new evaluation();
             f.setId_evaluation(res.getInt("id_evaluation"));
@@ -79,6 +81,7 @@ pre.executeUpdate(  );
             f.setCreateur(res.getString("Createur"));
             f.setNb_questions(res.getInt("nb_questions"));
             f.setDifficulte(res.getString("Difficulte"));
+            f.setDomaine(res.getString("domaine"));
 
             list.add(f);
         }
