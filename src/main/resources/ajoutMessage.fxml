@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjoutMessageController">
+   <children>
+      <TextField layoutX="101.0" layoutY="63.0" />
+      <TextField layoutX="101.0" layoutY="141.0" fx:id="x1" />
+      <TextField layoutX="101.0" layoutY="211.0" fx:id="x2" />
+      <Label layoutX="14.0" layoutY="67.0" text="message" />
+      <Label fx:id="messageFx" layoutX="14.0" layoutY="145.0" text="xxxx" />
+      <Label layoutX="14.0" layoutY="215.0" text="www" />
+      <Button layoutX="150.0" layoutY="302.0" mnemonicParsing="false" onAction="#ajouterMessage" text="Ajouter" />
+   </children>
+</AnchorPane>
