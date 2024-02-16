@@ -117,9 +117,7 @@ public class Formation {
 
     }
 
-    public Formation(String nomCategorie,String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau) {
-        this.nomCategorie = nomCategorie;
-
+    public Formation(String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau, String nomCategorie) {
         this.titre = titre;
         this.description = description;
         this.duree = duree;
@@ -127,5 +125,6 @@ public class Formation {
         this.dateFin = dateFin;
         this.prix = prix;
         this.niveau = niveau;
+        this.nomCategorie = nomCategorie;
     }
 }

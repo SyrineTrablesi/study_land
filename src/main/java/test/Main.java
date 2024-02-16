@@ -34,7 +34,7 @@ public class Main {
         Calendar calFin = Calendar.getInstance();
         calFin.set(2023, Calendar.DECEMBER, 31); // Année, Mois (indexé à partir de 0), Jour
         Date dateFin = calFin.getTime();
-        Formation f1 = new Formation("pascal", "java", "anis", 6, dateDebut, dateFin, 1650, "bac");
+//        Formation f1 = new Formation("pascal", "cours", 3,dateDebut, dateFin, 1650,"intermidiaire", "Pascal");
 //        Formation f2 = new Formation("symfony","mehdi",8,dateDebut,dateFin,1650,"intermediaire");
 //        Formation f3 = new Formation("java","sami",3,dateDebut,dateFin,1650,"bac");
 
