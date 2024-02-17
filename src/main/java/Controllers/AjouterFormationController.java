@@ -48,8 +48,8 @@ public class AjouterFormationController {
 
     @FXML
     void AfficherF(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherFormation.fxml"));
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherFormation.fxml"));
             Parent root = loader.load();
             AfficherFormationController affichercontroller = loader.getController();
             if (affichercontroller != null) {
@@ -57,10 +57,9 @@ public class AjouterFormationController {
                 affichercontroller.setDuree(Duree.getText());
                 affichercontroller.setNomC(NomC.getText());
 
-                // Display the loaded FXML in a new window
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
+                // Replace the content of the current scene with the loaded FXML
+                Scene scene = NomF.getScene(); // Assuming NomF is a TextField in your current scene
+                scene.setRoot(root);
             } else {
                 System.out.println("Error: AfficherFormationController is null");
             }
