@@ -35,16 +35,51 @@ public class Reponseservice implements EvaluationService<response> {
 
     @Override
     public void modifier(response response) throws SQLException {
-        String req="UPDATE  reponse SET  contenu=? , idQuestion=? , status =? WHERE idReponse=?";
-        PreparedStatement pre=connection.prepareStatement(req);
-        pre.setString(1,response.getContenu());
-        pre.setInt(2, response.getIdReponse());
-        pre.setString(3 ,response.getStatus().toString());
+
+            StringBuilder reqBuilder = new StringBuilder("UPDATE reponse SET");
+
+            if (response.getContenu() != null && !response.getContenu().isEmpty()) {
+                reqBuilder.append(" contenu=?,");
+            }
+
+            if (response.getIdQuestion() != 0) {
+                reqBuilder.append(" idQuestion=?,");
+            }
+
+            if (response.getStatus() != null) {
+                reqBuilder.append(" status=?,");
+            }
+
+            // Supprimer la virgule finale, si elle existe
+            if (reqBuilder.charAt(reqBuilder.length() - 1) == ',') {
+                reqBuilder.deleteCharAt(reqBuilder.length() - 1);
+            }
+
+            reqBuilder.append(" WHERE idReponse=?");
+
+            String req = reqBuilder.toString();
+            PreparedStatement pre = connection.prepareStatement(req);
+
+            int parameterIndex = 1;
+
+            if (response.getContenu() != null && !response.getContenu().isEmpty()) {
+                pre.setString(parameterIndex++, response.getContenu());
+            }
+
+            if (response.getIdQuestion() != 0) {
+                pre.setInt(parameterIndex++, response.getIdQuestion());
+            }
+
+            if (response.getStatus() != null) {
+                pre.setString(parameterIndex++, response.getStatus().toString());
+            }
+
+            pre.setInt(parameterIndex, response.getIdReponse());
+
+            pre.executeUpdate();
+        }
 
 
-
-        pre.executeUpdate(  );
-    }
 
     @Override
     public void supprimer(response response) throws SQLException {
@@ -66,7 +101,7 @@ public class Reponseservice implements EvaluationService<response> {
         ResultSet res = pre.executeQuery();
         while (res.next()) {
             response resp = new response();
-            resp.setIdReponse(res.getInt("idQuestion"));
+            resp.setIdReponse(res.getInt("idReponse"));
             resp.setContenu(res.getString("contenu"));
             resp.setIdQuestion(res.getInt("idQuestion"));
             String statusValue = res.getString("status");

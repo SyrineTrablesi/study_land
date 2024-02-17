@@ -25,6 +25,10 @@ public class question {
         this.reponses = new ArrayList<>();
     }
 
+    public question(int idQuestion) {
+        this.idQuestion = idQuestion;
+    }
+
     public question() {
         connection = MyDB.getInstance().getConnection();
 

@@ -46,8 +46,10 @@ question q1=new question(1,"cest quoi le protcol dtp ","reseau");
         //q2.displayResponses();
 
       //ajouter evaluation
-test2.loadQuestionsAndResponsesFromDatabase(connection);
-test2.displayQuestionsAndResponses();
+//test2.loadQuestionsAndResponsesFromDatabase(connection);
+//test2.displayQuestionsAndResponses();
+        System.out.println(servicetest.getEvaluationByName("tesssssssssssssssst java"));
+
 
 
         //try {

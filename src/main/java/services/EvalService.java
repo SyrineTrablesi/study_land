@@ -86,4 +86,43 @@ pre.executeUpdate(  );
             list.add(f);
         }
         return list;
-    }}
+    }
+
+    public static evaluation getEvaluationByName(String evaluationName) {
+        Connection connection = MyDB.getInstance().getConnection();
+        evaluation foundEvaluation = null;
+
+        try {
+            String query = "SELECT * FROM evaluation WHERE titre_evaluation = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, evaluationName);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int id_evaluation = resultSet.getInt("id_evaluation");
+                        String titre_evaluation = resultSet.getString("titre_evaluation");
+                        String description = resultSet.getString("description");
+                        String difficulte = resultSet.getString("Difficulte");
+                        int nb_questions = resultSet.getInt("nb_questions");
+                        Time duree = resultSet.getTime("Duree");
+                        float resultat = resultSet.getFloat("Resultat");
+                        Date testDate = resultSet.getDate("testDate");
+                        String createur = resultSet.getString("createur");
+                        float prix = resultSet.getFloat("prix");
+                        String domaine = resultSet.getString("domaine");
+
+                        foundEvaluation = new evaluation(id_evaluation, titre_evaluation, description, difficulte, nb_questions, duree, resultat, testDate, createur, prix, domaine);
+                    }else {
+                        // Debugging statement
+                        System.out.println("Not found in the database.");
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return foundEvaluation;
+    }
+}
