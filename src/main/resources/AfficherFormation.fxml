@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AfficherFormationController">
+   <children>
+      <AnchorPane layoutX="192.0" prefHeight="400.0" prefWidth="406.0" style="-fx-background-color: #C1DBDA;">
+         <children>
+            <Label layoutX="114.0" layoutY="25.0" text="From DB" />
+            <Label fx:id="FromDB" layoutX="14.0" layoutY="89.0" prefHeight="170.0" prefWidth="383.0" text="Label" />
+            <Button layoutX="167.0" layoutY="291.0" mnemonicParsing="false" onAction="#AfficherDB" text="AfficherDB" />
+         </children>
+      </AnchorPane>
+      <Label fx:id="NomF" layoutX="21.0" layoutY="38.0" text="NomF" />
+      <Label fx:id="Description" layoutX="21.0" layoutY="68.0" text="Description" />
+      <Label fx:id="Duree" layoutX="21.0" layoutY="103.0" text="Duree" />
+      <Label fx:id="DD" layoutX="16.0" layoutY="147.0" text="DD" />
+      <Label fx:id="DF" layoutX="16.0" layoutY="189.0" text="DF" />
+      <Label fx:id="Prix" layoutX="16.0" layoutY="224.0" text="Prix" />
+      <Label fx:id="Niveau" layoutX="16.0" layoutY="262.0" text="Niveau" />
+      <Label fx:id="NomC" layoutX="11.0" layoutY="289.0" text="NomC" />
+   </children>
+</AnchorPane>

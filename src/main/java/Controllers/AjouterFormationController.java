@@ -3,10 +3,15 @@ package Controllers;
 import entities.Formation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import services.ServiceFormation;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -40,7 +45,31 @@ public class AjouterFormationController {
     @FXML
     private TextField Prix;
 
+
+    @FXML
+    void AfficherF(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherFormation.fxml"));
+        try {
+            Parent root = loader.load();
+            AfficherFormationController affichercontroller = loader.getController();
+            if (affichercontroller != null) {
+                affichercontroller.setNomF(NomF.getText());
+                affichercontroller.setDuree(Duree.getText());
+                affichercontroller.setNomC(NomC.getText());
+
+                // Display the loaded FXML in a new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } else {
+                System.out.println("Error: AfficherFormationController is null");
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading AfficherFormation.fxml: " + e.getMessage());
+        }
+    }
     private final ServiceFormation FS= new ServiceFormation();
+
     private Date convertToUtilDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
