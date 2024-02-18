@@ -17,13 +17,11 @@ public class ServiceFavoris implements IFavoris<Favoris> {
 
     @Override
     public void ajouterFavoris(Favoris favoris) throws SQLException {
-        String req = "INSERT INTO favoris (id_favoris, id_panier) VALUES ('" + favoris.getId_favoris() + "','" + favoris.getId_panier() + "')";
+        String req = "INSERT INTO favoris (id_panier) VALUES ('" + favoris.getId_panier() + "')";
 
-        Statement ste= connection.createStatement();
+        Statement ste = connection.createStatement();
 
         ste.executeUpdate(req);
-
-
     }
 
     @Override

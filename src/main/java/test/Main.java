@@ -1,27 +1,23 @@
 package test;
 
+import entities.Achat;
 import entities.Favoris;
-import entities.Inscrit;
 import entities.Panier;
 import services.ServiceFavoris;
-import services.ServiceInscrit;
 import services.ServicePanier;
-import utils.MyDB;
+import services.ServiceAchat;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Main {
 
     public static void main(String[] args){
 
-
-
-/*
-       Panier p1 = new Panier(1,1,4,new Date(2023 , 5, 6));
-       Panier p2 = new Panier(2,6,9,new Date(2000 , 11, 11));
+//Panier
+        /*
+        Panier p1 = new Panier(1, 1, new Date(2023, 1, 1), "favoris");
+        Panier p2 = new Panier(3,7, 7,new Date(2024, 7, 7), "inscrite");
 
         ServicePanier services = new ServicePanier();
 
@@ -33,6 +29,7 @@ public class Main {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
 
 
         //Affichage
@@ -51,6 +48,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+
+
         //supprimer
 
         try {
@@ -61,11 +60,16 @@ public class Main {
 
  */
 
-/*
-        //Favoris
-        ServiceFavoris service = new ServiceFavoris();
-        Favoris f1 = new Favoris(3);
-        Favoris f2 = new Favoris(2,5);
+
+
+
+
+
+//Favoris
+
+   /*   ServiceFavoris service = new ServiceFavoris();
+        Favoris f1 = new Favoris(80);
+        Favoris f2 = new Favoris(6,100);
 
 
         // ajouter
@@ -79,6 +83,8 @@ public class Main {
 
 
 
+
+
         //Affichage
 
         try{
@@ -88,12 +94,14 @@ public class Main {
         }
 
 
-        // modification
+      // modification
         try {
             service.modifieFavoris(f2);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+
 
 
 
@@ -105,15 +113,19 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
- */
+    */
 
 
-        //Inscrit
-        ServiceInscrit srv = new ServiceInscrit();
-        Inscrit i1 = new Inscrit(1,6,10,2);
-        Inscrit i2 = new Inscrit(2,5,20,3);
 
-/*
+
+
+
+//Inscrit
+/*      ServiceInscrit srv = new ServiceInscrit();
+        Inscrit i1 = new Inscrit(10,10,10,10,new Date(2024-1900, 2, 1));
+        Inscrit i2 = new Inscrit(4,40,40,30,30,new Date(2024-1900, 3, 14));
+
+
         // ajouter
         try {
             srv.ajouterInscrit(i1);
@@ -122,7 +134,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
- */
+
+
 
 
 
@@ -136,14 +149,16 @@ public class Main {
         }
 
 
-      /*  // modification
+       // modification
         try {
             srv.modifierInscrit(i2);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-       */
+
+
+
 
 
 
@@ -155,11 +170,62 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+ */
+ //Achat
+        Achat a1 = new Achat(55, 11, 20.10, new Date(2023-1900, 1-1, 1)); // 1er janvier 2023
+        Achat a2 = new Achat(8,30, 70, 7.25, new Date(2024-1900, 9-1, 9));    // 7 juillet 2024
+
+        ServiceAchat services = new ServiceAchat();
+        // ajouter achat
+/*
+        try {
+            services.ajouterAchat(a1);
+            services.ajouterAchat(a2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+ */
+
+
+
+        //Affichage
+
+        try{
+            System.out.println(services.afficherAchat());
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        // modification
+   /*     try {
+            services.modifierAchat(a2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+    */
+
+
+        //supprimer
+
+        try {
+            services.supprimerAchat(a2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
 
 
 
 
 
     }
+
+
 
 }

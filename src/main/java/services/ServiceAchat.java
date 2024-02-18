@@ -17,12 +17,14 @@ public class ServiceAchat implements IAchat<Achat> {
 
     @Override
     public void ajouterAchat(Achat achat) throws SQLException {
-        String req = "INSERT INTO favoris (id_panier, id_user, facture, date_achat  ) VALUES ('" + achat.getId_panier() + "','" + achat.getId_user() + "','" + achat.getFacture() +"','" + achat.getDate_achat() + "')";
+        String req = "INSERT INTO achat (id_panier, id_user, facture, date_achat) VALUES (?, ?, ?, ?)";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setInt(1, achat.getId_panier());
+        pre.setInt(2, achat.getId_user());
+        pre.setDouble(3, achat.getFacture());
+        pre.setDate(4, new java.sql.Date(achat.getDate_achat().getTime())); // Utilisation de setDate pour la date
 
-        Statement ste= connection.createStatement();
-
-        ste.executeUpdate(req);
-
+        pre.executeUpdate();
     }
 
     @Override
@@ -32,8 +34,8 @@ public class ServiceAchat implements IAchat<Achat> {
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setInt(1, achat.getId_user());
         pre.setInt(2, achat.getId_panier());
-        pre.setInt(3, achat.getFacture());
-        pre.setDate(4, new java.sql.Date(achat.getDate_achat().getTime()));
+        pre.setDouble(3, achat.getFacture());
+        pre.setDate(4, new java.sql.Date(achat.getDate_achat().getTime())); // Utilisation de setDate pour la date
         pre.setInt(5, achat.getId_achat());
 
         pre.executeUpdate();
@@ -59,11 +61,11 @@ public class ServiceAchat implements IAchat<Achat> {
              ResultSet res = ste.executeQuery(req)) {
             while (res.next()) {
                 Achat a = new Achat();
-                a.setId_achat(res.getInt(1));
-                a.setId_user(res.getInt(2));
-                a.setId_panier(res.getInt(3));
-                a.setFacture(res.getInt(4));
-                a.setDate_achat(res.getDate(5));
+                a.setId_achat(res.getInt("id_achat"));
+                a.setId_user(res.getInt("id_user"));
+                a.setId_panier(res.getInt("id_panier"));
+                a.setFacture(res.getInt("facture"));
+                a.setDate_achat(res.getDate("date_achat"));
 
                 list.add(a);
             }
@@ -71,4 +73,17 @@ public class ServiceAchat implements IAchat<Achat> {
 
         return list;
     }
+// calculer facture
+/*
+    public void calculerFacture(Achat achat) throws SQLException {
+        String req = "SELECT SUM(prix) AS total_facture FROM panier  WHERE id_user = ?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setInt(1, achat.getId_panier());
+
+        ResultSet res = pre.executeQuery();
+        if (res.next()) {
+            achat.setFacture(res.getInt("total_facture"));
+        }
+    }
+    */
 }

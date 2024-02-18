@@ -3,8 +3,9 @@ package entities;
 import java.util.Date;
 
 public class Achat {
-    int id_achat, id_panier , id_user , facture;
-    Date date_achat;
+    public int id_achat, id_panier , id_user ;
+    public double facture;
+    public Date date_achat;
 
     public int getId_achat() {
         return id_achat;
@@ -30,11 +31,11 @@ public class Achat {
         this.id_user = id_user;
     }
 
-    public int getFacture() {
+    public double getFacture() {
         return facture;
     }
 
-    public void setFacture(int facture) {
+    public void setFacture(double facture) {
         this.facture = facture;
     }
 
@@ -60,7 +61,7 @@ public class Achat {
     public Achat() {
     }
 
-    public Achat(int id_achat, int id_panier, int id_user, int facture, Date date_achat) {
+    public Achat(int id_achat, int id_panier, int id_user, double facture, Date date_achat) {
         this.id_achat = id_achat;
         this.id_panier = id_panier;
         this.id_user = id_user;
@@ -68,7 +69,7 @@ public class Achat {
         this.date_achat = date_achat;
     }
 
-    public Achat(int id_panier, int id_user, int facture, Date date_achat) {
+    public Achat(int id_panier, int id_user, double facture, Date date_achat) {
         this.id_panier = id_panier;
         this.id_user = id_user;
         this.facture = facture;

@@ -1,16 +1,19 @@
 package services;
 
 import entities.Favoris;
-import entities.Panier;;
+import entities.Panier;
 import utils.MyDB;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static entities.Panier.typeFormation;
+
 public class ServicePanier implements IPanier<Panier> {
 
-    private Connection connection;
+    private final Connection connection;
+
     public ServicePanier(){
         connection= MyDB.getInstance().getConnection();
     }
@@ -18,14 +21,17 @@ public class ServicePanier implements IPanier<Panier> {
     @Override
     public void ajouterPanier(Panier panier) throws SQLException {
 
-        String req = "INSERT INTO panier (id_user, id_formation, date_ajout) VALUES (?, ?, ?)";
+
+        String req = "INSERT INTO panier (id_user, id_formation, date_ajout, TypeFormation) VALUES (?,?,?,?)";
         PreparedStatement pstmt = connection.prepareStatement(req);
 
 // Remplacement des paramètres de l'instruction préparée avec les valeurs réelles
         pstmt.setInt(1, panier.getId_user());
         pstmt.setInt(2, panier.getId_formation());
         pstmt.setDate(3, new java.sql.Date(panier.getDate_ajout().getTime()));
-        //pstmt.setArray(4, (Array) panier.getFavorisList());
+        pstmt.setString(4, panier.getTypeFormation().toString());
+        pstmt.setString(4, String.valueOf(panier.getTypeFormation()));
+        //pstmt.setArray(5, (Array) panier.getFavorisList());
        // pstmt.setArray(5, (Array) panier.getInscritList());
 
 // Exécution de la requête
@@ -34,14 +40,16 @@ public class ServicePanier implements IPanier<Panier> {
 
     @Override
     public void modifierPanier(Panier panier) throws SQLException {
-        String req = "update panier set id_user=?, id_formation=?, date_ajout=? where id_panier=?";
+        String req = "update panier set id_user=?, id_formation=?, date_ajout=? ,typeFormation=? where id_panier=?";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setInt(1, panier.getId_user());
         pre.setInt(2, panier.getId_formation());
+        pre.setDate(3, new java.sql.Date(panier.getDate_ajout().getTime()));
+        pre.setString(4, String.valueOf(panier.getTypeFormation()));
+
         //pre.setArray(5, (Array) panier.getFavorisList());
         //pre.setArray(6, (Array) panier.getInscritList());
-        pre.setDate(3, new java.sql.Date(panier.getDate_ajout().getTime()));
-        pre.setInt(4, panier.getId_panier()); // Définition du sixième paramètre
+        pre.setInt(5, panier.getId_panier()); // Définition du sixième paramètre
 
         pre.executeUpdate();
 
@@ -69,14 +77,36 @@ public class ServicePanier implements IPanier<Panier> {
              ResultSet res = ste.executeQuery(req)) {
             while (res.next()) {
                 Panier p = new Panier();
-                p.setId_panier(res.getInt(1));
-                p.setId_user(res.getInt(2));
-                p.setId_formation(res.getInt(3));
-                p.setDate_ajout(res.getDate(4));
+                p.setId_panier(res.getInt("id_panier"));
+                p.setId_user(res.getInt("id_user"));
+                p.setId_formation(res.getInt("id_formation"));
+                p.setDate_ajout(res.getDate("date_ajout"));
+
+
+                String typeValue = res.getString("typeFormation");
+
+
+                // Débogage : Afficher la valeur de typeValue avant la conversion
+                System.out.println("typeValue: " + typeValue);
+
+                typeFormation typeFormation;
+
+                // Assurez-vous de manipuler correctement la casse des constantes de l'énumération
+                if ("favoris".equalsIgnoreCase(typeValue)) {
+                    typeFormation = p.typeFormation.favoris;
+                } else if ("inscrite".equalsIgnoreCase(typeValue)) {
+                    typeFormation = p.typeFormation.inscrite;
+                } else {
+                    // Gérez le cas où la valeur n'est pas valide
+                    throw new IllegalArgumentException("Valeur de typeFormation non valide dans la base de données");
+                }
+                p.setTypeFormation(typeFormation);
+
                 //p.setFavorisList((List<Favoris>) res.getArray(5));
                 //p.setInscritList((List<Inscrit>) res.getArray(6));
                 list.add(p);
             }
+
         } // Les ressources seront fermées automatiquement ici
 
         return list;
