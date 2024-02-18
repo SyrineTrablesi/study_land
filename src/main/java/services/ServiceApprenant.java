@@ -17,7 +17,7 @@ public class ServiceApprenant implements IUserService<Apprenant> {
 
     @Override
     public void ajouter(Apprenant apprenant) throws SQLException {
-        if (apprenant.isEmailValid(apprenant.getEmail())&& apprenant.getConfirmerPassword().equals(apprenant.getPassword())) {
+        if (apprenant.isEmailValid(apprenant.getEmail()) && apprenant.getConfirmerPassword().equals(apprenant.getPassword())) {
             String req = "INSERT INTO user (nom, prenom, email, password, confirmer_password, Role) " +
                     "VALUES (?, ?, ?, ?, ?, 'Apprenant')"; // Utilisation de PreparedStatement pour les valeurs paramétrées
             PreparedStatement preparedStatement = connection.prepareStatement(req);
@@ -28,6 +28,7 @@ public class ServiceApprenant implements IUserService<Apprenant> {
             preparedStatement.setString(5, apprenant.getConfirmerPassword());
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            //    EmailSender.sendNotificationEmail(apprenant.getEmail());
         } else {
             System.out.println("L'e-mail n'est pas valide ou le mot de passe ne correspond pas au mot de passe de confirmation.");
         }
@@ -36,12 +37,13 @@ public class ServiceApprenant implements IUserService<Apprenant> {
 
     @Override
     public void modifier(Apprenant apprenant) throws SQLException {
-        String req = "UPDATE user SET nom=?, prenom=?, password=? WHERE id_user=?";
+        String req = "UPDATE user SET nom=?, prenom=?, email=?,password=? WHERE id_user=?";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setString(1, apprenant.getNom());
         pre.setString(2, apprenant.getPrenom());
-        pre.setString(3, apprenant.getPassword());
-        pre.setInt(4, apprenant.getId());
+        pre.setString(3, apprenant.getEmail());
+        pre.setString(4, apprenant.getPassword());
+        pre.setInt(5, apprenant.getId());
         pre.executeUpdate();
     }
 
@@ -74,7 +76,8 @@ public class ServiceApprenant implements IUserService<Apprenant> {
         }
         return ApprenatList;
     }
-//Rechercher  rechercheApprenantParEmail
+
+    //Rechercher  rechercheApprenantParEmail
     public Apprenant rechercheApprenantParEmail(String email) throws SQLException {
         String req = "SELECT * FROM user WHERE role = 'Apprenant' AND email = ?";
         PreparedStatement pre = connection.prepareStatement(req);
@@ -85,11 +88,22 @@ public class ServiceApprenant implements IUserService<Apprenant> {
             String nom = result.getString("nom");
             String prenom = result.getString("prenom");
             String adresseEmail = result.getString("email");
-            String password=result.getString("password");
-            return new Apprenant(id, nom, prenom, adresseEmail,password);
+            String password = result.getString("password");
+            return new Apprenant(id, nom, prenom, adresseEmail, password);
         } else {
             return null;
         }
+    }
+
+    // ApprenantExiste
+    public int existeApprenant(Apprenant apprenant) throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE id_user=?";
+        PreparedStatement pre = connection.prepareStatement(query);
+        pre.setInt(1, apprenant.getId());
+        ResultSet resultSet = pre.executeQuery();
+
+        int count = 1;
+        return count;
     }
 
 }

@@ -114,6 +114,7 @@ public class User {
         setConfirmerPassword(confirmerPassword);
         this.role = role;
     }
+    //Apprenant:
     public User(int id ,String nom, String prenom, String email, String password, String role, String confirmerPassword) {
         this.id=id;
         this.nom = nom;

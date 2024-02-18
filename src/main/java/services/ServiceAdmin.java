@@ -1,9 +1,7 @@
 package services;
-
 import entities.Admin;
 import entities.User;
 import utils.MyBD;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +19,6 @@ public class ServiceAdmin implements IUserService<Admin>{
         ste.executeUpdate(req);
 
     }
-
-
     @Override
     public void modifier(Admin admin) throws SQLException {
         String req = "UPDATE user SET nom=?, prenom=?, password=? WHERE id=?";
@@ -41,7 +37,6 @@ public class ServiceAdmin implements IUserService<Admin>{
             pre.setInt(1,admin.getId());
             pre.executeUpdate();
     }
-
     @Override
     public List<Admin> afficher() throws SQLException {
         String req = "SELECT * FROM user WHERE Role=?";

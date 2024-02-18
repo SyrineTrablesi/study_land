@@ -91,7 +91,9 @@ public class Main {
             System.out.println(e.getMessage());
         }
 */
-
+        Apprenant ApprenantUser = new Apprenant("5", "1", "5@gmail.com", "email", "email");
+        ServiceApprenant serviceApprenant = new ServiceApprenant();
+        System.out.println(serviceApprenant.existeApprenant(ApprenantUser));
     }}
 
 
