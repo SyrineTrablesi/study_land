@@ -39,7 +39,12 @@ public class ServiceCours implements IService<Cours>{
     }
 
     @Override
-    public List<Formation> afficher() throws SQLException {
+    public List<Cours> afficher() throws SQLException {
         return null;
     }
+
+//    @Override
+//    public List<> afficher() throws SQLException {
+//        return null;
+//    }
 }

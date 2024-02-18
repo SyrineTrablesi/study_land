@@ -10,7 +10,7 @@ public interface  IService <T>{
     public void ajouter (T t) throws SQLException;
     public void modifier (T t) throws SQLException;
     public void supprimer (T t) throws SQLException;
-    public List<Formation> afficher () throws SQLException;
+    public List<T> afficher () throws SQLException;
 
 
 }

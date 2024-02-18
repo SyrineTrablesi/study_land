@@ -75,6 +75,8 @@ public class ServiceFormation implements IService<Formation> {
             f.setDateFin(res.getDate("dateFin"));
             f.setPrix(res.getFloat("prix"));
             f.setNiveau(res.getString("niveau"));
+            f.setNomCategorie(res.getString("nomCategorie")); // Set nomCategorie
+
             list.add(f);
 
             // Print the current row being processed

@@ -46,6 +46,8 @@ public class AjouterFormationController {
     private TextField Prix;
 
 
+
+
     @FXML
     void AfficherF(ActionEvent event) {
         try {
@@ -136,5 +138,16 @@ public class AjouterFormationController {
         }
 
 
+    }
+
+    public void accederCategorie(ActionEvent actionEvent) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Categorie.fxml"));
+        try {
+            Parent root = loader1.load();
+            CategorieController controller = loader1.getController();
+            NomC.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
