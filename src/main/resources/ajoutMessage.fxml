@@ -5,15 +5,42 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjoutMessageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Gris;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjoutMessageController">
    <children>
-      <TextField layoutX="101.0" layoutY="63.0" />
-      <TextField layoutX="101.0" layoutY="141.0" fx:id="x1" />
-      <TextField layoutX="101.0" layoutY="211.0" fx:id="x2" />
-      <Label layoutX="14.0" layoutY="67.0" text="message" />
-      <Label fx:id="messageFx" layoutX="14.0" layoutY="145.0" text="xxxx" />
-      <Label layoutX="14.0" layoutY="215.0" text="www" />
-      <Button layoutX="150.0" layoutY="302.0" mnemonicParsing="false" onAction="#ajouterMessage" text="Ajouter" />
+      <AnchorPane layoutX="320.0" prefHeight="400.0" prefWidth="279.0" style="-fx-background-color: #948a8a;">
+         <children>
+            <Button layoutX="87.0" layoutY="190.0" mnemonicParsing="false" onAction="#affichermessage" prefHeight="26.0" prefWidth="106.0" text="Afficher" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tfmessage" layoutX="19.0" layoutY="76.0" prefHeight="47.0" prefWidth="263.0" style="-fx-background-color: #b15cf2;">
+         <children>
+            <Label layoutX="10.0" layoutY="15.0" prefHeight="18.0" prefWidth="81.0" text="Message" textFill="#dc99ea" />
+            <TextField fx:id="tfmessage" layoutX="65.0" layoutY="10.0" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: #e4a5f0;" text="xxxxnn" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tfsender" layoutX="19.0" layoutY="134.0" prefHeight="47.0" prefWidth="263.0" style="-fx-background-color: #b15cf2;">
+         <children>
+            <Label layoutX="10.0" layoutY="15.0" prefHeight="18.0" prefWidth="81.0" text="Id_Sender" textFill="#dc99ea" />
+            <TextField fx:id="tfdiss" layoutX="65.0" layoutY="10.0" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: #e4a5f0;" text="21" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tfdiss" layoutX="19.0" layoutY="191.0" prefHeight="47.0" prefWidth="263.0" style="-fx-background-color: #b15cf2;">
+         <children>
+            <Label layoutX="10.0" layoutY="15.0" prefHeight="18.0" prefWidth="81.0" text="Id_Diss" textFill="#dc99ea" />
+            <TextField fx:id="tfsender" layoutX="65.0" layoutY="10.0" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: #e4a5f0;" text="22" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tfdiss" layoutX="19.0" layoutY="248.0" prefHeight="47.0" prefWidth="263.0" style="-fx-background-color: #b15cf2;">
+         <children>
+            <Label fx:id="tfdate" layoutX="10.0" layoutY="15.0" prefHeight="18.0" prefWidth="81.0" text="Date" textFill="#dc99ea" />
+            <TextField fx:id="tfdate" layoutX="65.0" layoutY="10.0" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: #e4a5f0;" text="12-02-2012" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="317.0" prefHeight="400.0" prefWidth="285.0" style="-fx-background-color: #911beb;">
+         <children>
+            <Button layoutX="72.0" layoutY="174.0" mnemonicParsing="false" onAction="#ajoutMessage" prefHeight="26.0" prefWidth="142.0" text="Afficher" />
+         </children>
+      </AnchorPane>
+      <Button layoutX="86.0" layoutY="326.0" mnemonicParsing="false" onAction="#ajoutmessage" prefHeight="26.0" prefWidth="129.0" text="Ajouter" />
    </children>
 </AnchorPane>

@@ -6,7 +6,6 @@ import utils.MyDB;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 public class ServiceMessage implements IService<Message>{
 
@@ -18,8 +17,12 @@ public class ServiceMessage implements IService<Message>{
     }
     @Override
     public void ajouter(Message message) throws SQLException{
-        String req ="insert into message (message,date,id_sender,id_diss)" +
+       /* String req ="insert into message (message,date,id_sender,id_diss)" +
+                "values('"+message.getMessage()+"','"+message.getDate()+"','"+message.getId_sender()+"','"+message.getId_diss()+"')";*/
+
+              String req ="insert into message (message,date,id_sender,id_diss)" +
                 "values('"+message.getMessage()+"','"+message.getDate()+"','"+message.getId_sender()+"','"+message.getId_diss()+"')";
+
         Statement ste= connection.createStatement();
         ste.executeUpdate(req);
 
@@ -43,7 +46,7 @@ public class ServiceMessage implements IService<Message>{
     @Override
     public void supprimer(Message message) throws SQLException{
 
-        String req = " delete from message where id=?";
+        String req = " delete from message where id_message=?";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setInt(1,message.getId_message());
         pre.executeUpdate();
@@ -70,4 +73,5 @@ public class ServiceMessage implements IService<Message>{
 
         return list;
     }
+
 }
