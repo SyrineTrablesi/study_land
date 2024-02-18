@@ -22,7 +22,7 @@ public class Reponseservice implements EvaluationService<response> {
     }
 
     @Override
-    public void ajouter(response response) throws SQLException {
+    public int ajouter(response response) throws SQLException {
         String req = "insert into reponse (contenu,idQuestion,status) values(?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(req);
         preparedStatement.setString(1, response.getContenu());
@@ -31,6 +31,7 @@ public class Reponseservice implements EvaluationService<response> {
 
         preparedStatement.executeUpdate();
 
+        return 0;
     }
 
     @Override
@@ -106,19 +107,16 @@ public class Reponseservice implements EvaluationService<response> {
             resp.setIdQuestion(res.getInt("idQuestion"));
             String statusValue = res.getString("status");
 
-            // Débogage : Afficher la valeur de statusValue avant la conversion
-            System.out.println("StatusValue: " + statusValue);
+
 
             status status;
 
-            // Assurez-vous de manipuler correctement la casse des constantes de l'énumération
             if ("ONE".equalsIgnoreCase(statusValue)) {
                 status = response.status.ONE;
             } else if ("ZERO".equalsIgnoreCase(statusValue)) {
                 status = response.status.ZERO;
             } else {
-                // Gérez le cas où la valeur n'est pas valide
-                // Vous pouvez lever une exception, attribuer une valeur par défaut, etc.
+
                 throw new IllegalArgumentException("Valeur de statut non valide dans la base de données");
             }
 

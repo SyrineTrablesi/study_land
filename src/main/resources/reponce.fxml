@@ -11,23 +11,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="594.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Reponce">
    <children>
       <AnchorPane layoutX="9.0" layoutY="4.0" prefHeight="517.0" prefWidth="896.0" AnchorPane.bottomAnchor="3.2000000000000455" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.399999999999977" AnchorPane.topAnchor="4.0">
          <children>
-            <AnchorPane layoutX="23.0" layoutY="17.0" prefHeight="266.0" prefWidth="864.0" style="-fx-background-color: #ffff;" stylesheets="@question.css">
-               <styleClass>
-                  <String fx:value="white-bg" />
-                  <String fx:value="shadow" />
-               </styleClass>
+            <AnchorPane layoutX="23.0" layoutY="17.0" prefHeight="266.0" prefWidth="864.0" style="-fx-background-color: #ffff;" styleClass="shadow" stylesheets="@question.css">
                <children>
                   <TableView fx:id="tabreponse" layoutY="59.0" prefHeight="210.0" prefWidth="864.0">
                     <columns>
                       <TableColumn fx:id="idreponse" prefWidth="120.79995727539062" text="ID de la réponse " />
-                      <TableColumn fx:id="reponse" prefWidth="313.59996032714844" text="La reponse" />
-                        <TableColumn fx:id="status" prefWidth="153.5999755859375" text="Le status de réponse " />
-                        <TableColumn fx:id="idquestion" prefWidth="273.5999755859375" text="ID de la Question" />
+                      <TableColumn fx:id="reponse" prefWidth="488.8000793457031" text="La reponse" />
+                        <TableColumn fx:id="status" prefWidth="138.39996337890625" text="Le status de réponse " />
+                        <TableColumn fx:id="idquestion" prefWidth="113.5999755859375" text="ID de la Question" />
                     </columns>
                   </TableView>
                   <TextField layoutX="266.0" layoutY="14.0" prefHeight="26.0" prefWidth="333.0" />

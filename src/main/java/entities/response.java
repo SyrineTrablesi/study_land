@@ -29,6 +29,12 @@ public class response {
         this.contenu = contenu;
     }
 
+    public response(int idReponse) {
+
+
+        this.idReponse = idReponse;
+    }
+
     public response() {
     }
 

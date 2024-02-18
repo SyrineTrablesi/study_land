@@ -94,10 +94,17 @@ public class Reponce {
 
     @FXML
     void btnsupprimer(ActionEvent event) {
+        try{
+            reponseservice.supprimer(new response(Integer.parseInt(idtep.getText())));
+            initTable();
+
+        }catch (SQLException e ){
+            throw new RuntimeException(e);
+
+        }
     }
     @FXML
     public void initialize() {
-        // Initialisez les colonnes ici
         idquestion.setCellValueFactory(new PropertyValueFactory<>("idQuestion"));
         idreponse.setCellValueFactory(new PropertyValueFactory<>("idReponse"));
         reponse.setCellValueFactory(new PropertyValueFactory<>("contenu"));

@@ -25,9 +25,9 @@ public class AjouterQuestion {
     quesservice sq =new quesservice();
     @FXML
     private TableView<question> tab;
-
     @FXML
     private TextField tfdomaine;
+
 
     @FXML
     private TextField tfenonce;
@@ -48,29 +48,15 @@ public class AjouterQuestion {
 
     public void btnmodifier(javafx.event.ActionEvent actionEvent) throws SQLException {
 
-       try {
-            sq.modifier(new question(Integer.parseInt(tfidquestion.getText()),tfenonce.getText(),tfdomaine.getText()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     public void btnsupprimer(ActionEvent actionEvent) {
-        try{
-            sq.supprimer(new question(Integer.parseInt(tfidquestion.getText())));
-        }catch (SQLException e ){
-            throw new RuntimeException(e);
 
-        }
     }
 
     public void btnajouter(ActionEvent actionEvent) throws SQLException {
-        try {
-            sq.ajouter(new question(tfenonce.getText(),tfdomaine.getText()));
-            initTable();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     public void btnafficher(ActionEvent actionEvent) {
@@ -118,6 +104,28 @@ public class AjouterQuestion {
         } catch (SQLException e) {
             e.printStackTrace(); // Gérez l'exception de manière appropriée
         }
+    }
+
+    public void gererquestion(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gerequestion.fxml"));
+            Parent root = loader.load();
+
+            // Obtenez le contrôleur après avoir chargé le fichier FXML
+            Gerequestion affichepre = loader.getController();
+
+            // Créez une nouvelle scène avec le Parent chargé
+            Scene scene = new Scene(root);
+
+            // Récupérez la scène actuelle à partir du bouton
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Remplacez la scène actuelle par la nouvelle scène
+            currentStage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
 

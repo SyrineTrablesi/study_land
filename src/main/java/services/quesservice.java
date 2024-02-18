@@ -1,5 +1,4 @@
 package services;
-import entities.evaluation;
 import entities.question;
 import utils.MyDB;
 
@@ -17,7 +16,7 @@ public class quesservice implements EvaluationService<question> {
 
 
     @Override
-    public void ajouter(question question) throws SQLException {
+    public int ajouter(question question) throws SQLException {
             String req = "insert into question (enonce,domaine) values(?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(req);
         preparedStatement.setString(1, question.getEnonce());
@@ -25,6 +24,7 @@ public class quesservice implements EvaluationService<question> {
 
         preparedStatement.executeUpdate();
 
+        return 0;
     }
 
 
@@ -52,24 +52,45 @@ public class quesservice implements EvaluationService<question> {
 
     }
 
-    @Override
-    public List<question> afficher() throws SQLException {
+        @Override
+        public List<question> afficher() throws SQLException {
 
-        List<question> questionList = new ArrayList<>();
+            List<question> questionList = new ArrayList<>();
 
-        String req = "SELECT * FROM question";
-        PreparedStatement preparedStatement = connection.prepareStatement(req);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
-            question q =new question();
-            q.setIdQuestion(resultSet.getInt("idQuestion"));
-            q.setEnonce(resultSet.getString("enonce"));
-            q.setDomaine(resultSet.getString("domaine"));
-            questionList.add(q);
+            String req = "SELECT * FROM question";
+            PreparedStatement preparedStatement = connection.prepareStatement(req);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                question q =new question();
+                q.setIdQuestion(resultSet.getInt("idQuestion"));
+                q.setEnonce(resultSet.getString("enonce"));
+                q.setDomaine(resultSet.getString("domaine"));
+                questionList.add(q);
 
+            }
+
+
+            return questionList;
+        }
+    public question getQuestionById(int idQuestion) throws SQLException {
+        String query = "SELECT * FROM question WHERE idQuestion = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idQuestion);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    question q = new question();
+                    q.setIdQuestion(resultSet.getInt("idQuestion"));
+                    q.setEnonce(resultSet.getString("enonce"));
+                    q.setDomaine(resultSet.getString("domaine"));
+                    return q;
+                }
+            }
         }
 
-
-        return questionList;
+        // Return null if no question is found with the specified ID
+        return null;
     }
 }
+

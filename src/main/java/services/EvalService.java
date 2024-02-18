@@ -1,6 +1,5 @@
 package services;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import entities.evaluation;
 import utils.MyDB;
 
@@ -17,19 +16,59 @@ public class EvalService implements EvaluationService<evaluation> {
 
     }
 
-    @Override
-    public void ajouter(evaluation evaluation) throws SQLException {
-        String req = "insert into evaluation (titre_evaluation,description,difficulte,nb_questions,duree,resultat,testDate,createur,prix,domaine) values('" +
-                evaluation.getTitre_evaluation() + "','" + evaluation.getDescription() + "','" + evaluation.getDescription()+ "','" +
-                evaluation.getNb_questions() + "','" + evaluation.getDuree() + "','" + evaluation.getResultat() + "','" + evaluation.getTestDate() +"','"+evaluation.getCreateur()+ "','"  +evaluation.getPrix()+"','"  +evaluation.getDomaine()+"')";
+   @Override
+    public int ajouter(evaluation evaluation) throws SQLException {
+        String req = "insert into evaluation (titre_evaluation, description, difficulte, nb_questions, duree, resultat, testDate, createur, prix, domaine) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        try (PreparedStatement st = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
+            st.setString(1, evaluation.getTitre_evaluation());
+            st.setString(2, evaluation.getDescription());
+            st.setString(3, evaluation.getDifficulte());
+            st.setInt(4, evaluation.getNb_questions());
+            st.setTime(5, evaluation.getDuree());
+            st.setFloat(6, evaluation.getResultat());
+            st.setDate(7, new java.sql.Date(evaluation.getTestDate().getTime()));
+            st.setString(8, evaluation.getCreateur());
+            st.setFloat(9, evaluation.getPrix());
+            st.setString(10, evaluation.getDomaine());
 
-        Statement st = connection.createStatement();
+            int rowsAffected = st.executeUpdate();
 
-        st.executeUpdate(req);
+            // Récupérer les clés générées
+            if (rowsAffected > 0) {
+                try (ResultSet generatedKeys = st.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        long id = generatedKeys.getLong(1);
+                        System.out.println("ID généré : " + id);
+                        return (int) id;
 
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return rowsAffected;
+        }
     }
 
+
+    public List<Integer> getQuestionsByEvaluationId(int idEvaluation) throws SQLException {
+        List<Integer> questionIds = new ArrayList<>();
+        String query = "SELECT id_question FROM evaluationquestion WHERE id_evaluation = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idEvaluation);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int questionId = resultSet.getInt("id_question");
+                    questionIds.add(questionId);
+                }
+            }
+        }
+
+        return questionIds;
+    }
     @Override
     public void modifier(evaluation evaluation) throws SQLException {
         String req="UPDATE  evaluation SET  titre_evaluation=? ,description=?,difficulte=? ,nb_questions=?,duree=?,resultat=?,testDate=?,createur=?,prix=?,domaine=? WHERE id_evaluation=?";

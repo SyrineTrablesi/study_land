@@ -6,7 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import entities.question;
 
 public class evaluation {
     public int id_evaluation;
@@ -57,6 +56,21 @@ public class evaluation {
         this.domaine= domaine;
     }
 
+    public evaluation(int id_evaluation, String titre_evaluation, String description, String difficulte, int nb_questions, Time duree, float resultat, Date testDate, String createur, float prix, String domaine, List<question> question) {
+        this.id_evaluation = id_evaluation;
+        this.titre_evaluation = titre_evaluation;
+        this.description = description;
+        Difficulte = difficulte;
+        this.nb_questions = nb_questions;
+        Duree = duree;
+        Resultat = resultat;
+        this.testDate = testDate;
+        this.createur = createur;
+        this.prix = prix;
+        this.domaine = domaine;
+        this.question = question;
+    }
+
     public evaluation( ) {
         connection = MyDB.getInstance().getConnection();
 
@@ -74,7 +88,7 @@ public class evaluation {
         return description;
     }
 
-    public String getDifficulte(String difficulte) {
+    public String getDifficulte() {
         return Difficulte;
     }
 

@@ -29,3 +29,62 @@
     -fx-text-fill: #ffffff;
     -fx-font-family: "Arial";
 }
+.list-cell {
+    -fx-padding: 0px;
+    -fx-background-color:linear-gradient(to bottom right, #43A1F6, #A676FF);
+    -fx-border-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+
+    -fx-padding: 10; /* Padding around each cell */
+
+}
+
+
+.choice-box .menu-item {
+    -fx-text-fill: white; /* Adjust text color as needed */
+
+
+}
+/* Ajoutez ce code CSS à votre fichier de style (question.css) */
+.root {
+    -fx-background-color: #EAEDF0;
+}
+
+.label {
+    -fx-font-size: 15px;
+}
+
+.text-field, .date-picker, .list-view{
+    -fx-font-size: 16px;
+    -fx-background-color: white; /* Couleur de fond */
+    -fx-border-color: #B0C4DE; /* Couleur de la bordure */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.list-view {
+    -fx-background-color: #EEE5FF; /* Couleur de fond de la liste */
+}
+
+.list-view:selected {
+    -fx-background-color: #B0C4DE; /* Couleur de fond lorsqu'un élément est sélectionné */
+}
+
+
+
+
+.label {
+    -fx-text-fill: #333; /* Couleur du texte */
+    -fx-padding: 5px; /* Marge intérieure */}
+
+.aa{
+    -fx-background-color: linear-gradient(to bottom right, #43A1F6, #A676FF);
+}
+                                                   }
+
+
+
+
+
