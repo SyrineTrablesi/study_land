@@ -21,12 +21,12 @@
          </right>
       </BorderPane>
       <TextField layoutX="301.0" layoutY="29.0" prefHeight="26.0" prefWidth="367.0" />
-      <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="772.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="770.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/cloche.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="728.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="727.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/utilisateur.png" />
          </image>
@@ -43,12 +43,12 @@
                   <Image url="@src/ecrire.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="65.0" fitWidth="72.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@src/logo.png" />
                </image>
             </ImageView>
-            <Button fx:id="btn_App1" layoutX="35.0" layoutY="226.0" mnemonicParsing="false" onAction="#afficherApprenants" prefHeight="66.0" prefWidth="240.0" text="     Formateur" textAlignment="CENTER" textFill="#5777c1">
+            <Button fx:id="btn_formateur" layoutX="35.0" layoutY="226.0" mnemonicParsing="false" onAction="#afficherFormateur" prefHeight="66.0" prefWidth="240.0" text="     Formateur" textAlignment="CENTER" textFill="#5777c1">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -58,12 +58,12 @@
                   <Image url="@src/prof.png" />
                </image>
             </ImageView>
-            <Button fx:id="btn_App11" layoutX="33.0" layoutY="313.0" mnemonicParsing="false" onAction="#afficherApprenants" prefHeight="66.0" prefWidth="240.0" text="     Admin" textAlignment="CENTER" textFill="#5777c1">
+            <Button fx:id="btn_App11" layoutX="33.0" layoutY="328.0" mnemonicParsing="false" onAction="#afficherApprenants" prefHeight="66.0" prefWidth="240.0" text="     Admin" textAlignment="CENTER" textFill="#5777c1">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="51.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="53.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@src/reglages.png" />
                </image>

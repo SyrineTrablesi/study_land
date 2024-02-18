@@ -109,8 +109,6 @@ public class AffichageApprenant {
 
     private void initTable() {
 
-
-
         try {
             List<Apprenant> apprenants =serviceApprenant .afficher();
             ObservableList<Apprenant> observableList = FXCollections.observableArrayList(apprenants);

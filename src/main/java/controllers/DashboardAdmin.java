@@ -37,4 +37,16 @@ public class DashboardAdmin {
             e.printStackTrace();
         }
     }
+    @FXML
+    void afficherFormateur(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForamteurAffichage.fxml"));
+        try {
+            Parent affichageFormateurRoot = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(affichageFormateurRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

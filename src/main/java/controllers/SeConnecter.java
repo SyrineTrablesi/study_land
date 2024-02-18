@@ -57,7 +57,7 @@ public class SeConnecter {
             return;
         }*/
 
-        if (userinfo.role.equals("Apprenant")) {
+        if (userinfo.role.equals("Apprenant")|| userinfo.role.equals("Formateur")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileUser.fxml"));
             try {
                 Parent root = loader.load();

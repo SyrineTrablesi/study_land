@@ -45,7 +45,7 @@
       </Button>
       <TextField fx:id="id_mdp" layoutX="347.0" layoutY="196.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="193.0" promptText="mdp" />
       <Label layoutX="500.0" layoutY="342.0" text="mdp Oublier?" />
-      <Button fx:id="btn_inscrit" layoutX="324.0" layoutY="333.0" mnemonicParsing="false" onAction="#pageInscription" prefHeight="35.0" prefWidth="126.0" style="-fx-background-color: ;" text="s'inscrire" textAlignment="CENTER" textFill="#797777" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Button fx:id="btn_inscrit" layoutX="324.0" layoutY="333.0" mnemonicParsing="false" onAction="#pageInscription" prefHeight="35.0" prefWidth="126.0" text="s'inscrire" textAlignment="CENTER" textFill="#797777" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

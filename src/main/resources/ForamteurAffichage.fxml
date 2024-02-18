@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="990.0" prefWidth="1293.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ForamteurAffichage">
+   <children>
+      <AnchorPane layoutX="-55.0" layoutY="-16.0" prefHeight="908.0" prefWidth="999.0">
+         <children>
+            <Label layoutX="342.0" layoutY="27.0" text="Formateur" textFill="#0b41e4">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tab_formateur" layoutX="329.0" layoutY="75.0" prefHeight="187.0" prefWidth="602.0" stylesheets="@styleDash.css">
+               <columns>
+                  <TableColumn fx:id="id_user" prefWidth="105.5999755859375" text="           id" />
+                  <TableColumn fx:id="nom_user" prefWidth="77.60003662109375" text="     nom" />
+                  <TableColumn fx:id="pre_user" prefWidth="93.59996032714844" text="      prénom" />
+                  <TableColumn fx:id="email_user" prefWidth="119.20001220703125" text="         Email" />
+                  <TableColumn fx:id="mdp_user" prefWidth="96.79998779296875" text="        Mdp" />
+                  <TableColumn fx:id="supprimer_user" prefWidth="104.7999267578125" text="      Supprimer" />
+               </columns>
+            </TableView>
+            <Line endX="317.79998779296875" layoutX="431.0" layoutY="285.0" startX="79.4000244140625" />
+            <Label layoutX="396.0" layoutY="446.0" />
+            <Label layoutX="342.0" layoutY="311.0" text="Demande d'ajout d'un formateur à l'équipe" textFill="#0b41e4">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="id_prenom" alignment="CENTER" layoutX="845.0" layoutY="390.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Prenom" />
+            <TextField fx:id="id_email" layoutX="631.0" layoutY="455.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="exmple@gmail.com" />
+            <TextField fx:id="id_mdp" layoutX="845.0" layoutY="455.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="mot de passe" />
+            <Label fx:id="errorEmailLabel" contentDisplay="TEXT_ONLY" layoutX="572.0" layoutY="720.0" prefHeight="26.0" prefWidth="166.0" textAlignment="CENTER" textFill="#f41414" />
+            <Button fx:id="btn_ajouter" layoutX="762.0" layoutY="538.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="35.0" prefWidth="126.0" style="-fx-background-color: #2F2B6D;" text="Ajouter" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="643.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/gmail.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="858.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/la-cyber-securite.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="861.0" layoutY="401.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/utilisateur.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="631.0" layoutY="390.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Nom" scaleShape="false" />
+            <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="643.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/utilisateur.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="208.0" fitWidth="204.0" layoutX="348.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/lobtention-du-diplome.png" />
+               </image>
+            </ImageView>
+            <Line endX="126.20001220703125" endY="170.0" layoutX="444.0" layoutY="423.0" startX="126.20001220703125" startY="-42.0" />
+            <Label fx:id="errorEmailLabel1" contentDisplay="TEXT_ONLY" layoutX="762.0" layoutY="590.0" prefHeight="26.0" prefWidth="166.0" textAlignment="CENTER" textFill="#f41414" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

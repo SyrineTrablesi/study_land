@@ -1,17 +1,20 @@
 package controllers;
 
 import entities.Apprenant;
+import entities.Formateur;
 import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import security.Session;
 import security.UserInfo;
 import services.ServiceApprenant;
+import services.ServiceFormateur;
 import services.ServiceUser;
 
 import java.io.IOException;
@@ -105,23 +108,50 @@ public class GererProfile {
     @FXML
     void ModifierUser(ActionEvent event) {
         UserInfo userInfo = Session.userInfo;
-        Apprenant ap1=new Apprenant();
-        Apprenant ap =new Apprenant(userInfo.id,userInfo.nom,userInfo.prenom,userInfo.email,userInfo.mdp);
-        System.out.println(ap);
-       ap1.setNom(id_nom.getText());
-        ap1.setPrenom(id_prenom.getText());
-        ap1.setEmail(id_email.getText());
-        ap1.setPassword(id_password.getText());
-        ap1.setId(userInfo.id);
-        System.out.println(ap1);
-        ap1.setEmail(id_email.getText());
-        ServiceApprenant serviceApprenant = new ServiceApprenant();
-        try {
-            serviceApprenant.modifier(ap1);
+        User user1 = new User(userInfo.id, userInfo.nom, userInfo.prenom, userInfo.email, userInfo.mdp, userInfo.role);
+        user1.setNom(id_nom.getText());
+        user1.setPrenom(id_prenom.getText());
+        user1.setEmail(id_email.getText());
+        user1.setPassword(id_password.getText());
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(user1.getRole().equals("Apprenant")) {
+            try {
+                Apprenant apprenant = new Apprenant(userInfo.id, userInfo.nom, userInfo.prenom, userInfo.email, userInfo.mdp);
+                apprenant.setNom(user1.getNom());
+                apprenant.setPrenom(user1.getPrenom());
+                apprenant.setEmail(user1.getEmail());
+                apprenant.setPassword(user1.getPassword());
+
+                ServiceApprenant serviceApprenant = new ServiceApprenant();
+                serviceApprenant.modifier(apprenant);
+                showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
+            } catch (SQLException e) {
+                throw new RuntimeException("Erreur lors de la modification de l'utilisateur : " + e.getMessage());
+            }
+        } else if(user1.getRole().equals("Formateur")) {
+            try {
+                Formateur formateur = new Formateur(userInfo.id, userInfo.nom, userInfo.prenom, userInfo.email, userInfo.mdp);
+                formateur.setNom(user1.getNom());
+                formateur.setPrenom(user1.getPrenom());
+                formateur.setEmail(user1.getEmail());
+                formateur.setPassword(user1.getPassword());
+
+                ServiceFormateur serviceFormateur = new ServiceFormateur();
+                serviceFormateur.modifier(formateur);
+                showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
+            } catch (SQLException e) {
+                throw new RuntimeException("Erreur lors de la modification de l'utilisateur : " + e.getMessage());
+            }
         }
     }
+
+    private void showAlert2(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
 }
