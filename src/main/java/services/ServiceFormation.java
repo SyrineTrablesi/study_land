@@ -12,6 +12,7 @@ import java.util.List;
 public class ServiceFormation implements IService<Formation> {
 
     private Connection connection ;
+
     public ServiceFormation(){
         connection = MyDB.getInstance().getConnection();
     }
