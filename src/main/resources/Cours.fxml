@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,7 +13,7 @@
 
 <AnchorPane prefHeight="531.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursController">
    <children>
-      <Button layoutX="626.0" layoutY="210.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cours" />
+      <Button layoutX="632.0" layoutY="521.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cours" />
       <Label layoutX="282.0" layoutY="122.0" stylesheets="@styles.css" text="Nom_Cours" />
       <TextField fx:id="NomCours" layoutX="465.0" layoutY="118.0" stylesheets="@styles.css" />
       <WebView fx:id="pdf" layoutX="466.0" layoutY="175.0" prefHeight="22.0" prefWidth="172.0" stylesheets="@styles.css" />
@@ -23,8 +25,15 @@
             <Image url="@src/3974104-removebg-preview%20(1).png" />
          </image>
       </ImageView>
-      <Button layoutX="574.0" layoutY="255.0" mnemonicParsing="false" onAction="#ModifierCours" text="Modifier cours" />
-      <Button layoutX="574.0" layoutY="295.0" mnemonicParsing="false" onAction="#supprimerCours" text="Supprimer Cours" />
-      <Button layoutX="465.0" layoutY="223.0" mnemonicParsing="false" onAction="#AfficherCours" text="Afficher cours" />
-   </children>
+      <Button layoutX="389.0" layoutY="520.0" mnemonicParsing="false" onAction="#ModifierCours" stylesheets="@styles.css" text="Modifier cours" />
+      <Button layoutX="246.0" layoutY="520.0" mnemonicParsing="false" onAction="#supprimerCours" stylesheets="@styles.css" text="Supprimer Cours" />
+      <Button layoutX="513.0" layoutY="521.0" mnemonicParsing="false" onAction="#AfficherCours" stylesheets="@styles.css" text="Afficher cours" />
+      <ListView fx:id="CoursListView" layoutX="263.0" layoutY="288.0" prefHeight="200.0" prefWidth="514.0">
+         <!-- Specify the generic type of the ListView -->
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <!-- Add Formation items here -->
+            </FXCollections>
+         </items>
+      </ListView>   </children>
 </AnchorPane>

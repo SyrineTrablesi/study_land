@@ -1,5 +1,6 @@
 package Controllers;
 
+import entities.Categorie;
 import entities.Cours;
 import entities.Formation;
 import javafx.event.ActionEvent;
@@ -29,13 +30,15 @@ public class CoursController {
 
     @FXML
     private WebView pdf;
+    @FXML
+    private ListView<Cours> CoursListView;
 
     private ServiceCours serviceC = new ServiceCours();
     private ServiceFormation serviceFormation = new ServiceFormation();
 
     @FXML
     private void initialize() {
-        // Set up cell factory to display idFormation
+        // Set up cell factory to display only the ID of the Formation
         idFormation.setCellFactory(param -> new ListCell<Formation>() {
             @Override
             protected void updateItem(Formation item, boolean empty) {
@@ -117,12 +120,38 @@ public class CoursController {
 
     @FXML
     void supprimerCours(ActionEvent event) {
-        // Implementation for deleting a course
+        // Get the selected Cours object from the ListView
+        Cours selectedCours = CoursListView.getSelectionModel().getSelectedItem();
+
+        if (selectedCours != null) {
+            try {
+                // Delete the course from the database
+                serviceC.supprimer(selectedCours);
+
+                // Refresh the ListView
+                AfficherCours(event);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                // Handle the exception appropriately
+            }
+        } else {
+            System.out.println("No item selected.");
+        }
     }
 
     @FXML
     void AfficherCours(ActionEvent event) {
-        // Implementation for displaying course details
+        try {
+            List<Cours> courses = serviceC.afficher(); // Assuming this method retrieves a list of all courses
+            CoursListView.getItems().clear();
+
+            for (Cours Cours : courses) {
+                CoursListView.getItems().add(Cours);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
