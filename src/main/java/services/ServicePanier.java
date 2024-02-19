@@ -1,6 +1,5 @@
 package services;
 
-import entities.Favoris;
 import entities.Panier;
 import utils.MyDB;
 
@@ -8,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static entities.Panier.typeFormation;
+import static entities.Panier.type_formation;
 
 public class ServicePanier implements IPanier<Panier> {
 
@@ -28,7 +27,7 @@ public class ServicePanier implements IPanier<Panier> {
 // Remplacement des paramètres de l'instruction préparée avec les valeurs réelles
         pstmt.setInt(1, panier.getId_user());
         pstmt.setInt(2, panier.getId_formation());
-        pstmt.setDate(3, new java.sql.Date(panier.getDate_ajout().getTime()));
+        pstmt.setDate(3, panier.getDate_ajout());
         pstmt.setString(4, panier.getTypeFormation().toString());
         pstmt.setString(4, String.valueOf(panier.getTypeFormation()));
         //pstmt.setArray(5, (Array) panier.getFavorisList());
@@ -81,26 +80,7 @@ public class ServicePanier implements IPanier<Panier> {
                 p.setId_user(res.getInt("id_user"));
                 p.setId_formation(res.getInt("id_formation"));
                 p.setDate_ajout(res.getDate("date_ajout"));
-
-
-                String typeValue = res.getString("typeFormation");
-
-
-                // Débogage : Afficher la valeur de typeValue avant la conversion
-                System.out.println("typeValue: " + typeValue);
-
-                typeFormation typeFormation;
-
-                // Assurez-vous de manipuler correctement la casse des constantes de l'énumération
-                if ("favoris".equalsIgnoreCase(typeValue)) {
-                    typeFormation = p.typeFormation.favoris;
-                } else if ("inscrite".equalsIgnoreCase(typeValue)) {
-                    typeFormation = p.typeFormation.inscrite;
-                } else {
-                    // Gérez le cas où la valeur n'est pas valide
-                    throw new IllegalArgumentException("Valeur de typeFormation non valide dans la base de données");
-                }
-                p.setTypeFormation(typeFormation);
+                p.setTypeFormation(type_formation);
 
                 //p.setFavorisList((List<Favoris>) res.getArray(5));
                 //p.setInscritList((List<Inscrit>) res.getArray(6));

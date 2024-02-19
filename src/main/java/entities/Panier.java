@@ -1,5 +1,6 @@
 package entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -8,13 +9,14 @@ import java.util.List;
 
 
 public class Panier {
-    public enum typeFormation {
+
+    public enum type_formation {
         favoris,
         inscrite;
     }
     public int id_panier , id_user , id_formation;
     public Date date_ajout;
-    public static typeFormation typeFormation;
+    public static String type_formation;
     public List<Favoris> favorisList;
     public List<Inscrit> inscritList;
 
@@ -58,20 +60,20 @@ public class Panier {
         this.inscritList = inscritList;
     }
 
-    public Date getDate_ajout() {
-        return  date_ajout;
+    public java.sql.Date getDate_ajout() {
+        return (java.sql.Date) date_ajout;
     }
 
     public void setDate_ajout(Date date_ajout) {
         this.date_ajout = date_ajout;
     }
 
-    public typeFormation getTypeFormation() {
-        return typeFormation;
+    public String getTypeFormation() {
+        return type_formation;
     }
 
-    public void setTypeFormation(typeFormation typeFormation) {
-        this.typeFormation = typeFormation;
+    public void setTypeFormation(String typeFormation) {
+        this.type_formation = typeFormation;
     }
 
     @Override
@@ -81,7 +83,7 @@ public class Panier {
                 ", id_user=" + id_user +
                 ", id_formation=" + id_formation +
                 ", date_ajout=" + date_ajout +
-                ", typeFormation=" + typeFormation +
+                ", type_formation=" + type_formation +
                 ", favorisList=" + favorisList +
                 ", inscritList=" + inscritList +
                 '}';
@@ -91,23 +93,23 @@ public class Panier {
 
     }
 
-    public Panier(int id_user, int id_formation, Date date_ajout, String typeFormation) {
+    public Panier(int id_user, int id_formation, LocalDate date_ajout, String type_formation) {
 
         this.id_user = id_user;
         this.id_formation = id_formation;
-        this.date_ajout = date_ajout;
-        this.typeFormation = Panier.typeFormation.valueOf(typeFormation);
+        this.date_ajout = java.sql.Date.valueOf(date_ajout);
+        this.type_formation = Panier.type_formation.valueOf(type_formation);
 
 
     }
 
-    public Panier(int id_panier, int id_user, int id_formation,Date date_ajout, String typeFormation) {
+    public Panier(int id_panier, int id_user, int id_formation, LocalDate date_ajout, String type_formation) {
 
         this.id_panier = id_panier;
         this.id_user = id_user;
         this.id_formation = id_formation;
-        this.date_ajout = date_ajout;
-        this.typeFormation = Panier.typeFormation.valueOf(typeFormation);
+        this.date_ajout = java.sql.Date.valueOf(date_ajout);
+        this.type_formation = Panier.type_formation.valueOf(type_formation);
 
     }
 }
