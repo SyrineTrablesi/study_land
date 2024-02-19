@@ -4,12 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import services.EvalService;
 import entities.question;
 import services.quesservice;
 import utils.MyDB;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -146,4 +152,24 @@ public class Ajoutevaluation {
     }
 
 
+    public void lesevaluation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lesevaluation.fxml"));
+            Parent root = loader.load();
+
+            // Obtenez le contrôleur après avoir chargé le fichier FXML
+            Lesevaluation affichepre = loader.getController();
+
+            // Créez une nouvelle scène avec le Parent chargé
+            Scene scene = new Scene(root);
+
+            // Récupérez la scène actuelle à partir du bouton
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Remplacez la scène actuelle par la nouvelle scène
+            currentStage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

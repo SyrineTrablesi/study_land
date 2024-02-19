@@ -127,5 +127,28 @@ public class AjouterQuestion {
         }
 
     }
+
+
+
+    public void evaluation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lesevaluation.fxml"));
+            Parent root = loader.load();
+
+            // Obtenez le contrôleur après avoir chargé le fichier FXML
+            Lesevaluation affichepre = loader.getController();
+
+            // Créez une nouvelle scène avec le Parent chargé
+            Scene scene = new Scene(root);
+
+            // Récupérez la scène actuelle à partir du bouton
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Remplacez la scène actuelle par la nouvelle scène
+            currentStage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

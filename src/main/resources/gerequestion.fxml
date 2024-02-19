@@ -5,14 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="739.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Gerequestion">
+<AnchorPane prefHeight="682.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Gerequestion">
    <children>
-      <AnchorPane layoutX="30.0" layoutY="283.0" prefHeight="190.0" prefWidth="772.0" style="-fx-background-color: #ffff;" stylesheets="@question.css">
+      <AnchorPane layoutX="1.0" prefHeight="681.0" prefWidth="845.0" style="-fx-background-color: #A8D5FD;">
          <styleClass>
             <String fx:value="white-bg" />
             <String fx:value="shadow" />
@@ -20,50 +21,51 @@
          <children>
             <Label layoutX="539.0" layoutY="127.0" />
             <Label layoutX="75.0" layoutY="36.0" />
-            <TextField fx:id="modfdomaine" layoutX="276.0" layoutY="107.0" prefHeight="40.0" prefWidth="150.0" promptText="domaine" />
-            <Button layoutX="686.0" layoutY="107.0" mnemonicParsing="false" onAction="#btnmodifier" prefHeight="18.0" prefWidth="71.0" text="Modifier" />
-            <TextField fx:id="modifid" layoutX="473.0" layoutY="107.0" prefHeight="40.0" prefWidth="150.0" promptText="idQuestion" />
-            <TextArea fx:id="modifeneonce" layoutX="20.0" layoutY="86.0" prefHeight="66.0" prefWidth="230.0" promptText="énoncé de question" />
-            <Text layoutX="276.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modifier question">
+            <TextField fx:id="ajoutdomain" layoutX="357.0" layoutY="159.0" prefHeight="40.0" prefWidth="199.0" promptText="domaine" />
+            <TextArea fx:id="ajouteneonce" layoutX="357.0" layoutY="107.0" prefHeight="40.0" prefWidth="199.0" promptText="énoncé de question" />
+            <Button id="button" layoutX="655.0" layoutY="146.0" mnemonicParsing="false" onAction="#btnajouter" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" stylesheets="@question.css" text="Ajouter" />
+            <Text layoutX="358.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter question" wrappingWidth="212.2889404296875">
                <font>
                   <Font size="28.0" />
                </font>
             </Text>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="30.0" layoutY="54.0" prefHeight="190.0" prefWidth="772.0" style="-fx-background-color: #ffff;" stylesheets="@question.css">
-         <styleClass>
-            <String fx:value="white-bg" />
-            <String fx:value="shadow" />
-         </styleClass>
-         <children>
-            <Label layoutX="539.0" layoutY="127.0" />
-            <Label layoutX="75.0" layoutY="36.0" />
-            <TextField fx:id="ajoutdomain" layoutX="415.0" layoutY="102.0" prefHeight="40.0" prefWidth="150.0" promptText="domaine" />
-            <TextArea fx:id="ajouteneonce" layoutX="26.0" layoutY="89.0" prefHeight="65.0" prefWidth="302.0" promptText="énoncé de question" />
-            <Button layoutX="681.0" layoutY="109.0" mnemonicParsing="false" onAction="#btnajouter" text="Ajouter" />
-            <Text layoutX="287.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter question" wrappingWidth="256.28900146484375">
+            <TextField fx:id="modifid" layoutX="357.0" layoutY="398.0" prefHeight="40.0" prefWidth="186.0" promptText="idQuestion" />
+            <TextField fx:id="modfdomaine" layoutX="358.0" layoutY="340.0" prefHeight="40.0" prefWidth="186.0" promptText="domaine" />
+            <TextArea fx:id="modifeneonce" layoutX="360.0" layoutY="283.0" prefHeight="40.0" prefWidth="186.0" promptText="énoncé de question" />
+            <Text layoutX="360.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modifier question" wrappingWidth="230.4000000000001">
                <font>
                   <Font size="28.0" />
                </font>
             </Text>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="30.0" layoutY="504.0" prefHeight="190.0" prefWidth="772.0" style="-fx-background-color: #ffff;" stylesheets="@question.css">
-         <styleClass>
-            <String fx:value="white-bg" />
-            <String fx:value="shadow" />
-         </styleClass>
-         <children>
-            <Label layoutX="539.0" layoutY="127.0" />
-            <Label layoutX="75.0" layoutY="36.0" />
-            <Button layoutX="503.0" layoutY="109.0" mnemonicParsing="false" onAction="#btnsupprimer" text="Supprimer" />
-            <TextField fx:id="iddelete" layoutX="189.0" layoutY="102.0" prefHeight="40.0" prefWidth="150.0" promptText="idQuestion" />
-            <Text layoutX="276.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer question">
+            <Button layoutX="655.0" layoutY="347.0" mnemonicParsing="false" onAction="#btnmodifier" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="Modifier" />
+            <Text layoutX="360.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer question" wrappingWidth="256.28900146484375">
                <font>
                   <Font size="28.0" />
                </font>
             </Text>
+            <TextField fx:id="iddelete" layoutX="360.0" layoutY="522.0" prefHeight="40.0" prefWidth="186.0" promptText="idQuestion" />
+            <Button layoutX="655.0" layoutY="529.0" mnemonicParsing="false" onAction="#btnsupprimer" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="Supprimer" />
+            <ImageView fitHeight="202.0" fitWidth="199.0" layoutX="54.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/q1-removebg-preview.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="320.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/icons8-plus-50.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="320.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/icons8-boucle-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="26.0" fitWidth="20.0" layoutX="323.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/icons8-supprimer-30.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="105.0" layoutY="445.0" mnemonicParsing="false" onAction="#affichagequetion" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="Les questions" />
          </children>
       </AnchorPane>
    </children>

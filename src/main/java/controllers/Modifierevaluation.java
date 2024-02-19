@@ -6,17 +6,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import services.EvalService;
 import services.quesservice;
 import utils.MyDB;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -187,5 +194,62 @@ public class Modifierevaluation {
             st.setInt(2, idQuestion);
             st.executeUpdate();
         }
+    }
+
+    public void lesevaluation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lesevaluation.fxml"));
+            Parent root = loader.load();
+
+            // Obtenez le contrôleur après avoir chargé le fichier FXML
+            Lesevaluation affichepre = loader.getController();
+
+            // Créez une nouvelle scène avec le Parent chargé
+            Scene scene = new Scene(root);
+
+            // Récupérez la scène actuelle à partir du bouton
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Remplacez la scène actuelle par la nouvelle scène
+            currentStage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void recuperer(ActionEvent actionEvent) {
+    EvalService eval = new EvalService();
+        try {
+            // Get the evaluation ID from the user input or any other source
+            int evaluationIdToRetrieve = Integer.parseInt(ideval.getText());
+
+            // Call the getEvaluationById method to retrieve the evaluation
+            evaluation retrievedEvaluation = eval.getEvaluationById(evaluationIdToRetrieve);
+
+            if (retrievedEvaluation != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                // Populate UI fields with the retrieved evaluation data
+                titre.setText(retrievedEvaluation.getTitre_evaluation());
+                description.setText(retrievedEvaluation.getDescription());
+                dificulter.setText(retrievedEvaluation.getDifficulte());
+                nbquestion.setText(String.valueOf(retrievedEvaluation.getNb_questions()));
+                duree.setText(retrievedEvaluation.getDuree().toString());
+                resultat.setText(String.valueOf(retrievedEvaluation.getResultat()));
+                date.setValue(LocalDate.parse(dateFormat.format(retrievedEvaluation.getTestDate())));
+                createur.setText(retrievedEvaluation.getCreateur());
+                prix.setText(String.valueOf(retrievedEvaluation.getPrix()));
+                domaine.setText(retrievedEvaluation.getDomaine());
+
+                // You may also need to handle the question-related parts if needed
+
+                System.out.println("Evaluation retrieved: " + retrievedEvaluation);
+            } else {
+                System.out.println("Evaluation not found with ID: " + evaluationIdToRetrieve);
+            }
+        } catch (NumberFormatException | SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately in your application
+        }
+
+
     }
 }

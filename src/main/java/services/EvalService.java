@@ -126,6 +126,31 @@ pre.executeUpdate(  );
         }
         return list;
     }
+    public evaluation getEvaluationById(int evaluationId) throws SQLException {
+        String req = "SELECT * FROM evaluation WHERE id_evaluation=?";
+        try (PreparedStatement st = connection.prepareStatement(req)) {
+            st.setInt(1, evaluationId);
+            ResultSet res = st.executeQuery();
+
+            if (res.next()) {
+                evaluation f = new evaluation();
+                f.setId_evaluation(res.getInt("id_evaluation"));
+                f.setTitre_evaluation(res.getString("titre_evaluation"));
+                f.setDescription(res.getString("description"));
+                f.setDuree(res.getTime("Duree"));
+                f.setTestDate(res.getDate("testDate"));
+                f.setPrix(res.getFloat("prix"));
+                f.setResultat(res.getFloat("Resultat"));
+                f.setCreateur(res.getString("Createur"));
+                f.setNb_questions(res.getInt("nb_questions"));
+                f.setDifficulte(res.getString("Difficulte"));
+                f.setDomaine(res.getString("domaine"));
+
+                return f;
+            }
+        }
+        return null; // Return null if no evaluation with the given ID is found
+    }
 
     public static evaluation getEvaluationByName(String evaluationName) {
         Connection connection = MyDB.getInstance().getConnection();

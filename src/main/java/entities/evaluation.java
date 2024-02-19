@@ -217,6 +217,9 @@ q.loadResponses(connection);
         this.question = matchingQuestions;  // Assign the matching questions to the instance variable
     }
 
+    public evaluation(int id_evaluation) {
+        this.id_evaluation = id_evaluation;
+    }
 
     public void loadResponses(question q, List<response> allResponses) {
         for (response response : allResponses) {

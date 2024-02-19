@@ -10,17 +10,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="806.0" prefWidth="1394.0" style="-fx-background-color: #EAEDF0;" stylesheets="@question.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ajoutevaluation">
+<AnchorPane prefHeight="806.0" prefWidth="1394.0" style="-fx-background-color: #EAEDF0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ajoutevaluation">
    <children>
-      <Label layoutX="820.0" layoutY="170.0" prefHeight="34.0" prefWidth="144.0" text="La difficulté" textFill="#0270ac" underline="true">
+      <Label layoutX="820.0" layoutY="170.0" prefHeight="34.0" prefWidth="144.0" text="La difficulté" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Label layoutX="68.0" layoutY="227.0" prefHeight="30.0" prefWidth="276.0" text="Description d'evaluation" underline="true">
+      <Label layoutX="68.0" layoutY="227.0" prefHeight="30.0" prefWidth="276.0" text="Description d'evaluation" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Label layoutX="72.0" layoutY="408.0" prefHeight="30.0" prefWidth="190.0" text="La date d'evaluation" underline="true">
+      <Label layoutX="72.0" layoutY="408.0" prefHeight="30.0" prefWidth="190.0" text="La date d'evaluation" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
@@ -30,7 +30,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <ImageView fitHeight="103.0" fitWidth="154.0" layoutX="708.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="103.0" fitWidth="154.0" layoutX="738.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/Checklist-removebg-preview.png" />
          </image>
@@ -40,49 +40,53 @@
       <TextField fx:id="createur" layoutX="1087.0" layoutY="282.0" promptText="Nom de Createur" />
       <TextField fx:id="duree" layoutX="1087.0" layoutY="226.0" promptText="Durée " />
       <TextField fx:id="dificulter" layoutX="1087.0" layoutY="170.0" promptText="difficulté" />
-      <Label layoutX="815.0" layoutY="340.0" prefHeight="30.0" prefWidth="190.0" text="Le prix d'evaluation" underline="true">
+      <Label layoutX="815.0" layoutY="340.0" prefHeight="30.0" prefWidth="190.0" text="Le prix d'evaluation" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Label layoutX="67.0" layoutY="171.0" prefHeight="27.0" prefWidth="200.0" text="Le titre d'evaluation" underline="true">
+      <Label layoutX="67.0" layoutY="171.0" prefHeight="27.0" prefWidth="200.0" text="Le titre d'evaluation" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
       <TextField fx:id="titre" layoutX="327.0" layoutY="171.0" promptText="Titre" />
-      <Label layoutX="820.0" layoutY="225.0" prefHeight="34.0" prefWidth="200.0" text="Durée de l'évaluation" underline="true">
+      <Label layoutX="820.0" layoutY="225.0" prefHeight="34.0" prefWidth="200.0" text="Durée de l'évaluation" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Label layoutX="72.0" layoutY="272.0" prefHeight="27.0" prefWidth="133.0" text="Le Domaine" underline="true">
+      <Label layoutX="72.0" layoutY="282.0" prefHeight="27.0" prefWidth="133.0" text="Le Domaine" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
       <TextField fx:id="domaine" layoutX="327.0" layoutY="282.0" promptText="domaine" />
-      <Label layoutX="825.0" layoutY="282.0" prefHeight="27.0" prefWidth="133.0" text="Le Createur" underline="true">
+      <Label layoutX="825.0" layoutY="282.0" prefHeight="27.0" prefWidth="133.0" text="Le Createur" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Label layoutX="185.0" layoutY="491.0" prefHeight="38.0" prefWidth="217.0" text="Liste de questions" />
-      <Label layoutX="72.0" layoutY="333.0" prefHeight="34.0" prefWidth="226.0" text="Le nombre de questions" underline="true">
+      <Label layoutX="185.0" layoutY="491.0" prefHeight="38.0" prefWidth="217.0" text="Liste de questions" textFill="#0270ac">
+         <font>
+            <Font size="26.0" />
+         </font></Label>
+      <Label layoutX="72.0" layoutY="333.0" prefHeight="34.0" prefWidth="226.0" text="Le nombre de questions" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <ListView fx:id="questionListView" layoutX="21.0" layoutY="543.0" prefHeight="238.0" prefWidth="564.0" style="-fx-background-color: #EEE5FF; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@question.css" />
-      <ListView fx:id="questionselectioner" layoutX="815.0" layoutY="536.0" prefHeight="251.0" prefWidth="543.0" style="-fx-background-color: #EEE5FF; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@question.css" />
+      <ListView fx:id="questionListView" layoutX="21.0" layoutY="543.0" prefHeight="238.0" prefWidth="564.0" style="-fx-background-color: #794AFF; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@question.css" />
+      <ListView fx:id="questionselectioner" layoutX="815.0" layoutY="536.0" prefHeight="251.0" prefWidth="543.0" style="-fx-background-color: #794AFF; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@question.css" />
 
-      <Button fx:id="button" layoutX="638.0" layoutY="623.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="38.0" prefWidth="117.0" style="-fx-background-color: #7891ff;" stylesheets="@question.css" text="Ajouter question" />
-      <Label layoutX="884.0" layoutY="491.0" prefHeight="38.0" prefWidth="247.0" text="les questions choisie">
+      <Button fx:id="button" layoutX="638.0" layoutY="627.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="34.0" prefWidth="118.0" style="-fx-background-color: #F8982A;" stylesheets="@question.css" text="Ajouter question" />
+      <Label layoutX="884.0" layoutY="491.0" prefHeight="38.0" prefWidth="247.0" text="les questions choisie" textFill="#0270ac">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Button fx:id="ajouterevaluation" layoutX="625.0" layoutY="695.0" mnemonicParsing="false" onAction="#ajouterevaluation" prefHeight="34.0" prefWidth="144.0" style="-fx-background-color: #7891ff;" stylesheets="@buttonevaluation.css" text="sauvegarder" textFill="#2e2929" />
+      <Button fx:id="ajouterevaluation" layoutX="638.0" layoutY="672.0" mnemonicParsing="false" onAction="#ajouterevaluation" prefHeight="34.0" prefWidth="118.0" style="-fx-background-color: #F8982A;" stylesheets="@buttonevaluation.css" text="sauvegarder" textFill="#2e2929" />
       <TextField fx:id="resultat" layoutX="1087.0" layoutY="386.0" promptText="Resultat" />
       <TextField fx:id="prix" layoutX="1087.0" layoutY="333.0" promptText="Prix en dinare" />
-      <Label layoutX="825.0" layoutY="391.0" prefHeight="30.0" prefWidth="190.0" text="La resultat">
+      <Label layoutX="825.0" layoutY="391.0" prefHeight="30.0" prefWidth="190.0" text="La resultat" textFill="#0270ac">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
+      <Button fx:id="ajouterevaluation1" layoutX="638.0" layoutY="728.0" mnemonicParsing="false" onAction="#lesevaluation" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #F8982A;" stylesheets="@buttonevaluation.css" text="les evaluation" textFill="#2e2929" />
    </children>
 </AnchorPane>
