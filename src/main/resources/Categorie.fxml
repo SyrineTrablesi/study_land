@@ -28,6 +28,7 @@
             <Image url="@src/categories.png" />
          </image>
       </ImageView>
+      <Button fx:id="accederFormation" layoutX="307.0" layoutY="492.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
 
    </children>
 </AnchorPane>

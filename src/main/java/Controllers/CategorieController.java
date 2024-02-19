@@ -4,6 +4,8 @@ import entities.Categorie;
 import entities.Formation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -11,6 +13,7 @@ import javafx.scene.control.TextInputDialog;
 import services.ServiceCategorie;
 import services.ServiceFormation;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +27,8 @@ public class CategorieController {
     @FXML
     private ListView<String> categorieListView;
     private List<Categorie> categories;
+
+
 
 
     public void AjouterCategorie(ActionEvent actionEvent) {
@@ -122,5 +127,19 @@ public class CategorieController {
             System.out.println("No item selected.");
         }
     }
+    @FXML
+    void accederFormation(ActionEvent event) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/AjouterFormation.fxml"));
+        try {
+            Parent root = loader1.load();
+            AjouterFormationController controller = loader1.getController();
+            NomC.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+
+        }
+    }
+
+
 }
 

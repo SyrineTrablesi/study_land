@@ -2,6 +2,7 @@ package Controllers;
 
 import entities.Categorie;
 import entities.Formation;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import java.util.Optional;
 import Controllers.AjouterFormationController;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import services.ServiceFormation;
 
 
@@ -177,9 +179,102 @@ public class AfficherFormationController {
         int endIndex = selectedItem.indexOf(",", startIndex);
         return Integer.parseInt(selectedItem.substring(startIndex, endIndex));
     }
+    @FXML
+    void modifierFormation(ActionEvent event) {
+        // Get the selected Formation object from the ListView
+        String selectedItem = formationListView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            // Parse the ID from the selected item
+            int id = parseIdFromSelectedItem(selectedItem);
 
-    public void modifierFormation(ActionEvent actionEvent) {
-    }
-}
+            try {
+                // Retrieve the existing Formation object from the database based on its ID
+                Formation existingFormation = FS.rechercherParId(id);
+                if (existingFormation != null) {
+                    // Create a dialog with text input fields pre-filled with existing details
+                    Dialog<Formation> dialog = new Dialog<>();
+                    dialog.setTitle("Modifier Formation");
+                    dialog.setHeaderText("Modifier les détails de la formation");
+
+                    // Set the button types
+                    ButtonType modifierButtonType = new ButtonType("Modifier", ButtonBar.ButtonData.OK_DONE);
+                    dialog.getDialogPane().getButtonTypes().addAll(modifierButtonType, ButtonType.CANCEL);
+
+                    // Create text input fields pre-filled with existing details
+                    TextField nomField = new TextField(existingFormation.getTitre());
+                    TextField descriptionField = new TextField(existingFormation.getDescription());
+                    TextField dureeField = new TextField(String.valueOf(existingFormation.getDuree()));
+                    TextField prixField = new TextField(String.valueOf(existingFormation.getPrix()));
+                    TextField niveauField = new TextField(existingFormation.getNiveau());
+
+                    // Set the content of the dialog pane
+                    dialog.getDialogPane().setContent(new VBox(10,
+                            new Label("Nouveau nom:"),
+                            nomField,
+                            new Label("Nouvelle description:"),
+                            descriptionField,
+                            new Label("Nouvelle durée:"),
+                            dureeField,
+                            new Label("Nouveau prix:"),
+                            prixField,
+                            new Label("Nouveau niveau:"),
+                            niveauField
+                    ));
+
+                    // Request focus on the nom field by default
+                    Platform.runLater(nomField::requestFocus);
+
+                    // Convert the result to a Formation object when the modifier button is clicked
+                    dialog.setResultConverter(dialogButton -> {
+                        if (dialogButton == modifierButtonType) {
+                            try {
+                                // Create a new Formation object with the updated details
+                                Formation updatedFormation = new Formation(
+                                        id,
+                                        existingFormation.getNomCategorie(), // Retain the existing value for nomCategorie
+                                        nomField.getText(),
+                                        descriptionField.getText(),
+                                        Integer.parseInt(dureeField.getText()),
+                                        existingFormation.getDateDebut(), // Retain the existing value for dateDebut
+                                        existingFormation.getDateFin(), // Retain the existing value for dateFin
+                                        Float.parseFloat(prixField.getText()),
+                                        niveauField.getText()
+                                );
+                                return updatedFormation;
+                            } catch (NumberFormatException e) {
+                                // Handle invalid input (e.g., non-numeric values for duree or prix)
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Veuillez entrer des valeurs valides pour la durée et le prix.");
+                                alert.showAndWait();
+                                return null;
+                            }
+                        }
+                        return null;
+                    });
+
+                    Optional<Formation> result = dialog.showAndWait();
+                    result.ifPresent(updatedFormation -> {
+                        try {
+                            // Call the modifier method in your ServiceFormation class
+                            FS.modifier(updatedFormation);
+                            // Refresh the ListView
+                            AfficherDB(event);
+                        } catch (SQLException e) {
+                            System.out.println(e.getMessage());
+                            // Handle the exception appropriately
+                        }
+                    });
+                } else {
+                    System.out.println("Formation with ID " + id + " not found.");
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                // Handle the exception appropriately
+            }
+        } else {
+            System.out.println("No item selected.");
+        }}}
 
 

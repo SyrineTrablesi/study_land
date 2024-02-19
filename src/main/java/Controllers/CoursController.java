@@ -4,10 +4,7 @@ import entities.Cours;
 import entities.Formation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -21,16 +18,17 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class CoursController {
     @FXML
     private TextField NomCours;
 
     @FXML
-    private WebView pdf;
+    private ComboBox<Formation> idFormation;
 
     @FXML
-    private ComboBox<Formation> idFormation;
+    private WebView pdf;
 
     private ServiceCours serviceC = new ServiceCours();
     private ServiceFormation serviceFormation = new ServiceFormation();
@@ -115,5 +113,19 @@ public class CoursController {
             errorAlert.setContentText("Error adding course: " + e.getMessage());
             errorAlert.showAndWait();
         }
+    }
+
+    @FXML
+    void supprimerCours(ActionEvent event) {
+        // Implementation for deleting a course
+    }
+
+    @FXML
+    void AfficherCours(ActionEvent event) {
+        // Implementation for displaying course details
+    }
+
+    @FXML
+    void ModifierCours(ActionEvent event) {
     }
 }

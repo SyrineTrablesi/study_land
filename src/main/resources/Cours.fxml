@@ -11,17 +11,20 @@
 
 <AnchorPane prefHeight="531.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursController">
    <children>
-      <Button layoutX="463.0" layoutY="376.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cour" />
-      <Label layoutX="272.0" layoutY="68.0" stylesheets="@styles.css" text="Nom_Cours" />
-      <TextField fx:id="NomCours" layoutX="388.0" layoutY="64.0" stylesheets="@styles.css" />
-      <WebView fx:id="pdf" layoutX="404.0" layoutY="151.0" prefHeight="59.0" prefWidth="140.0" stylesheets="@styles.css" />
-      <Label layoutX="272.0" layoutY="160.0" stylesheets="@styles.css" text="Description_Cours" />
-      <ComboBox fx:id="idFormation" layoutX="388.0" layoutY="265.0" prefHeight="29.0" prefWidth="150.0" stylesheets="@styles.css" />
-      <Label layoutX="272.0" layoutY="269.0" prefHeight="18.0" prefWidth="96.0" stylesheets="@styles.css" text="Id de Formation" />
+      <Button layoutX="626.0" layoutY="210.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cours" />
+      <Label layoutX="282.0" layoutY="122.0" stylesheets="@styles.css" text="Nom_Cours" />
+      <TextField fx:id="NomCours" layoutX="465.0" layoutY="118.0" stylesheets="@styles.css" />
+      <WebView fx:id="pdf" layoutX="466.0" layoutY="175.0" prefHeight="22.0" prefWidth="172.0" stylesheets="@styles.css" />
+      <Label layoutX="283.0" layoutY="176.0" stylesheets="@styles.css" text="Description_Cours" />
+      <ComboBox fx:id="idFormation" layoutX="465.0" layoutY="57.0" prefHeight="38.0" prefWidth="172.0" stylesheets="@styles.css" />
+      <Label layoutX="280.0" layoutY="76.0" prefHeight="21.0" prefWidth="115.0" stylesheets="@styles.css" text="Id de Formation" />
       <ImageView fitHeight="531.0" fitWidth="256.0" layoutY="3.0" pickOnBounds="true">
          <image>
             <Image url="@src/3974104-removebg-preview%20(1).png" />
          </image>
       </ImageView>
+      <Button layoutX="574.0" layoutY="255.0" mnemonicParsing="false" onAction="#ModifierCours" text="Modifier cours" />
+      <Button layoutX="574.0" layoutY="295.0" mnemonicParsing="false" onAction="#supprimerCours" text="Supprimer Cours" />
+      <Button layoutX="465.0" layoutY="223.0" mnemonicParsing="false" onAction="#AfficherCours" text="Afficher cours" />
    </children>
 </AnchorPane>

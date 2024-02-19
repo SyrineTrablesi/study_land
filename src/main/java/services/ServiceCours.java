@@ -6,7 +6,9 @@ import utils.MyDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceCours implements IService<Cours>{
@@ -30,21 +32,47 @@ public class ServiceCours implements IService<Cours>{
     }
     @Override
     public void modifier(Cours cours) throws SQLException {
-
+        String sql = "UPDATE cour_formation SET Nom_Cours = ?, Description_Cours = ?, idFormation = ? WHERE idCour = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, cours.getNom_Cours());
+        statement.setBytes(2, cours.getDescription_Cours());
+        statement.setInt(3, cours.getIdFormation());
+        statement.setInt(4, cours.getIdCour());
+        statement.executeUpdate();
     }
 
     @Override
     public void supprimer(Cours cours) throws SQLException {
+        // Préparer la requête SQL
+        String sql = "DELETE FROM cour_formation WHERE idCour = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        // Définir les valeurs des paramètres
+        statement.setInt(1, cours.getIdCour());
+
+        // Exécuter la requête
+        statement.executeUpdate();
 
     }
 
     @Override
     public List<Cours> afficher() throws SQLException {
-        return null;
+        String sql = "SELECT * FROM cour_formation";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Cours> coursList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            Cours cours = new Cours();
+            cours.setIdCour(resultSet.getInt("idCour"));
+            cours.setNom_Cours(resultSet.getString("Nom_Cours"));
+            cours.setDescription_Cours(resultSet.getBytes("Description_Cours"));
+            cours.setIdFormation(resultSet.getInt("idFormation"));
+            coursList.add(cours);
+        }
+
+        return coursList;
     }
 
-//    @Override
-//    public List<> afficher() throws SQLException {
-//        return null;
-//    }
 }

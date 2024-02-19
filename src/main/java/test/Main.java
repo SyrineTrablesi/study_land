@@ -16,10 +16,7 @@ import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 
 public class Main {
@@ -168,7 +165,7 @@ public class Main {
         }
 
         // Create a new course instance
-        Cours cr = new Cours("java", descriptionBytes, 9);
+        Cours cr = new Cours(5, "salah", descriptionBytes, 9);
         ServiceCours serviceC = new ServiceCours();
 
         // Call the method to add the course to the database
@@ -178,6 +175,74 @@ public class Main {
 //            } catch (SQLException e) {
 //            System.out.println("Error adding course: " + e.getMessage());
 //        }
+        // afficher cours
+//        try {
+//            List<Cours> coursList = serviceC.afficher();
+//            System.out.println("Cours list:");
+//            for (Cours cours : coursList) {
+//                System.out.println(cours);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error retrieving courses: " + e.getMessage());
+//        }
+        //supprimer cours
+//        try {
+//            // Retrieve a course from the database
+//            List<Cours> coursList = serviceC.afficher();
+//            Cours coursToDelete = coursList.get(0); // Assuming there is at least one course in the database
+//
+//            // Delete the course
+//            serviceC.supprimer(cr);
+//            System.out.println("Course deleted successfully!");
+//
+//            // Verify that the course has been deleted
+//            coursList = serviceC.afficher();
+//            boolean courseDeleted = true;
+//            for (Cours cours : coursList) {
+//                if (cours.getIdCour() == coursToDelete.getIdCour()) {
+//                    courseDeleted = false;
+//                    break;
+//                }
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println("Error: " + e.getMessage());
+//        }
 
+
+//modifier cours
+
+// Modify the course in the database
+        try {
+            serviceC.modifier(cr);
+            System.out.println("Course modified successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error modifying course: " + e.getMessage());
+        }
+
+        // Verify that the course was modified
+        try {
+            List<Cours> coursList = serviceC.afficher();
+            boolean courseModified = false;
+            for (Cours cours : coursList) {
+                if (cours.getIdCour() == cr.getIdCour()) {
+                    if (cours.getNom_Cours().equals(cr.getNom_Cours()) &&
+                            Arrays.equals(cours.getDescription_Cours(), cr.getDescription_Cours()) &&
+                            cours.getIdFormation() == cr.getIdFormation()) {
+                        courseModified = true;
+                        break;
+                    }
+                }
+            }
+            if (courseModified) {
+                System.out.println("Course modified successfully!");
+            } else {
+                System.out.println("Error: Course not modified.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving courses: " + e.getMessage());
+        }
     }
+
+
 }

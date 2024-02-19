@@ -162,4 +162,6 @@ public class AjouterFormationController {
             System.out.println(e.getMessage());
         }
     }
+
+
 }
