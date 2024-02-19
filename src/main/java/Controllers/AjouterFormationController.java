@@ -48,6 +48,7 @@ public class AjouterFormationController {
 
 
 
+
     @FXML
     void AfficherF(ActionEvent event) {
         try {
@@ -146,6 +147,17 @@ public class AjouterFormationController {
             Parent root = loader1.load();
             CategorieController controller = loader1.getController();
             NomC.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    @FXML
+    void AccederCours(ActionEvent event) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Cours.fxml"));
+        try {
+            Parent root = loader1.load();
+            CoursController controller = loader1.getController();
+            Niveau.getScene().setRoot(root);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

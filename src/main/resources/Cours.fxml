@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursController">
+<AnchorPane prefHeight="531.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursController">
    <children>
-      <Button layoutX="463.0" layoutY="326.0" mnemonicParsing="false" onAction="#AjouterCours" text="Ajouter Cour" />
-      <Label layoutX="272.0" layoutY="68.0" text="Nom_Cours" />
-      <TextField fx:id="NomCours" layoutX="388.0" layoutY="64.0" />
-      <WebView fx:id="pdf" layoutX="398.0" layoutY="100.0" prefHeight="96.0" prefWidth="150.0" />
-      <Label layoutX="272.0" layoutY="120.0" text="Description_Cours" />
-      <ComboBox fx:id="idFormation" layoutX="388.0" layoutY="265.0" prefWidth="150.0" />
-      <Label layoutX="272.0" layoutY="269.0" prefHeight="18.0" prefWidth="96.0" text="Id de Formation" />
+      <Button layoutX="463.0" layoutY="376.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cour" />
+      <Label layoutX="272.0" layoutY="68.0" stylesheets="@styles.css" text="Nom_Cours" />
+      <TextField fx:id="NomCours" layoutX="388.0" layoutY="64.0" stylesheets="@styles.css" />
+      <WebView fx:id="pdf" layoutX="404.0" layoutY="151.0" prefHeight="59.0" prefWidth="140.0" stylesheets="@styles.css" />
+      <Label layoutX="272.0" layoutY="160.0" stylesheets="@styles.css" text="Description_Cours" />
+      <ComboBox fx:id="idFormation" layoutX="388.0" layoutY="265.0" prefHeight="29.0" prefWidth="150.0" stylesheets="@styles.css" />
+      <Label layoutX="272.0" layoutY="269.0" prefHeight="18.0" prefWidth="96.0" stylesheets="@styles.css" text="Id de Formation" />
+      <ImageView fitHeight="531.0" fitWidth="256.0" layoutY="3.0" pickOnBounds="true">
+         <image>
+            <Image url="@src/3974104-removebg-preview%20(1).png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
