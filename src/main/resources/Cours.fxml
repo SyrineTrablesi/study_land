@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="531.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursController">
    <children>
-      <Button layoutX="632.0" layoutY="521.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cours" />
+      <Button layoutX="569.0" layoutY="215.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cours" />
       <Label layoutX="282.0" layoutY="122.0" stylesheets="@styles.css" text="Nom_Cours" />
       <TextField fx:id="NomCours" layoutX="465.0" layoutY="118.0" stylesheets="@styles.css" />
       <WebView fx:id="pdf" layoutX="466.0" layoutY="175.0" prefHeight="22.0" prefWidth="172.0" stylesheets="@styles.css" />
@@ -25,15 +25,35 @@
             <Image url="@src/3974104-removebg-preview%20(1).png" />
          </image>
       </ImageView>
-      <Button layoutX="389.0" layoutY="520.0" mnemonicParsing="false" onAction="#ModifierCours" stylesheets="@styles.css" text="Modifier cours" />
-      <Button layoutX="246.0" layoutY="520.0" mnemonicParsing="false" onAction="#supprimerCours" stylesheets="@styles.css" text="Supprimer Cours" />
-      <Button layoutX="513.0" layoutY="521.0" mnemonicParsing="false" onAction="#AfficherCours" stylesheets="@styles.css" text="Afficher cours" />
-      <ListView fx:id="CoursListView" layoutX="263.0" layoutY="288.0" prefHeight="200.0" prefWidth="514.0">
+      <Button layoutX="649.0" layoutY="450.0" mnemonicParsing="false" onAction="#ModifierCours" stylesheets="@styles.css" text="Modifier cours" />
+      <Button layoutX="300.0" layoutY="450.0" mnemonicParsing="false" onAction="#supprimerCours" stylesheets="@styles.css" text="Supprimer Cours" />
+      <Button layoutX="484.0" layoutY="450.0" mnemonicParsing="false" onAction="#AfficherCours" prefHeight="22.0" prefWidth="109.0" stylesheets="@styles.css" text="Afficher cours" />
+      <ListView fx:id="CoursListView" layoutX="263.0" layoutY="253.0" prefHeight="173.0" prefWidth="514.0">
          <!-- Specify the generic type of the ListView -->
          <items>
             <FXCollections fx:factory="observableArrayList">
                <!-- Add Formation items here -->
             </FXCollections>
          </items>
-      </ListView>   </children>
+      </ListView>
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="263.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/supprimer.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="431.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/panneau-daffichage.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="38.0" fitWidth="37.0" layoutX="612.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/bouton-modifier.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="689.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/ajouter-le-fichier.png" />
+         </image>
+      </ImageView>   </children>
 </AnchorPane>

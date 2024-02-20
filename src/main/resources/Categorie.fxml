@@ -8,16 +8,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="557.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
+<AnchorPane prefHeight="575.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
    <children>
       <Label layoutX="361.0" layoutY="109.0" stylesheets="@styles.css" text="Nom categorie" />
       <TextField fx:id="NomC" layoutX="477.0" layoutY="105.0" stylesheets="@styles.css" />
       <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="29.0" prefWidth="71.0" stylesheets="@styles.css" text="Ajouter" />
-      <Button layoutX="409.0" layoutY="371.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
+      <Button layoutX="525.0" layoutY="376.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
       <ListView fx:id="categorieListView" layoutX="297.0" layoutY="167.0" prefHeight="190.0" prefWidth="532.0" stylesheets="@styles.css" />
       <!-- Add the Delete Button -->
-      <Button layoutX="515.0" layoutY="371.0" mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
-      <Button layoutX="626.0" layoutY="371.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
+      <Button layoutX="361.0" layoutY="376.0" mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
+      <Button layoutX="696.0" layoutY="371.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
       <ImageView fitHeight="557.0" fitWidth="295.0" pickOnBounds="true">
          <image>
             <Image url="@src/Categorie.jpg" />
@@ -29,6 +29,21 @@
          </image>
       </ImageView>
       <Button fx:id="accederFormation" layoutX="307.0" layoutY="492.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
+      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="311.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/supprimer.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="482.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/panneau-daffichage.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="650.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/bouton-modifier.png" />
+         </image>
+      </ImageView>
 
    </children>
 </AnchorPane>
