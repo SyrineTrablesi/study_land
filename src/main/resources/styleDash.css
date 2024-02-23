@@ -62,7 +62,52 @@
     -fx-background-color:derive( #2D75E8,90%);
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
+}
 
+
+/* The main scrollbar **track** CSS class  */
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color:derive(  #2D75E8,80%);
+    -fx-background-radius: 2em;
+    -fx-border-radius:2em;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color:derive( #2D75E8,90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+
+}
+
+/* chart properties */
+
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+    -fx-legend-visible: false;
+}
+.chart-plot-background {
+    -fx-background-color:transparent;
+}
+
+.chart-pie {
+    -fx-border-color: derive(-fx-pie-color, 1%);
+    -fx-border-width: 0px;
+}
+/*.linear-grad
+{
+    -fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);
+}*/
+.linear-grad
+{
+    -fx-background-color: #2A3D9B;
+}
+#hello{
+    -fx-font-family:'Poppins';
 }
 .input {
     padding: .25em;
@@ -71,4 +116,73 @@
     -fx-border-radius: 30%;
     -fx-border-width: 30%;
     -fx-background-color:derive( #2D75E8,90%) ;
+}
+.list-view {
+    -fx-background-color: #f4f4f4;
+    -fx-animated: true;
+}
+
+
+.list-view .list-cell {
+    -fx-padding: 10px;
+    -fx-background-color: transparent; /* Couleur de fond des cellules */
+    -fx-border-width: 0 1px 0 0; /* Bordure à droite */
+    -fx-border-color: #cccccc; /* Couleur de la bordure */
+}
+
+.list-view .list-cell:collapsed {
+    -fx-border-width: 0; /* Pas de bordure à droite pour la dernière cellule */
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #eaeaea; /* Couleur de fond au survol */
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #007bff; /* Couleur de fond lorsque sélectionné */
+    -fx-text-fill: white; /* Couleur du texte lorsque sélectionné */
+}
+
+.list-view .list-cell:filled:selected:focused {
+    -fx-background-color: #007bff; /* Couleur de fond lorsque sélectionné et focus */
+    -fx-text-fill: white; /* Couleur du texte lorsque sélectionné et focus */
+}
+
+.list-view .list-cell:filled:selected:hover {
+    -fx-background-color: #0056b3; /* Couleur de fond lorsque sélectionné et survol */
+    -fx-text-fill: white; /* Couleur du texte lorsque sélectionné et survol */
+}
+
+.list-view .scroll-bar {
+    -fx-background-color: transparent; /* Couleur de fond de la barre de défilement */
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: #cccccc; /* Couleur de fond du pouce de la barre de défilement */
+}
+#hello{
+    -fx-font-family:'Poppins';
+}
+/* Style de la carte utilisateur */
+.card-user {
+    -fx-background-color: #4658a9; /* Couleur de fond */
+    -fx-border-color: rgba(115, 189, 199, 0.2); /* Couleur de la bordure */
+    -fx-border-width: 1px; /* Largeur de la bordure */
+    -fx-border-radius: 5px; /* Rayon des coins */
+    -fx-padding: 10px; /* Espacement interne */
+}
+
+/* Style des étiquettes (nom, prénom, email) */
+.card-user .label {
+    -fx-background-color: #4658a9; /* Couleur de fond */
+    -fx-border-color: rgba(115, 189, 199, 0.2); /* Couleur de la bordure */
+    -fx-text-fill: #333333; /* Couleur du texte */
+    -fx-padding: 5px; /* Espacement interne */
+    -fx-border-radius: 3px; /* Rayon des coins */
+    -fx-font-weight: bold; /* Poids de la police */
+}
+.box-mdp-oublier{
+    -fx-background-color: #C2C2D2;
+
+
 }

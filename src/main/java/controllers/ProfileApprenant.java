@@ -47,7 +47,7 @@ public class ProfileApprenant {
     private BorderPane rootPane;
     @FXML
     void afficherParametre(ActionEvent event) {
-        UserInfo userInfo = Session.userInfo;
+        UserInfo userInfo = Session.getInstance().userInfo;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GererProfile.fxml"));
         try {
             Parent root = loader.load();
@@ -57,7 +57,6 @@ public class ProfileApprenant {
             controller.getId_nom().setText(userInfo.nom);
             controller.getId_prenom().setText(userInfo.prenom);
             controller.getId_email().setText(userInfo.email);
-            controller.getId_password().setText(userInfo.mdp);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

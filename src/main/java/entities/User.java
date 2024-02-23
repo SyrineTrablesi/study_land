@@ -143,6 +143,15 @@ public class User {
         this.role=role;
         this.password = password;
     }
+    //sans mdp pour la modification
+    public User( String nom, String prenom, String email,String role,int id) {
+        this.nom = nom;
+        this.prenom = prenom;
+        setEmail(email);
+        this.email = email;
+        this.role=role;
+        this.id=id;
+    }
 
 
 }

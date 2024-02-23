@@ -1,33 +1,36 @@
 package controllers;
 
 import entities.Apprenant;
+import entities.EmailSender;
 import entities.User;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import services.ServiceApprenant;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.CompletableFuture;
 
 public class InscriptionApprenant {
     User user = new User();
-
-
-
-
     @FXML
     private Label errorMdpLabel;
+
+    @FXML
+    private Label errorMessage;
 
     @FXML
     private Label errorEmailLabel;
 
     @FXML
-    private Button btn_ajouter;
+    private Hyperlink seConnecter;
 
     @FXML
     private TextField id_confirmer;
@@ -81,66 +84,62 @@ public class InscriptionApprenant {
     }
 
     //Sercice Apprenant
-    ServiceApprenant SP= new ServiceApprenant();
+    ServiceApprenant SP = new ServiceApprenant();
     private Apprenant apprenant = new Apprenant();
 
     @FXML
     void Ajouter(ActionEvent event) {
-        try {
-            Apprenant apprenant=new Apprenant(id_nom.getText(),id_prenom.getText(),id_email.getText(),id_mdp.getText(),id_confirmer.getText());
-            int count = SP.existeApprenant(apprenant);
-            if (!(apprenant.isEmailValid(id_email.getText()))) {
-                errorEmailLabel.setText("Adresse e-mail invalide !");
-            }
-            if(!(id_confirmer.getText().equals(apprenant.getPassword()))){
-                errorMdpLabel.setText("Le mot de passe de confirmation ne correspond pas au mot de passe");
+        Apprenant apprenant = new Apprenant(id_nom.getText(), id_prenom.getText(), id_email.getText(), id_mdp.getText(), id_confirmer.getText());
+        if (!apprenant.isEmailValid(id_email.getText())) {
+            errorEmailLabel.setText("Adresse e-mail invalide !");
+        } else if (!id_confirmer.getText().equals(apprenant.getPassword())) {
+            errorMdpLabel.setText("Le mot de passe de confirmation ne correspond pas au mot de passe");
+        } else if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty() || id_confirmer.getText().isEmpty()) {
+            errorMessage.setText("Veuillez remplir tous les champs.");
+        } else {
+            // Envoyer l'e-mail de bienvenue de manière asynchrone
+            CompletableFuture<Void> sendEmailFuture = CompletableFuture.runAsync(() -> {
+                EmailSender.sendWelcomeEmailWithSignature(id_email.getText(), id_nom.getText());
+            });
 
-            }else{
-                SP.ajouter(apprenant);
-              User user =new User(id_nom.getText(), id_prenom.getText(), id_email.getText(),id_mdp.getText(),"Apprenat",id_confirmer.getText());
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
+// Attendez que l'e-mail soit envoyé avec succès avant d'ajouter l'apprenant et de charger le layout de l'apprenant
+            sendEmailFuture.thenRun(() -> {
                 try {
-                    Parent root = loader.load();
-                    SeConnecter controller = loader.getController();
-                    controller.getId_email().setText(apprenant.getEmail());
-                    controller.getId_mdp().setText(apprenant.getPassword());
-
-                    id_nom.getScene().setRoot(root);
-
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    SP.ajouter(apprenant);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
 
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+                // Charger le layout de l'apprenant
+                Platform.runLater(() -> {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
+                    try {
+                        Parent root = loader.load();
+                        SeConnecter controller = loader.getController();
+                        controller.getId_email().setText(apprenant.getEmail());
+                        controller.getId_mdp().setText(apprenant.getPassword());
 
+
+                        id_nom.getScene().setRoot(root);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println(e.getMessage());
+                    }
+                });
+            });
+
+        }
     }
     @FXML
-    void PageHome(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardAdmin.fxml"));
+    void seConnecter(ActionEvent event) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
         try {
-            Parent root = loader.load();
-            DashboardAdmin affichage = loader.getController();
-            id_nom.getScene().setRoot(root);
-
+            Parent root = loader1.load();
+            SeConnecter controller = loader1.getController();
+            id_email.getScene().setRoot(root);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
-
-        public void initData(Apprenant apprenant) {
-            this.apprenant = apprenant;
-            if (apprenant != null) {
-                id_nom.setText(apprenant.getNom());
-                id_prenom.setText(apprenant.getPrenom());
-                id_email.setText(apprenant.getEmail());
-            }
-    }
-    public User getUser() {
-        return new User(id_nom.getText(), id_prenom.getText(), id_email.getText(),id_mdp.getText(),"Apprenat",id_confirmer.getText());
-    }
-
 }
+

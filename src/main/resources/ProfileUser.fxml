@@ -20,7 +20,7 @@
                   <StackPane fx:id="centerPane" prefHeight="524.0" prefWidth="959.0" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
-            <TextField layoutX="331.0" layoutY="16.0" prefHeight="40.0" prefWidth="274.0" />
+            <TextField layoutX="331.0" layoutY="16.0" prefHeight="40.0" prefWidth="274.0" promptText="recherche formation" />
             <ImageView fitHeight="32.0" fitWidth="53.0" layoutX="857.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@src/cloche.png" />
@@ -64,7 +64,7 @@
                      </image>
                   </ImageView>
                   <Button fx:id="btn_parameter" layoutX="20.0" layoutY="392.0" mnemonicParsing="false" onAction="#afficherParametre" prefHeight="57.0" prefWidth="274.0" text="     Parametre" textAlignment="CENTER" textFill="#5777c1">
-
+      
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -86,7 +86,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <ImageView fitHeight="32.0" fitWidth="42.0" layoutX="350.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="42.0" layoutX="565.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@src/chercher.png" />
                </image>
@@ -106,12 +106,6 @@
                   <Font name="Bookman Old Style" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="358.0" layoutY="124.0" prefHeight="28.0" prefWidth="1144.0" text="Chaque jour est une nouvelle opportunité de grandir, d'apprendre et de devenir la meilleure version de vous-même" textFill="#1443d1">
-               <font>
-                  <Font name="Calibri Light" size="24.0" />
-               </font>
-            </Label>
-            <Line endX="899.7999267578125" layoutX="567.0" layoutY="149.0" startX="-194.60000610351562" stroke="#cfa544" />
             <Line endX="416.39996337890625" layoutX="520.0" layoutY="116.0" startX="-194.60000610351562" stroke="#e3a027" />
          </children>
       </AnchorPane>

@@ -12,4 +12,8 @@ public class Formateur extends User{
     public Formateur(String nom, String prenom, String email, String password){
         super(nom, prenom, email, password, "Formateur");
     }
+    //pour modification
+    public Formateur(String nom, String prenom, String email,String  role,int id) {
+        super( nom, prenom, email,"Formateur",id);
+    }
 }

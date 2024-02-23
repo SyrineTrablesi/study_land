@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="410.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InscriptionApprenant">
+<AnchorPane prefHeight="372.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InscriptionApprenant">
    <children>
-      <VBox alignment="CENTER" prefHeight="410.0" prefWidth="318.0" style="-fx-background-color: C2C2D2;">
+      <VBox alignment="CENTER" prefHeight="446.0" prefWidth="318.0" style="-fx-background-color: C2C2D2;">
          <children>
             <Label alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="75.0" prefWidth="282.0" style=" " text="StudyLand" textAlignment="RIGHT" textFill="#f8982a" textOverrun="CENTER_ELLIPSIS" wrapText="true">
                <font>
@@ -23,7 +25,7 @@
                   <Image url="@src/login.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" contentDisplay="TOP" prefHeight="81.0" prefWidth="282.0" text="Rejoignez notre communauté " textAlignment="CENTER" textFill="#2f2b6d">
+            <Label alignment="CENTER" contentDisplay="TOP" prefHeight="56.0" prefWidth="264.0" text="Rejoignez notre communauté " textAlignment="CENTER" textFill="#2f2b6d">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -35,43 +37,49 @@
             <Image url="@src/logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="369.0" layoutY="77.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Nom" scaleShape="false" />
-      <TextField fx:id="id_prenom" alignment="CENTER" layoutX="371.0" layoutY="128.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Prenom" />
-      <TextField fx:id="id_email" layoutX="370.0" layoutY="180.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="exmple@gmail.com" />
-      <TextField fx:id="id_mdp" layoutX="369.0" layoutY="232.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="mot de passe" />
-      <Label fx:id="errorEmailLabel" contentDisplay="TEXT_ONLY" layoutX="362.0" layoutY="213.0" prefHeight="26.0" prefWidth="166.0" textAlignment="CENTER" textFill="#f41414" />
-      <TextField fx:id="id_confirmer" layoutX="370.0" layoutY="288.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="mot de passe" />
-
-      <Button fx:id="btn_ajouter" layoutX="404.0" layoutY="354.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="35.0" prefWidth="126.0" style="-fx-background-color: #2F2B6D;" text="S’inscrire" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="389.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="373.0" layoutY="73.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Nom" scaleShape="false" />
+      <TextField fx:id="id_prenom" alignment="CENTER" layoutX="375.0" layoutY="124.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Prenom" />
+      <TextField fx:id="id_email" layoutX="374.0" layoutY="176.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="exmple@gmail.com" />
+      <Label fx:id="errorEmailLabel" contentDisplay="TEXT_ONLY" layoutX="389.0" layoutY="215.0" prefHeight="26.0" prefWidth="166.0" textAlignment="CENTER" textFill="#f41414" />
+      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="393.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/utilisateur.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="390.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="394.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/gmail.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="383.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/la-cyber-securite.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="388.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="392.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/utilisateur.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="58.0" fitWidth="30.0" layoutX="378.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true">
+      <PasswordField fx:id="id_mdp" alignment="CENTER_RIGHT" layoutX="375.0" layoutY="234.0" prefHeight="42.0" prefWidth="194.0" promptText="mot de passe" />
+      <PasswordField fx:id="id_confirmer" alignment="CENTER_RIGHT" layoutX="375.0" layoutY="290.0" prefHeight="42.0" prefWidth="194.0" promptText="Confirmer mot de passe" />
+      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="390.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/la-cyber-securite.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="394.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/la-cyber-securite.png" />
+         </image>
+      </ImageView>
+
+            <Button fx:id="btn_ajouter" layoutX="388.0" layoutY="340.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #2F2B6D;" text="S’inscrire" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Hyperlink fx:id="seConnecter" layoutX="538.0" layoutY="32.0" onAction="#seConnecter" text="Se connecter" />
+      <Label fx:id="errorMessage" layoutX="365.0" layoutY="396.0" prefHeight="35.0" prefWidth="185.0" textFill="#f70404">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
    </children>
    
 </AnchorPane>

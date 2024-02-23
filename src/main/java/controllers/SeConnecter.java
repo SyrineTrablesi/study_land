@@ -1,23 +1,17 @@
 package controllers;
 
+import entities.EmailSender;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import security.Session;
 import security.UserInfo;
 
 import java.io.IOException;
 
 public class SeConnecter {
-    @FXML
-    private Button btn_connecter;
-
-    @FXML
-    private Label errorEmailLabel;
     @FXML
     private Label errorMdpLabel;
 
@@ -27,7 +21,6 @@ public class SeConnecter {
     @FXML
     private TextField id_mdp;
     @FXML
-    private Button btn_inscrit;
     public TextField getId_email() {
         return id_email;
     }
@@ -42,21 +35,39 @@ public class SeConnecter {
     public void setId_mdp(TextField id_mdp) {
         this.id_mdp = id_mdp;
     }
+    @FXML
+    private Hyperlink id_mdp_oublier;
 
     @FXML
-    void seConnecter(ActionEvent event) {
-        Session session = new Session();
-        session.login(id_email.getText(), id_mdp.getText());
-        UserInfo userinfo = Session.userInfo;
-      /*  if (userinfo.email == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText(null);
-            alert.setContentText("Veuillez vérifier vos informations.");
-            alert.showAndWait();
-            return;
-        }*/
+    void mdpOublier(ActionEvent event) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/mdpOublie.fxml"));
+        try {
+            Parent root = loader1.load();
+            MdpOublie controller = loader1.getController();
+            id_email.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
+
+    }
+    @FXML
+    void seConnecter(ActionEvent event) {
+        String email = id_email.getText();
+        String mdp = id_mdp.getText();
+
+        // Vérifier si les champs sont vides
+        if (email.isEmpty() || mdp.isEmpty()) {
+            errorMdpLabel.setText("Veuillez remplir tous les champs.");
+            return;
+        }
+        Session session = Session.getInstance();
+        session.login(id_email.getText(), id_mdp.getText());
+        UserInfo userinfo = Session.getInstance().userInfo;
+        if (userinfo == null) {
+            errorMdpLabel.setText("Veuillez vérifier vos informations.");
+            return;
+        }
         if (userinfo.role.equals("Apprenant")|| userinfo.role.equals("Formateur")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileUser.fxml"));
             try {
@@ -89,9 +100,8 @@ public class SeConnecter {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
-
+    }
     }
 
-}
+
 

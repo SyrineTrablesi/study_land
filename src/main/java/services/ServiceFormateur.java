@@ -37,17 +37,16 @@ public class ServiceFormateur implements IUserService<Formateur>{
         ste.executeUpdate(req);
     }
 
-    @Override
     public void modifier(Formateur formateur) throws SQLException {
-        String req = "UPDATE user SET nom=?, prenom=?, email=?,password=? WHERE id_user=?";
+        String req = "UPDATE user SET nom=?, prenom=?, email=? WHERE id_user=? ";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setString(1, formateur.getNom());
         pre.setString(2, formateur.getPrenom());
         pre.setString(3, formateur.getEmail());
-        pre.setString(4, formateur.getPassword());
-        pre.setInt(5, formateur.getId());
+        pre.setInt(4, formateur.getId());
         pre.executeUpdate();
     }
+
 
     @Override
     public void supprimer(Formateur formateur) throws SQLException {

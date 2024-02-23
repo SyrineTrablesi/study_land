@@ -5,13 +5,14 @@ import services.ServiceUser;
 
 public class Session {
     private static Session instance;
-    private UserInfo userInfo;
-    private ServiceUser serviceuser = new ServiceUser();
+     public UserInfo userInfo;
 
-    // Constructeur privé pour empêcher l'instanciation directe depuis l'extérieur de la classe
-    private Session() {}
+    private ServiceUser serviceUser;
 
-    // Méthode statique pour obtenir l'instance unique de Session
+    private Session() {
+        serviceUser = new ServiceUser();
+    }
+
     public static Session getInstance() {
         if (instance == null) {
             instance = new Session();
@@ -19,19 +20,20 @@ public class Session {
         return instance;
     }
 
-    // Méthode login
     public void login(String email, String password) {
         try {
-            User user = serviceuser.connexion(email, password);
-            userInfo = new UserInfo(user.getId(), user.getNom(), user.getPrenom(), user.getRole(), user.getEmail(), user.getPassword());
+            User user = serviceUser.connexion(email, password);
+            if (user != null) {
+                userInfo = new UserInfo(user.getId(), user.getNom(), user.getPrenom(), user.getRole(), user.getEmail(), user.getPassword());
+            } else {
+                userInfo = null;
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-    // Autres méthodes pour accéder aux informations de session
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public void logout() {
+        userInfo = null;
     }
-}
 
+}

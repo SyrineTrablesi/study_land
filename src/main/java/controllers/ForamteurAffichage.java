@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Apprenant;
+import entities.EmailSender;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -134,20 +135,19 @@ public class ForamteurAffichage {
     @FXML
     void Ajouter(ActionEvent event) {
         try {
-            // Créer un nouvel objet Formateur avec les informations fournies
             Formateur formateur = new Formateur(id_nom.getText(), id_prenom.getText(), id_email.getText(), id_mdp.getText());
-
-                // Ajouter le formateur à la base de données
-                try {
+             try {
+                    if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty()) {
+                        showAlert2("Erreuur","Veuillez remplir tous les champs.");}
+                    else {
                     serviceFormateur.ajouter(formateur);
-                    // Si l'ajout réussit, réinitialiser les champs et afficher un message de succès
+                        EmailSender.sendInfoFormateur(formateur.getEmail(),formateur);
                     id_nom.clear();
                     id_prenom.clear();
                     id_email.clear();
                     id_mdp.clear();
                     showAlert2("Succès", "Le formateur a été ajouté avec succès.");
-                } catch (SQLException e) {
-                    // Gérer l'erreur SQL de manière appropriée (par exemple, afficher un message d'erreur à l'utilisateur)
+                } }catch (SQLException e) {
                     System.out.println(e.getMessage());
                     showAlert2("Erreur", "Une erreur s'est produite lors de l'ajout du formateur. Veuillez réessayer.");
                 }

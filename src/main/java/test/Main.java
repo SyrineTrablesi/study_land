@@ -1,9 +1,6 @@
 package test;
 
-import entities.Admin;
-import entities.Apprenant;
-import entities.Formateur;
-import entities.User;
+import entities.*;
 import services.ServiceAdmin;
 import services.ServiceApprenant;
 import services.ServiceFormateur;
@@ -14,7 +11,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+
+
+
         MyBD db = MyBD.getInstance();
+        String recipientEmail = "syrinet6@gmail.com";
+        EmailSender.sendVerificationCode(recipientEmail);
+
        /* Admin adminUser= new Admin(3,"trabelsi", "syrine", "syrinet6@gmail.com", "hama123");
         Formateur formateurUser = new Formateur(12,"5", "henda", "syrinet6@gmail.com", "henda");
         ServiceFormateur serviceFormateur= new ServiceFormateur();
