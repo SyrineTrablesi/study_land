@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 
 import java.sql.SQLException;
@@ -22,8 +23,13 @@ import java.util.Optional;
 
 import Controllers.AjouterFormationController;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import services.ServiceFormation;
 
 
@@ -55,6 +61,8 @@ public class AfficherFormationController {
 
     @FXML
     private Label FromDB;
+    @FXML
+    private WebView affichageWeb;
 
     public String getDescription() {
         return Description.getText();
@@ -127,32 +135,100 @@ public class AfficherFormationController {
     @FXML
     private ListView<String> formationListView;
     private List<Formation> formations;
-
+    @FXML
+    private VBox affichageformationvbox;
 
 
 
 
 
     @FXML
-    void AfficherDB(ActionEvent event) {
+    void AfficherDB(ActionEvent event){
         try {
             List<Formation> formations = FS.afficher();
 
-            // Clear any existing items in the ListView
-            formationListView.getItems().clear();
+            // Clear any existing items in the VBox
+            affichageformationvbox.getChildren().clear();
 
-            // Add each Formation object to the ListView
-            for (Formation formation : formations) {
-                formationListView.getItems().add(formation.toString());
+            // Loop through each Formation object and add its details to the VBox
+            for (int i = 0; i < formations.size(); i += 4) {
+                // Create a new HBox for each row
+                HBox rowBox = new HBox();
+                rowBox.setSpacing(20); // Adjust spacing between formations in a row
+
+                // Loop through 4 formations and add them to the current row
+                for (int j = i; j < Math.min(i + 4, formations.size()); j++) {
+                    Formation formation = formations.get(j);
+
+                    // Create labels for each property of the Formation object
+                    Label titreLabel = new Label("Titre: " + formation.getTitre());
+                    Label descriptionLabel = new Label("Description: " + formation.getDescription());
+                    Label dureeLabel = new Label("Durée: " + formation.getDuree() + " heures");
+                    Label dateDebutLabel = new Label("Date Début: " + formation.getDateDebut());
+                    Label dateFinLabel = new Label("Date Fin: " + formation.getDateFin());
+                    Label prixLabel = new Label("Prix: " + formation.getPrix() + " €");
+                    Label niveauLabel = new Label("Niveau: " + formation.getNiveau());
+
+                    // Optionally, you can add an image to the formation
+                    ImageView imageView = new ImageView(new Image("/src/cours.png"));
+                    imageView.setFitWidth(100);
+                    imageView.setPreserveRatio(true);
+
+                    // Add labels and image to the current VBox
+                    VBox formationBox = new VBox(imageView, titreLabel, descriptionLabel, dureeLabel, dateDebutLabel, dateFinLabel, prixLabel, niveauLabel);
+                    formationBox.setSpacing(5); // Adjust spacing between labels in a formation
+
+                    // Create the "Supprimer" button
+                    Button supprimerButton = new Button("Supprimer");
+
+                    // Optionally, you can add a picture next to the "Supprimer" button
+                    ImageView deleteIcon = new ImageView(new Image("/src/supprimer.png"));
+                    deleteIcon.setFitWidth(20);
+                    deleteIcon.setPreserveRatio(true);
+
+                    supprimerButton.setGraphic(deleteIcon);
+
+                    supprimerButton.setOnAction(e -> supprimerFormation(formation)); // Attach the event handler
+
+                    // Add labels, image, and "Supprimer" button to the current VBox
+                    VBox.setMargin(supprimerButton, new Insets(5, 0, 0, 0)); // Add margin to the button
+                    formationBox.getChildren().addAll(supprimerButton, deleteIcon);
+
+                    // Add the VBox for the current formation to the row
+                    rowBox.getChildren().add(formationBox);
+                }
+
+                // Add the current row to the VBox
+                affichageformationvbox.getChildren().add(rowBox);
+
+                // Add spacing between rows
+                Region spacer = new Region();
+                spacer.setPrefHeight(40); // Adjust the height to increase or decrease the spacing between rows
+                affichageformationvbox.getChildren().add(spacer);
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }}
+
+    // Method to handle formation deletion
+    private void supprimerFormation(Formation formation) {
+        try {
+            // Delete related records in the cour_formation table
+            FS.deleteCourFormationByFormationId(formation.getIdFormation());
+
+            // Delete the Formation from the database
+            FS.supprimer(formation);
+
+            // Refresh the ListView
+            AfficherDB(new ActionEvent());
+        } catch (SQLException e) {
+            System.out.println("Error deleting formation: " + e.getMessage());
         }
     }
-
-    public void deleteFormation(ActionEvent actionEvent) {
-        // Get the selected Formation object from the ListView
+    @FXML
+    void supprimer(ActionEvent event) {
+// Get the selected Formation object from the ListView
         String selectedItem = formationListView.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             // Parse the ID from the selected item
@@ -162,15 +238,17 @@ public class AfficherFormationController {
                 // Delete the Formation from the database
                 FS.supprimer(new Formation(id, null, null, null, 0, null, null, 0, null)); // Create a temporary Formation object with only the ID
                 // Refresh the ListView
-                AfficherDB(actionEvent);
+                AfficherDB(event);
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Error deleting formation: " + e.getMessage());
                 // Handle the exception appropriately
             }
         } else {
             System.out.println("No item selected.");
         }
     }
+
+
 
     // Helper method to parse the ID from the string representation of a Formation object
     private int parseIdFromSelectedItem(String selectedItem) {
@@ -179,102 +257,10 @@ public class AfficherFormationController {
         int endIndex = selectedItem.indexOf(",", startIndex);
         return Integer.parseInt(selectedItem.substring(startIndex, endIndex));
     }
-    @FXML
-    void modifierFormation(ActionEvent event) {
-        // Get the selected Formation object from the ListView
-        String selectedItem = formationListView.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            // Parse the ID from the selected item
-            int id = parseIdFromSelectedItem(selectedItem);
 
-            try {
-                // Retrieve the existing Formation object from the database based on its ID
-                Formation existingFormation = FS.rechercherParId(id);
-                if (existingFormation != null) {
-                    // Create a dialog with text input fields pre-filled with existing details
-                    Dialog<Formation> dialog = new Dialog<>();
-                    dialog.setTitle("Modifier Formation");
-                    dialog.setHeaderText("Modifier les détails de la formation");
 
-                    // Set the button types
-                    ButtonType modifierButtonType = new ButtonType("Modifier", ButtonBar.ButtonData.OK_DONE);
-                    dialog.getDialogPane().getButtonTypes().addAll(modifierButtonType, ButtonType.CANCEL);
 
-                    // Create text input fields pre-filled with existing details
-                    TextField nomField = new TextField(existingFormation.getTitre());
-                    TextField descriptionField = new TextField(existingFormation.getDescription());
-                    TextField dureeField = new TextField(String.valueOf(existingFormation.getDuree()));
-                    TextField prixField = new TextField(String.valueOf(existingFormation.getPrix()));
-                    TextField niveauField = new TextField(existingFormation.getNiveau());
 
-                    // Set the content of the dialog pane
-                    dialog.getDialogPane().setContent(new VBox(10,
-                            new Label("Nouveau nom:"),
-                            nomField,
-                            new Label("Nouvelle description:"),
-                            descriptionField,
-                            new Label("Nouvelle durée:"),
-                            dureeField,
-                            new Label("Nouveau prix:"),
-                            prixField,
-                            new Label("Nouveau niveau:"),
-                            niveauField
-                    ));
-
-                    // Request focus on the nom field by default
-                    Platform.runLater(nomField::requestFocus);
-
-                    // Convert the result to a Formation object when the modifier button is clicked
-                    dialog.setResultConverter(dialogButton -> {
-                        if (dialogButton == modifierButtonType) {
-                            try {
-                                // Create a new Formation object with the updated details
-                                Formation updatedFormation = new Formation(
-                                        id,
-                                        existingFormation.getNomCategorie(), // Retain the existing value for nomCategorie
-                                        nomField.getText(),
-                                        descriptionField.getText(),
-                                        Integer.parseInt(dureeField.getText()),
-                                        existingFormation.getDateDebut(), // Retain the existing value for dateDebut
-                                        existingFormation.getDateFin(), // Retain the existing value for dateFin
-                                        Float.parseFloat(prixField.getText()),
-                                        niveauField.getText()
-                                );
-                                return updatedFormation;
-                            } catch (NumberFormatException e) {
-                                // Handle invalid input (e.g., non-numeric values for duree or prix)
-                                Alert alert = new Alert(Alert.AlertType.ERROR);
-                                alert.setTitle("Error");
-                                alert.setHeaderText(null);
-                                alert.setContentText("Veuillez entrer des valeurs valides pour la durée et le prix.");
-                                alert.showAndWait();
-                                return null;
-                            }
-                        }
-                        return null;
-                    });
-
-                    Optional<Formation> result = dialog.showAndWait();
-                    result.ifPresent(updatedFormation -> {
-                        try {
-                            // Call the modifier method in your ServiceFormation class
-                            FS.modifier(updatedFormation);
-                            // Refresh the ListView
-                            AfficherDB(event);
-                        } catch (SQLException e) {
-                            System.out.println(e.getMessage());
-                            // Handle the exception appropriately
-                        }
-                    });
-                } else {
-                    System.out.println("Formation with ID " + id + " not found.");
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-                // Handle the exception appropriately
-            }
-        } else {
-            System.out.println("No item selected.");
-        }}}
+}
 
 

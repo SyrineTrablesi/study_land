@@ -7,41 +7,53 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 
 <AnchorPane prefHeight="575.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
    <children>
-      <Label layoutX="361.0" layoutY="109.0" stylesheets="@styles.css" text="Nom categorie" />
-      <TextField fx:id="NomC" layoutX="477.0" layoutY="105.0" stylesheets="@styles.css" />
-      <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="29.0" prefWidth="71.0" stylesheets="@styles.css" text="Ajouter" />
-      <Button layoutX="525.0" layoutY="376.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
-      <ListView fx:id="categorieListView" layoutX="297.0" layoutY="167.0" prefHeight="190.0" prefWidth="532.0" stylesheets="@styles.css" />
+      <Label layoutX="479.0" layoutY="100.0" stylesheets="@styles.css" text="Nom categorie" />
+      <TextField fx:id="NomC" layoutX="595.0" layoutY="96.0" stylesheets="@styles.css" />
+      <Button layoutX="789.0" layoutY="94.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="29.0" prefWidth="71.0" stylesheets="@styles.css" text="Ajouter" />
+      <Button layoutX="643.0" layoutY="367.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
+      <ListView fx:id="categorieListView" layoutX="415.0" layoutY="158.0" prefHeight="190.0" prefWidth="532.0" stylesheets="@styles.css" />
       <!-- Add the Delete Button -->
-      <Button layoutX="361.0" layoutY="376.0" mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
-      <Button layoutX="696.0" layoutY="371.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
-      <ImageView fitHeight="557.0" fitWidth="295.0" pickOnBounds="true">
+      <Button layoutX="479.0" layoutY="367.0" mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
+      <Button layoutX="814.0" layoutY="362.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
+      <ImageView fitHeight="388.0" fitWidth="326.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true">
          <image>
             <Image url="@src/Categorie.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="44.0" fitWidth="37.0" layoutX="307.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="44.0" fitWidth="37.0" layoutX="425.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/categories.png" />
          </image>
       </ImageView>
-      <Button fx:id="accederFormation" layoutX="307.0" layoutY="492.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
-      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="311.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="accederFormation" layoutX="25.0" layoutY="485.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
+      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="429.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/supprimer.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="482.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="600.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/panneau-daffichage.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="650.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="768.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/bouton-modifier.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="142.0" fitWidth="102.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/thumbnail_logo.png" />
+         </image>
+      </ImageView>
+      <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="475.0" layoutY="158.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
+      <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="876.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/ajouter-le-fichier.png" />
          </image>
       </ImageView>
 

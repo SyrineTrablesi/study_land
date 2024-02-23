@@ -51,12 +51,23 @@ public class ServiceFormation implements IService<Formation> {
 
     @Override
     public void supprimer(Formation formation) throws SQLException {
-        String req ="delete from formation where idFormation=?";
-        PreparedStatement pre =connection.prepareStatement(req);
-        pre.setInt(1,formation.getIdFormation());
-        pre.executeUpdate();
-    }
+        // Delete related records in the cour_formation table
+        deleteCourFormationByFormationId(formation.getIdFormation());
 
+        // Delete the Formation from the formation table
+        String req = "DELETE FROM formation WHERE idFormation=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setInt(1, formation.getIdFormation());
+            pre.executeUpdate();
+        }
+    }
+    public  void deleteCourFormationByFormationId(int formationId) throws SQLException {
+        String req = "DELETE FROM cour_formation WHERE idFormation=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setInt(1, formationId);
+            pre.executeUpdate();
+        }
+    }
     @Override
     public List<Formation> afficher() throws SQLException {
         String req = "SELECT * FROM formation";

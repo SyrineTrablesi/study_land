@@ -2,25 +2,21 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane prefHeight="635.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AfficherFormationController">
    <children>
       <!-- Labels -->
-      <Label fx:id="NomF" layoutX="386.0" layoutY="510.0" stylesheets="@styles.css" text="NomF" />
-      <Label fx:id="Duree" layoutX="386.0" layoutY="540.0" stylesheets="@styles.css" text="Duree" />
-      <Label fx:id="NomC" layoutX="385.0" layoutY="561.0" stylesheets="@styles.css" text="NomC" />
-      <ListView id="formationListView" fx:id="formationListView" layoutX="386.0" layoutY="39.0" prefHeight="278.0" prefWidth="529.0" stylesheets="@styles.css" />
+      <Label fx:id="NomF" layoutX="265.0" layoutY="532.0" stylesheets="@styles.css" text="NomF" />
+      <Label fx:id="Duree" layoutX="265.0" layoutY="562.0" stylesheets="@styles.css" text="Duree" />
+      <Label fx:id="NomC" layoutX="264.0" layoutY="583.0" stylesheets="@styles.css" text="NomC" />
       <!-- Button -->
-      <Button layoutX="586.0" layoutY="351.0" mnemonicParsing="false" onAction="#AfficherDB" prefHeight="26.0" prefWidth="94.0" stylesheets="@styles.css" text="AfficherDB" />
-      <Button layoutX="425.0" layoutY="351.0" mnemonicParsing="false" onAction="#deleteFormation" prefHeight="26.0" prefWidth="94.0" stylesheets="@styles.css" text="Supprimer" />
-      <Button layoutX="755.0" layoutY="351.0" mnemonicParsing="false" onAction="#modifierFormation" prefHeight="21.0" prefWidth="94.0" stylesheets="@styles.css" text="Modifier" />
+      <Button layoutX="395.0" layoutY="128.0" mnemonicParsing="false" onAction="#AfficherDB" prefHeight="26.0" prefWidth="94.0" stylesheets="@styles.css" text="AfficherDB" />
       <ImageView fitHeight="616.0" fitWidth="324.0" layoutY="6.0" pickOnBounds="true">
          <image>
             <Image url="@src/3974104-removebg-preview.png" />
@@ -31,25 +27,8 @@
             <Image url="@src/thumbnail_logo.png" />
          </image>
       </ImageView>
-      <VBox layoutX="802.0" layoutY="406.0" prefHeight="200.0" prefWidth="100.0">
-         <Label text="Nouveau nom:" />
-         <TextField fx:id="nomField" />
-         <Label text="Nouvelle description:" />
-         <TextField fx:id="descriptionField" />
-         <Label text="Nouvelle durée:" />
-         <TextField fx:id="dureeField" />
-         <Label text="Nouveau prix:" />
-         <TextField fx:id="prixField" />
-         <Label text="Nouveau niveau:" />
-         <TextField fx:id="niveauField" />
-      </VBox>
       <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="452.0" layoutY="185.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="361.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/supprimer.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="529.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="501.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/panneau-daffichage.png" />
          </image>
@@ -59,7 +38,26 @@
             <Image url="@src/bouton-modifier.png" />
          </image>
       </ImageView>
+      <WebView fx:id="affichageWeb" layoutX="61.0" layoutY="563.0" prefHeight="142.0" prefWidth="150.0" />
+      <VBox fx:id="affichageformationvbox" layoutX="395.0" layoutY="187.0" prefHeight="253.0" prefWidth="253.0" stylesheets="@styles.css">
+         <children>
+            <ImageView fitHeight="133.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@src/en-train-detudier.png" />
+               </image>
+            </ImageView>
 
+            <Label fx:id="titreLabel" prefHeight="18.0" prefWidth="95.0" text="Titre:" />
+            <Label fx:id="descriptionLabel" text="Description:" />
+            <Label fx:id="dureeLabel" text="Durée:" />
+            <Label fx:id="dateDebutLabel" text="Date Début:" />
+            <Label fx:id="dateFinLabel" text="Date Fin:" />
+            <Label fx:id="prixLabel" text="Prix:" />
+            <Label fx:id="niveauLabel" text="Niveau:" />
+         </children>
+         <Button layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#supprimer" stylesheets="@styles.css" text="supprimer" />
+         <ImageView fx:id="deleteIcon" fitHeight="52.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" />
+      </VBox>
 
    </children>
 </AnchorPane>

@@ -5,6 +5,8 @@ import entities.Cours;
 import entities.Formation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -156,5 +158,19 @@ public class CoursController {
 
     @FXML
     void ModifierCours(ActionEvent event) {
+    }
+
+
+    @FXML
+    void RetournerFormation(ActionEvent event) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/AjouterFormation.fxml"));
+        try {
+            Parent root = loader1.load();
+            AjouterFormationController controller = loader1.getController();
+            NomCours.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+
+        }
     }
 }
