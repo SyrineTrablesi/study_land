@@ -1,9 +1,6 @@
 package controllers;
 
-import entities.Admin;
-import entities.Apprenant;
-import entities.Formateur;
-import entities.User;
+import entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -110,51 +107,61 @@ public class GererProfile {
     @FXML
     void ModifierUser(ActionEvent event) {
         UserInfo userInfo = Session.getInstance().userInfo;
-        User user1 = new User( userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role,userInfo.id);
-        user1.setNom(id_nom.getText());
-        user1.setPrenom(id_prenom.getText());
-        user1.setEmail(id_email.getText());
+        String nouveauNom = id_nom.getText().trim();
+        String nouveauPrenom = id_prenom.getText().trim();
+        String nouvelEmail = id_email.getText().trim();
 
-        if(user1.getRole().equals("Apprenant")) {
-            try {
-                Apprenant apprenant = new Apprenant( userInfo.nom, userInfo.prenom, userInfo.email,userInfo.role,userInfo.id);
+        if (nouveauNom.isEmpty() || nouveauPrenom.isEmpty() || nouvelEmail.isEmpty()) {
+            showAlert("Erreur", "Veuillez remplir tous les champs.");
+            return; // Sortir de la méthode si un champ est vide
+        }
+
+        if (ValidationFormuaire.isEmail(nouvelEmail)) {
+            showAlert("Erreur", "Veuillez saisir une adresse email valide.");
+            return; // Sortir de la méthode si l'email est invalide
+        }
+
+        User user1 = new User(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
+        user1.setNom(nouveauNom);
+        user1.setPrenom(nouveauPrenom);
+        user1.setEmail(nouvelEmail);
+
+        try {
+            if (user1.getRole().equals("Apprenant")) {
+                Apprenant apprenant = new Apprenant(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
                 apprenant.setNom(user1.getNom());
                 apprenant.setPrenom(user1.getPrenom());
                 apprenant.setEmail(user1.getEmail());
                 ServiceApprenant serviceApprenant = new ServiceApprenant();
                 serviceApprenant.modifier(apprenant);
-                showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
-            } catch (SQLException e) {
-                throw new RuntimeException("Erreur lors de la modification de l'utilisateur : " + e.getMessage());
-            }
-        } else if(user1.getRole().equals("Formateur")) {
-            try {
-                Formateur formateur = new Formateur(userInfo.nom, userInfo.prenom, userInfo.email,userInfo.role,userInfo.id);
+            } else if (user1.getRole().equals("Formateur")) {
+                Formateur formateur = new Formateur(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
                 formateur.setNom(user1.getNom());
                 formateur.setPrenom(user1.getPrenom());
                 formateur.setEmail(user1.getEmail());
                 ServiceFormateur serviceFormateur = new ServiceFormateur();
                 serviceFormateur.modifier(formateur);
-                showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
-            } catch (SQLException e) {
-                throw new RuntimeException("Erreur lors de la modification de l'utilisateur : " + e.getMessage());
-            }
-        }else{
-            try{
-            Admin admin = new Admin(userInfo.nom, userInfo.prenom, userInfo.email,userInfo.id);
+            } else {
+                Admin admin = new Admin(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.id);
                 admin.setNom(user1.getNom());
                 admin.setPrenom(user1.getPrenom());
                 admin.setEmail(user1.getEmail());
                 admin.setPassword(user1.getPassword());
-
-            ServiceAdmin serviceAdmin = new ServiceAdmin();
+                ServiceAdmin serviceAdmin = new ServiceAdmin();
                 serviceAdmin.modifier(admin);
+            }
             showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
         } catch (SQLException e) {
             throw new RuntimeException("Erreur lors de la modification de l'utilisateur : " + e.getMessage());
         }
-
-        }
+    }
+    // Méthode pour afficher une alerte
+    private void showAlert(String titre, String contenu) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(contenu);
+        alert.showAndWait();
     }
 
     private void showAlert2(String title, String message) {

@@ -1,8 +1,6 @@
 package controllers;
 
-import entities.EmailSender;
 import entities.ValidationFormuaire;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +14,7 @@ import java.io.IOException;
 public class SeConnecter {
     @FXML
     private Label errorMdpLabel;
+
 
     @FXML
     private TextField id_email;
@@ -70,11 +69,11 @@ public class SeConnecter {
             return;
         }
         if (userinfo.role.equals("Apprenant")|| userinfo.role.equals("Formateur")) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileUser.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
             try {
                 Parent root = loader.load();
                 ProfileApprenant controller = loader.getController();
-                controller.getId_nom().setText(userinfo.nom.toString());
+                controller.getId_nom().setText(" Hello" +" ,  "+ userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
             }

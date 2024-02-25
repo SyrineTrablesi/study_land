@@ -50,7 +50,7 @@ public class AffichageApprenant {
         nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
-        mdp_user.setCellValueFactory(new PropertyValueFactory<>("password"));
+
         addActionColumn();
         initTable();
     }

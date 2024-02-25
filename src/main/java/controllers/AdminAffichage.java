@@ -1,8 +1,6 @@
 package controllers;
 
-import entities.Admin;
-import entities.Apprenant;
-import entities.Formateur;
+import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,6 +47,8 @@ public class AdminAffichage {
     public AdminAffichage() {
         serviceAdmin = new ServiceAdmin();
     }
+    @FXML
+    private Button btn_ajouter;
 
     @FXML
     public void initialize() {
@@ -56,9 +56,12 @@ public class AdminAffichage {
         nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
-        mdp_user.setCellValueFactory(new PropertyValueFactory<>("password"));
         addActionColumn();
         initTable();
+    }
+    @FXML
+    private void initialize2() {
+
     }
 
     private void addActionColumn() {
@@ -106,7 +109,7 @@ public class AdminAffichage {
 
     // Méthode pour afficher une alerte
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -128,37 +131,36 @@ public class AdminAffichage {
     @FXML
     void Ajouter(ActionEvent event) {
         try {
-            // Créer un nouvel objet Formateur avec le  infos de la crd
             Admin admin = new Admin(id_nom.getText(), id_prenom.getText(), id_email.getText(), id_mdp.getText());
-            // Ajouter le formateur
-            try {
-                if (admin==null){
-                    showAlert2("Erreur", "Une erreur s'est produite lors de l'ajout du Admin. Veuillez réessayer.");
-                }
-                 if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty()) {
-                     showAlert2("Erreuur","Veuillez remplir tous les champs.");
-                 }else {
-                     serviceAdmin.ajouter(admin);
-                     id_nom.clear();
-                     id_prenom.clear();
-                     id_email.clear();
-                     id_mdp.clear();
 
-                     showAlert2("Succès", " l'admin a été ajouté avec succès.");
-                 }} catch (SQLException e) {
-                System.out.println(e.getMessage());
+            if (admin == null) {
+                errorEmailLabel.setText("Une erreur s'est produite lors de l'ajout du Admin. Veuillez réessayer.");
+            } else if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty() || !ValidationFormuaire.isEmail(id_email.getText())) {
+                showAlert2("Erreur", "Veuillez remplir tous les champs correctement.");
+            } else {
+                // Ajouter l'admin
+                serviceAdmin.ajouter(admin);
+                EmailSender.sendInfoAdmin(id_email.getText(), admin);
+                id_nom.clear();
+                id_prenom.clear();
+                id_email.clear();
+                id_mdp.clear();
+
+                showAlert("Succès", "L'admin a été ajouté avec succès.");
             }
-
-
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showAlert("Erreur", "Une erreur s'est produite lors de l'ajout d'un Admin. Veuillez réessayer.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             showAlert("Erreur", "Une erreur s'est produite lors de l'ajout d'un Admin. Veuillez réessayer.");
         }
     }
 
+
     // Méthode pour afficher une alerte
     private void showAlert2(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

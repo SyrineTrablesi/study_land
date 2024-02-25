@@ -6,10 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import services.ServiceUser;
 
@@ -38,7 +36,7 @@ public class ChangerPassword {
             ServiceUser serviceUser = new ServiceUser();
             try {
                 user = serviceUser.UpdateMdp(user, newPassword);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileUser.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
                 try {
                     Parent root = loader.load();
                     ProfileApprenant controller = loader.getController();

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
@@ -25,19 +26,43 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DashboardAdmin {
-    @FXML
-    private Button btn_App;
-    @FXML
-    private VBox cardsContainer;
+
 
     @FXML
-    private BorderPane rootPane;
+    private Button btn_Admin;
+
     @FXML
-    private TextField id_recherche;
+    private Button btn_App;
+
+    @FXML
+    private Button btn_formateur;
+
+    @FXML
+    private Button btn_parameter;
+
+    @FXML
+    private Button btn_profile;
 
     @FXML
     private StackPane centerPane;
 
+    @FXML
+    private Button id_home;
+
+    @FXML
+    private Label id_nom1;
+
+    @FXML
+    private Button id_projet;
+
+    @FXML
+    private TextField id_recherche;
+
+    @FXML
+    private VBox id_side_bar;
+
+    @FXML
+    private BorderPane rootPane;
     @FXML
     void afficherApprenants(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AffichageApprenant.fxml"));
@@ -91,7 +116,7 @@ public class DashboardAdmin {
         }
     }
     @FXML
-    void homePage(ActionEvent event) {
+    void home(ActionEvent event) {
         FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
         try {
             Parent root = loader1.load();
@@ -104,7 +129,7 @@ public class DashboardAdmin {
     }
 
     @FXML
-    void onRecherche(ActionEvent event) {
+    void onREcherche(ActionEvent event) {
         String email = id_recherche.getText(); // Supprimez les espaces inutiles
         System.out.println(email);
 

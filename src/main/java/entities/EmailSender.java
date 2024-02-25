@@ -87,6 +87,42 @@ public class EmailSender {
             throw new RuntimeException("Erreur lors de l'envoi de l'email : " + e.getMessage());
         }
     }
+    public static void sendInfoAdmin(String recipientEmail, Admin admin) {
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(EMAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+            message.setSubject("StudyLand Resultat concours");
+            Multipart multipart = new MimeMultipart();
+            String emailContentWithSignature = "<html>" +
+                    "<body>" +
+                    "<p>Cher " + admin.getNom() + ",</p>" +
+                    "<p>Nous avons le plaisir de vous informer que vous avez été admis à StudyLand en tant que admin.</p>" +
+                    "<p><strong>Informations d'inscription à renseigner :</strong></p>" +
+                    "<p>Votre email : " + admin.getEmail() + "</p>" +
+                    "<p>Votre mot de passe : " + admin.getPassword() + "</p>" +
+                    "<p>Cordialement,<br>StudyLand</p>" +
+                    "<img src=\"cid:logo\" width=\"100px\">" +
+                    "</body>" +
+                    "</html>";
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setContent(emailContentWithSignature, "text/html");
+            multipart.addBodyPart(textPart);
+
+            MimeBodyPart imagePart = new MimeBodyPart();
+            DataSource imageDataSource = new ByteArrayDataSource(imageBytes, "image/png");
+            imagePart.setDataHandler(new DataHandler(imageDataSource));
+            imagePart.setHeader("Content-ID", "<logo>");
+            imagePart.setDisposition(MimeBodyPart.INLINE);
+            multipart.addBodyPart(imagePart);
+
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Erreur lors de l'envoi de l'email : " + e.getMessage());
+        }
+    }
+
 
     public static void sendWelcomeEmailWithSignature(String recipientEmail, String nom) {
         try {

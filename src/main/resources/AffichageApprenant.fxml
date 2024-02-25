@@ -6,20 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="482.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AffichageApprenant">
+<AnchorPane prefHeight="513.0" prefWidth="922.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AffichageApprenant">
    <children>
-      <TableView fx:id="tab_Apprenant" layoutX="93.0" layoutY="65.0" prefHeight="306.0" prefWidth="602.0" stylesheets="@styleDash.css">
+      <TableView fx:id="tab_Apprenant" layoutX="93.0" layoutY="65.0" prefHeight="306.0" prefWidth="498.0" stylesheets="@styleDash.css">
         <columns>
           <TableColumn fx:id="id_user" prefWidth="105.5999755859375" text="           id" />
             <TableColumn fx:id="nom_user" prefWidth="77.60003662109375" text="     nom" />
-            <TableColumn fx:id="pre_user" prefWidth="93.59996032714844" text="      prénom" />
-            <TableColumn fx:id="email_user" prefWidth="119.20001220703125" text="         Email" />
-            <TableColumn fx:id="mdp_user" prefWidth="96.79998779296875" text="        Mdp" />
+            <TableColumn fx:id="pre_user" prefWidth="97.5999755859375" text="      prénom" />
+            <TableColumn fx:id="email_user" prefWidth="116.0" text="         Email" />
             <TableColumn fx:id="supprimer_user" prefWidth="104.7999267578125" text="      Supprimer" />
 
         </columns>
       </TableView>
-      <Label layoutX="104.0" layoutY="28.0" text="Apprenats" textFill="#0b41e4">
+      <Label layoutX="104.0" layoutY="28.0" prefHeight="27.0" prefWidth="141.0" text="Apprenats" textFill="#0b41e4">
          <font>
             <Font name="Berlin Sans FB" size="24.0" />
          </font>

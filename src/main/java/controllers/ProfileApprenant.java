@@ -7,8 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import security.Session;
 import security.UserInfo;
 
@@ -18,35 +21,50 @@ public class ProfileApprenant {
     Apprenant apprenant=new Apprenant();
 
     @FXML
-    private Button btn_achat;
-
-    @FXML
-    private Button btn_certif;
+    private ImageView img;
 
     @FXML
     private Button btn_parameter;
 
     @FXML
+    private Button btn_profile;
+
+    @FXML
     private StackPane centerPane;
 
     @FXML
-    private Button id_btn_panier;
+    private Button id_evaluation;
+
+    @FXML
+    private Button id_formation;
+
+    @FXML
+    private Button id_home;
 
     @FXML
     private Label id_nom;
-    // get et set
-    public void setId_nom(Label id_nom) {
-        this.id_nom = id_nom;
-    }
+
+    @FXML
+    private Button id_panier;
+
+    @FXML
+    private Button id_projet;
+
+    @FXML
+    private TextField id_recherche_formation;
+
+    @FXML
+    private VBox id_side_bar;
+
+    @FXML
+    private BorderPane rootPane;
 
     public Label getId_nom() {
         return id_nom;
     }
 
     @FXML
-    private BorderPane rootPane;
-    @FXML
-    void afficherParametre(ActionEvent event) {
+    void modification(ActionEvent event) {
         UserInfo userInfo = Session.getInstance().userInfo;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GererProfile.fxml"));
         try {
@@ -62,7 +80,7 @@ public class ProfileApprenant {
         }
     }
     @FXML
-    void homePage(ActionEvent event) {
+    void home(ActionEvent event) {
         FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
         try {
             Parent root = loader1.load();
@@ -74,5 +92,3 @@ public class ProfileApprenant {
 
     }
 }
-
-

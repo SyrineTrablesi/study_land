@@ -70,7 +70,6 @@ public class ForamteurAffichage {
         nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
-        mdp_user.setCellValueFactory(new PropertyValueFactory<>("password"));
         addActionColumn();
         initTable();
     }
@@ -141,7 +140,7 @@ public class ForamteurAffichage {
                         showAlert2("Erreuur","Veuillez remplir tous les champs.");}
                     else {
                     serviceFormateur.ajouter(formateur);
-                        EmailSender.sendInfoFormateur(formateur.getEmail(),formateur);
+                    EmailSender.sendInfoFormateur(formateur.getEmail(),formateur);
                     id_nom.clear();
                     id_prenom.clear();
                     id_email.clear();

@@ -118,6 +118,28 @@
 }
 .button_inscrit:hover {-fx-background-color :linear-gradient(to top left, rgb(229, 151, 10), #1451d7);
 }
+.compte_user_side_bar{
+    -fx-background-color: rgba(228, 228, 228, 0.49776);
+
+}
+.button3
+{
+    -fx-font-weight: bold;
+    -fx-font-family:'Poppins';
+    -fx-background-radius :  0 0 0 0;
+    -fx-background-color: transparent;
+
+}
+
+.button3:pressed
+{
+    -fx-background-color : rgba(42, 61, 155, 0.07);
+}
+.compte_user_nav_bar{
+    -fx-background-color: rgba(228, 228, 228, 0.49776);
+
+}
+
 
 
 
