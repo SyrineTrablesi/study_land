@@ -1,84 +1,79 @@
 package services;
 
 import entities.Inscrit;
+import entities.Panier;
 import utils.MyDB;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceInscrit implements IInscrit<Inscrit>{
+public class ServiceInscrit implements IInscrit< Inscrit> {
+    private  Connection connection;
 
-    private Connection connection;
-
-    public ServiceInscrit(){
-        connection= MyDB.getInstance().getConnection();
+    public ServiceInscrit() {
+        connection = MyDB.getInstance().getConnection();
     }
 
     @Override
     public void ajouterInscrit(Inscrit inscrit) throws SQLException {
-        String req = "INSERT INTO inscrit (id_user, id_panier, id_formation, id_achat, inscription_date) VALUES (?, ?, ?, ?, ?)";
+        String req = "INSERT INTO inscrit (id_user, idFormation, inscription_date) VALUES (?,?,?)";
         PreparedStatement pstmt = connection.prepareStatement(req);
-        pstmt.setInt(1, inscrit.getId_user());
-        pstmt.setInt(2, inscrit.getId_panier());
-        pstmt.setInt(3, inscrit.getId_formation());
-        pstmt.setInt(4, inscrit.getId_achat());
-        pstmt.setDate(5, new java.sql.Date(inscrit.getInscription_date().getTime()));
-        pstmt.executeUpdate();
 
+        pstmt.setInt(1, inscrit.getId_user());
+        pstmt.setInt(2, inscrit.getIdFormation());
+        pstmt.setDate(3, Date.valueOf(inscrit.getInscription_date()));
+
+        pstmt.executeUpdate();
     }
 
     @Override
     public void modifierInscrit(Inscrit inscrit) throws SQLException {
+        String req = "UPDATE inscrit SET id_user=?, idFormation=?, inscription_date=? WHERE id_inscrit=?";
+        PreparedStatement pstmt = connection.prepareStatement(req);
 
-        // 1. Construct a secure and parameterized SQL query:
-        String sql = "UPDATE inscrit SET id_panier=?, id_user=?, id_formation=?, id_achat=?, inscription_date=? WHERE id_inscrit=?";
+        pstmt.setInt(1, inscrit.getId_user());
+        pstmt.setInt(2, inscrit.getIdFormation());
+        pstmt.setDate(3, Date.valueOf(inscrit.getInscription_date()));
+        pstmt.setInt(4, inscrit.getId_inscrit());
 
-        // 2. Prepare the statement with placeholders for values:
-        PreparedStatement statement = connection.prepareStatement(sql);
-
-        // 3. Bind values to placeholders using appropriate methods:
-        statement.setInt(1, inscrit.getId_panier());
-        statement.setInt(2, inscrit.getId_user());
-        statement.setInt(3, inscrit.getId_formation());
-        statement.setInt(4, inscrit.getId_achat());
-        statement.setDate(5, new java.sql.Date(inscrit.getInscription_date().getTime())); // Convert to SQL-compatible date
-        statement.setInt(6, inscrit.getId_inscrit()); // Use getInt() for id retrieval
-
-        // 4. Execute the update query:
-        statement.executeUpdate();
-
+        pstmt.executeUpdate();
     }
 
-    @Override
     public void supprimerInscrit(Inscrit inscrit) throws SQLException {
-
-        String req = " delete from inscrit where id_inscrit=?";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1,inscrit.getId_inscrit());
-        pre.executeUpdate();
-
-
+        String req = "DELETE FROM inscrit WHERE id_inscrit=?";
+        PreparedStatement pstmt = connection.prepareStatement(req);
+        pstmt.setInt(1, inscrit.getId_inscrit());
+        pstmt.executeUpdate();
     }
 
     @Override
-    public List<Inscrit> afficherInscrit() throws SQLException {
+    public List<Inscrit> afficherInscritAdmin() throws SQLException {
+        String req = "SELECT * FROM inscrit INNER JOIN formation ON inscrit.idFormation = formation.idFormation INNER JOIN user ON inscrit.id_user = user.id_user";
+        return fetchInscrit(req);
+    }
 
+    @Override
+    public List<Inscrit> afficherInscritUser(int id_user) throws SQLException {
+        String req = "SELECT * FROM inscrit INNER JOIN formation ON inscrit.idFormation = formation.idFormation WHERE id_user=?";
+        PreparedStatement pstmt = connection.prepareStatement(req);
+        pstmt.setInt(1, id_user);
+        return fetchInscrit(pstmt.toString());
+    }
 
-        String req = "select * from inscrit";
-        Statement ste = connection.createStatement();
-        ResultSet res = ste.executeQuery(req);
-        List<Inscrit> list =new ArrayList<>();
-        while (res.next()){
-            Inscrit i = new Inscrit();
-            i.setId_inscrit(res.getInt("id_inscrit"));
-            i.setId_user(res.getInt("id_user"));
-            i.setId_panier(res.getInt("id_panier"));
-            i.setId_formation(res.getInt("id_formation"));
-            i.setId_achat(res.getInt("id_achat"));
-            i.setInscription_date(res.getDate("inscription_date"));
-
-            list.add(i);
+    private List<Inscrit> fetchInscrit(String req) throws SQLException {
+        List<Inscrit> list = new ArrayList<>();
+        try (Statement ste = connection.createStatement();
+             ResultSet res = ste.executeQuery(req)) {
+            while (res.next()) {
+                Inscrit inscrit = new Inscrit();
+                inscrit.setId_inscrit(res.getInt("id_inscrit"));
+                inscrit.setId_user(res.getInt("id_user"));
+                inscrit.setIdFormation(res.getInt("idFormation"));
+                inscrit.setInscription_date(res.getDate("inscription_date").toLocalDate());
+                // Ajouter les autres attributs hérités de la table Formation ici
+                list.add(inscrit);
+            }
         }
         return list;
     }

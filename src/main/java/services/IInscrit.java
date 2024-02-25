@@ -1,12 +1,16 @@
 package services;
 
+import entities.Inscrit;
+
 import java.sql.SQLException;
 import java.util.List;
 
 public interface IInscrit<I> {
-    public void ajouterInscrit(I i) throws SQLException;
-    public void modifierInscrit(I i) throws SQLException;
-    public void supprimerInscrit(I i) throws SQLException;
-    public List<I> afficherInscrit() throws SQLException;
+    void ajouterInscrit(Inscrit inscrit) throws SQLException;
 
+    void modifierInscrit(Inscrit inscrit) throws SQLException;
+
+    void supprimerInscrit(Inscrit idInscrit) throws SQLException;
+    List<Inscrit> afficherInscritAdmin() throws SQLException;
+    List<Inscrit> afficherInscritUser(int idUser) throws SQLException;
 }

@@ -12,7 +12,7 @@
    <children>
       <Label layoutX="40.0" layoutY="24.0" prefHeight="27.0" prefWidth="97.0" text="id_user" />
       <Label layoutX="40.0" layoutY="68.0" prefHeight="27.0" prefWidth="97.0" text="id_formation" />
-      <DatePicker fx:id="date_ajout_Panier" layoutX="39.0" layoutY="127.0" opacity="0.96" prefHeight="27.0" prefWidth="240.0" promptText=" date d'ajout au panier">
+      <DatePicker fx:id="date_ajout" layoutX="39.0" layoutY="127.0" opacity="0.96" prefHeight="27.0" prefWidth="240.0" promptText=" date d'ajout au panier">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -25,10 +25,6 @@
       <TextField fx:id="tfId_user" layoutX="131.0" layoutY="25.0" />
       <TextField fx:id="tfId_formation" layoutX="131.0" layoutY="70.0" />
       <Button layoutX="95.0" layoutY="229.0" mnemonicParsing="false" onAction="#ajouterPanier" text="Ajouter à Panier" />
-      <AnchorPane layoutX="14.0" layoutY="277.0" prefHeight="401.0" prefWidth="436.0" style="-fx-background-color: #911beb;">
-         <children>
-            <Button layoutX="98.0" layoutY="164.0" mnemonicParsing="false" onAction="#afficherPanier" prefHeight="27.0" prefWidth="240.0" text="AfficherPanier" />
-         </children>
-      </AnchorPane>
+      <Button layoutX="106.0" layoutY="285.0" mnemonicParsing="false" onAction="#afficherMonPanier" text="Mon Panier" />
    </children>
 </AnchorPane>

@@ -1,27 +1,29 @@
-package controllers;
+/*package controllers;
 
-import entities.Panier;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.scene.Node;
 import services.ServicePanier;
+import entities.Panier;
 
 import java.io.IOException;
-import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
 
-public class AjouterPanierController implements Initializable {
-    ServicePanier sp = new ServicePanier();
+public class AjouterPanierController {
 
     @FXML
-    private DatePicker date_ajout_Panier;
+    private DatePicker date_ajout;
 
     @FXML
     private TextField tfId_formation;
@@ -31,65 +33,123 @@ public class AjouterPanierController implements Initializable {
 
     @FXML
     private ChoiceBox<String> tfTypeFormation;
-    private String[] type_formation = {"favoris", "inscrite"};
 
-    @FXML
-    void afficherPanier(ActionEvent event) {
+    private ServicePanier servicePanier;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPanier.fxml"));
-        try {
-            Parent root = loader.load();
-            AfficherPanierController afficherController = loader.getController();
-            afficherController.setLabelId_user(tfId_user.getText());
-            afficherController.setLabelId_formation(tfId_formation.getText());
-            afficherController.setLabelDate_ajout(date_ajout_Panier.getValue().toString());
-            afficherController.setLabelType_formation(tfTypeFormation.getValue());
-
-            tfId_user.getScene().setRoot(root);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public AjouterPanierController() {
+        servicePanier = new ServicePanier();
     }
 
     @FXML
-    void ajouterPanier(ActionEvent event) {
+    void initialize() {
+        // Ajouter les choix "favoris" et "inscrite" à la ChoiceBox
+        tfTypeFormation.getItems().addAll("favoris", "inscrite");
+
+    }
+
+    @FXML
+    void ajouterPanier() {
         try {
+            // Récupérer les valeurs des champs en tant qu'entiers
             int id_user = Integer.parseInt(tfId_user.getText());
             int id_formation = Integer.parseInt(tfId_formation.getText());
-            String type_formation = tfTypeFormation.getValue();
+            String typeFormation = tfTypeFormation.getValue();
 
-            if (id_user <= 0 || id_formation <= 0 || type_formation == null) {
-                System.err.println("Veuillez remplir tous les champs obligatoires.");
+            if (id_user <= 0 || id_formation <= 0 || typeFormation == null) {
+                afficherAlerte("Erreur", "Veuillez remplir tous les champs obligatoires.");
                 return;
             }
 
             LocalDate date_ajout = getDate_ajout();
 
             if (date_ajout == null) {
-                System.err.println("Veuillez sélectionner une date valide.");
-                return;
+                afficherAlerte("Erreur", "Veuillez sélectionner une date valide.");
+                return; // Sortir de la méthode si la date est null
             }
 
+            // Créer une instance de Panier avec les valeurs récupérées
+            Panier nouveauPanier = new Panier();
+            nouveauPanier.setId_user(id_user);
+            nouveauPanier.setId_formation(id_formation);
+            nouveauPanier.setDate_ajout(date_ajout);
+            nouveauPanier.setTypeFormation(Panier.TypeFormation.valueOf(typeFormation));
+
+            // Appeler la méthode ajouterPanier avec la nouvelle instance de Panier
+            boolean ajoutReussi = false;
             try {
-                sp.ajouterPanier(new Panier(id_user, id_formation, date_ajout, type_formation));
+                servicePanier.ajouterPanier(nouveauPanier);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+            if (ajoutReussi) {
+                afficherMessageAjoutReussi();
+                // Effacer les champs après l'ajout réussi
+                tfId_user.clear();
+                tfId_formation.clear();
+                tfTypeFormation.getSelectionModel().clearSelection();
+            } else {
+                afficherAlerte("Erreur", "Formation déjà ajoutée.");
+            }
+
         } catch (NumberFormatException e) {
-            System.err.println("Veuillez saisir des valeurs numériques valides pour les champs 'id_user' et 'id_formation'.");
+            afficherAlerte("Erreur", "Veuillez saisir des valeurs numériques valides pour les champs 'id_user' et 'id_formation'.");
+            e.printStackTrace();
+        }
+    }
+     LocalDate getDate_ajout() {
+        return date_ajout.getValue();
+    }
+
+    private void afficherAlerte(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void afficherMessageAjoutReussi() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajout_reussi.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Ajout réussi");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        tfTypeFormation.getItems().addAll(type_formation);
+
+
+    @FXML
+    public void afficherMonPanier(ActionEvent actionEvent) {
+        try {
+            // Charger le fichier FXML de la scène d'affichage du panier
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherPanier.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène
+            Scene scene = new Scene(root);
+
+            // Obtenir le stage actuel (celui du bouton "Mon Panier")
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Changer la scène du stage actuel pour afficher le contenu du panier
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
-    // Méthode pour obtenir la date d'ajout du DatePicker
-    private LocalDate getDate_ajout() {
-        return date_ajout_Panier.getValue();
-    }
 }
+
+ */
+
 

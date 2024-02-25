@@ -20,7 +20,6 @@ public class MainFX extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterPanier.fxml"));
         try {
             Parent root = loader.load();
-
             Scene sc = new Scene(root);
             primaryStage.setScene(sc);
             primaryStage.show();

@@ -1,89 +1,84 @@
 package services;
 
 import entities.Achat;
+import entities.Favoris;
 import utils.MyDB;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceAchat implements IAchat<Achat> {
+public class ServiceAchat implements IAchat {
+    private final Connection connection;
 
-
-    private Connection connection;
-    public ServiceAchat(){
-        connection= MyDB.getInstance().getConnection();
+    public ServiceAchat() {
+        connection = MyDB.getInstance().getConnection();
     }
 
     @Override
     public void ajouterAchat(Achat achat) throws SQLException {
-        String req = "INSERT INTO achat (id_panier, id_user, facture, date_achat) VALUES (?, ?, ?, ?)";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1, achat.getId_panier());
-        pre.setInt(2, achat.getId_user());
-        pre.setDouble(3, achat.getFacture());
-        pre.setDate(4, new java.sql.Date(achat.getDate_achat().getTime())); // Utilisation de setDate pour la date
+        String req = "INSERT INTO achat (id_user, idFormation, date_achat, facture) VALUES (?,?,?,?)";
+        PreparedStatement pstmt = connection.prepareStatement(req);
 
-        pre.executeUpdate();
+        pstmt.setInt(1, achat.getId_user());
+        pstmt.setInt(2, achat.getId_formation());
+        pstmt.setDate(3, Date.valueOf(String.valueOf(achat.getDate_achat())));
+        pstmt.setString(4, String.valueOf(achat.getFacture()));
+
+        pstmt.executeUpdate();
     }
+
 
     @Override
     public void modifierAchat(Achat achat) throws SQLException {
+        String req = "UPDATE achat SET id_user=?, idFormation=?, date_achat=?, facture=? WHERE id_achat=?";
+        PreparedStatement pstmt = connection.prepareStatement(req);
 
-        String req = "update achat set id_user=?, id_panier=?, facture=?,date_achat=? where id_achat=?";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1, achat.getId_user());
-        pre.setInt(2, achat.getId_panier());
-        pre.setDouble(3, achat.getFacture());
-        pre.setDate(4, new java.sql.Date(achat.getDate_achat().getTime())); // Utilisation de setDate pour la date
-        pre.setInt(5, achat.getId_achat());
+        pstmt.setInt(1, achat.getId_user());
+        pstmt.setInt(2, achat.getId_formation());
+        pstmt.setDate(3, Date.valueOf(achat.getDate_achat()));
+        pstmt.setString(4, String.valueOf(achat.getFacture()));
+        pstmt.setInt(5, achat.getId_achat());
 
-        pre.executeUpdate();
+        pstmt.executeUpdate();
     }
 
     @Override
     public void supprimerAchat(Achat achat) throws SQLException {
-
-        String req = " delete from achat where id_achat=?";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1,achat.getId_achat());
-        pre.executeUpdate();
-
+        String req = "DELETE FROM achat WHERE id_achat=?";
+        PreparedStatement pstmt = connection.prepareStatement(req);
+        pstmt.setInt(1, achat.getId_achat());
+        pstmt.executeUpdate();
+    }
+    @Override
+    public List<Achat> afficherAchatAdmin() throws SQLException {
+        String req = "SELECT * FROM achat INNER JOIN user ON achat.id_user = user.id_user INNER JOIN formation ON achat.idFormation = formation.idFormation";
+        return fetchAchat(req);
     }
 
     @Override
-    public List<Achat> afficherAchat() throws SQLException {
+    public List<Achat> afficherAchatUser(int id_user) throws SQLException {
+        String req = "SELECT * FROM achat INNER JOIN formation ON achat.idFormation = formation.idFormation WHERE id_user=?";
+        PreparedStatement pstmt = connection.prepareStatement(req);
+        pstmt.setInt(1, id_user);
+        return fetchAchat(pstmt.toString());
+    }
 
-        String req = "select * from achat";
+    private List<Achat> fetchAchat(String req) throws SQLException {
         List<Achat> list = new ArrayList<>();
-
         try (Statement ste = connection.createStatement();
              ResultSet res = ste.executeQuery(req)) {
             while (res.next()) {
                 Achat a = new Achat();
                 a.setId_achat(res.getInt("id_achat"));
                 a.setId_user(res.getInt("id_user"));
-                a.setId_panier(res.getInt("id_panier"));
-                a.setFacture(res.getInt("facture"));
-                a.setDate_achat(res.getDate("date_achat"));
-
+                a.setId_formation(res.getInt("idFormation"));
+                a.setDate_achat(res.getDate("date_achat").toLocalDate());
+                a.setFacture(Double.parseDouble(res.getString("facture")));
+                // Vous pouvez ajouter d'autres attributs hérités de la table Formation ici
                 list.add(a);
             }
         }
-
         return list;
     }
-// calculer facture
-/*
-    public void calculerFacture(Achat achat) throws SQLException {
-        String req = "SELECT SUM(prix) AS total_facture FROM panier  WHERE id_user = ?";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1, achat.getId_panier());
-
-        ResultSet res = pre.executeQuery();
-        if (res.next()) {
-            achat.setFacture(res.getInt("total_facture"));
-        }
-    }
-    */
 }

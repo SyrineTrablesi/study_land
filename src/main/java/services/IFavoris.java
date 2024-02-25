@@ -1,11 +1,14 @@
 package services;
 
+import entities.Favoris;
+
 import java.sql.SQLException;
 import java.util.List;
 
-public interface IFavoris<F>  {
-    public void ajouterFavoris(F f) throws SQLException;
-    public void modifieFavoris(F f) throws SQLException;
-    public void supprimerFavoris(F f) throws SQLException;
-    public List<F> afficherFavoris() throws SQLException;
+public interface IFavoris {
+    void ajouterFavoris(Favoris favoris) throws SQLException;
+    void modifierFavoris(Favoris favoris) throws SQLException;
+    void supprimerFavoris(Favoris favoris) throws SQLException;
+    List<Favoris> afficherFavorisAdmin() throws SQLException;
+    List<Favoris> afficherFavorisUser(int idUser) throws SQLException;
 }
