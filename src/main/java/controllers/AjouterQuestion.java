@@ -9,9 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import services.quesservice;
@@ -21,43 +19,21 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AjouterQuestion {
+
+
+    @FXML
+    private TableColumn<question, Void> supprimer;
     @FXML
     quesservice sq =new quesservice();
     @FXML
     private TableView<question> tab;
-    @FXML
-    private TextField tfdomaine;
 
-
-    @FXML
-    private TextField tfenonce;
-    @FXML
-    private TextField tfidquestion;
-    @FXML
-    private TableColumn<question, Integer> columidq;
 
     @FXML
     private TableColumn<question, String> columndom;
 
     @FXML
     private TableColumn<question,String> columnenonce;
-
-
-
-
-
-    public void btnmodifier(javafx.event.ActionEvent actionEvent) throws SQLException {
-
-
-    }
-
-    public void btnsupprimer(ActionEvent actionEvent) {
-
-    }
-
-    public void btnajouter(ActionEvent actionEvent) throws SQLException {
-
-    }
 
     public void btnafficher(ActionEvent actionEvent) {
         try {
@@ -82,12 +58,10 @@ public class AjouterQuestion {
 
     @FXML
     public void initialize() {
-        // Initialisez les colonnes ici
-        columidq.setCellValueFactory(new PropertyValueFactory<>("idQuestion"));
+
         columndom.setCellValueFactory(new PropertyValueFactory<>("domaine"));
         columnenonce.setCellValueFactory(new PropertyValueFactory<>("enonce"));
-
-        // Appelez la méthode pour charger les données dans le tableau
+        addActionColumn();
         initTable();
     }
 
@@ -150,5 +124,36 @@ public class AjouterQuestion {
             e.printStackTrace();
         }
     }
+    private void addActionColumn() {
+        supprimer.setCellFactory(param -> new TableCell<>() {
+            private final Button button = new Button("Supprimer");
+
+            {
+                button.setOnAction(event -> {
+                    question q = getTableView().getItems().get(getIndex());
+                    // Add your delete logic here
+                    try {
+                        // Call your service method to delete the question
+                        sq.supprimer(q);
+                        // Update the TableView
+                        tab.getItems().remove(q);
+                    } catch (SQLException e) {
+                        e.printStackTrace();  // Handle the exception appropriately
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(button);
+                }
+            }
+        });
+    }
+
 }
 

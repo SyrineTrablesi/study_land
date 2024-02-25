@@ -29,13 +29,7 @@
 
 }
 .list-cell {
-    -fx-padding: 0px;
-    -fx-background-color: #794AFF;
-    -fx-border-color: #000;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5px;
 
-    -fx-padding: 10; /* Padding around each cell */
 
 }
 
@@ -57,7 +51,6 @@
 .text-field, .date-picker, .list-view{
     -fx-font-size: 16px;
     -fx-background-color: #000; /* Couleur de fond */
-    -fx-border-color: #B0C4DE; /* Couleur de la bordure */
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-padding: 5px;

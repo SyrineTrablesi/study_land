@@ -189,4 +189,34 @@ pre.executeUpdate(  );
 
         return foundEvaluation;
     }
+    public List<evaluation> rechercherParCaractere(String caractereRecherche) throws SQLException {
+        List<evaluation> evaluationsTrouvees = new ArrayList<>();
+        String req = "SELECT * FROM evaluation WHERE titre_evaluation LIKE ?";
+
+        try (PreparedStatement st = connection.prepareStatement(req)) {
+            st.setString(1, "%" + caractereRecherche + "%");
+
+            try (ResultSet res = st.executeQuery()) {
+                while (res.next()) {
+                    evaluation f = new evaluation();
+                    f.setId_evaluation(res.getInt("id_evaluation"));
+                    f.setTitre_evaluation(res.getString("titre_evaluation"));
+                    f.setDescription(res.getString("description"));
+                    f.setDuree(res.getTime("Duree"));
+                    f.setTestDate(res.getDate("testDate"));
+                    f.setPrix(res.getFloat("prix"));
+                    f.setResultat(res.getFloat("Resultat"));
+                    f.setCreateur(res.getString("Createur"));
+                    f.setNb_questions(res.getInt("nb_questions"));
+                    f.setDifficulte(res.getString("Difficulte"));
+                    f.setDomaine(res.getString("domaine"));
+
+                    evaluationsTrouvees.add(f);
+                }
+            }
+        }
+
+        return evaluationsTrouvees;
+    }
+
 }

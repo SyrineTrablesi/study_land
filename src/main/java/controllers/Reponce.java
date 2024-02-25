@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.evaluation;
 import entities.question;
 import entities.response;
 import javafx.collections.FXCollections;
@@ -22,7 +23,8 @@ import java.util.List;
 
 public class Reponce {
     Reponseservice reponseservice =new Reponseservice();
-
+    @FXML
+    private TableColumn<response,Void> supprimer;
     @FXML
     private TextField idques;
 
@@ -54,71 +56,23 @@ public class Reponce {
     @FXML
     private TableView<response> tabreponse;
 
-    @FXML
-    void btnajouter(ActionEvent event) {
-
-            try {
-                response updatedResponse = new response();
-                updatedResponse.setIdReponse(Integer.parseInt(idtep.getText()));
-                updatedResponse.setContenu(rep.getText());
-                updatedResponse.setIdQuestion(Integer.parseInt(idques.getText()));
-                updatedResponse.setStatus(response.status.valueOf(oui.isSelected() ? "ONE" : "ZERO"));
-
-                // Modifier la response dans la base de données
-                reponseservice.modifier(updatedResponse);
-
-                initTable();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
 
 
-    @FXML
-    void btnmodifier(ActionEvent event) {
 
 
-            try {
-                response updatedResponse = new response();
-                updatedResponse.setContenu(rep.getText());
-                updatedResponse.setIdQuestion(Integer.parseInt(idques.getText()));
-                updatedResponse.setStatus(response.status.valueOf(oui.isSelected() ? "ONE" : "ZERO"));
-
-                updatedResponse.setIdReponse(Integer.parseInt(idtep.getText()));
 
 
-                // Modifier la response dans la base de données
-                reponseservice.modifier(updatedResponse);
 
-                initTable();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
-    @FXML
-    void btnsupprimer(ActionEvent event) {
-        try{
-            reponseservice.supprimer(new response(Integer.parseInt(idtep.getText())));
-            initTable();
-
-        }catch (SQLException e ){
-            throw new RuntimeException(e);
-
-        }
-    }
     @FXML
     public void initialize() {
-        idquestion.setCellValueFactory(new PropertyValueFactory<>("idQuestion"));
-        idreponse.setCellValueFactory(new PropertyValueFactory<>("idReponse"));
         reponse.setCellValueFactory(new PropertyValueFactory<>("contenu"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
 
         // Appelez la méthode pour charger les données dans le tableau
         initTable();
+        addActionColumn();
     }
 
     private void initTable() {
@@ -181,24 +135,57 @@ public class Reponce {
         }
     }
 
-    public void modifierrep(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifierevaluation.fxml"));
-            Parent root = loader.load();
 
-            // Obtenez le contrôleur après avoir chargé le fichier FXML
-            Modifierevaluation affichepre = loader.getController();
 
-            // Créez une nouvelle scène avec le Parent chargé
-            Scene scene = new Scene(root);
+    private void addActionColumn() {
+        supprimer.setCellFactory(param -> new TableCell<>() {
+            private final Button button = new Button("Supprimer");
 
-            // Récupérez la scène actuelle à partir du bouton
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            {
+                button.setOnAction(event -> {
+                    response res = getTableView().getItems().get(getIndex());
+                    try {
+                        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                        confirmationAlert.setTitle("Confirmation de suppression");
+                        confirmationAlert.setHeaderText("Supprimer response ?");
+                        confirmationAlert.setContentText("Êtes-vous sûr de vouloir supprimer response " + res.getContenu() + " ?");
 
-            // Remplacez la scène actuelle par la nouvelle scène
-            currentStage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                        confirmationAlert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.OK) {
+                                try {
+                                    reponseservice.supprimer(res);
+                                    tabreponse.getItems().remove(res);
+                                    showAlert("Suppression réussie", " response a été supprimé avec succès.");
+                                } catch (SQLException e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }
+                        });
+                    } finally {
+
+                    }
+                });
+            }
+
+            private void showAlert(String title, String message) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(title);
+                alert.setHeaderText(null);
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
+
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(button);
+                }
+            }
+        });
     }
+
 }

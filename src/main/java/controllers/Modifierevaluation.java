@@ -43,7 +43,8 @@ public class Modifierevaluation {
 
     @FXML
     private DatePicker date;
-
+    @FXML
+    private TextField textrecherche;
     @FXML
     private TextField description;
 
@@ -63,7 +64,7 @@ public class Modifierevaluation {
     private TextField prix;
 
     @FXML
-    private ListView<question> questionListView;
+    private ListView<String> questionListView;
 
     @FXML
     private ListView<question> questionselectioner;
@@ -76,7 +77,11 @@ public class Modifierevaluation {
     @FXML
     private TextField ideval;
     EvalService eval =new EvalService();
+    @FXML
+    private ListView<String> evaluationListView;
     public Connection connection;
+    EvalService evalService = new EvalService();
+
 
     public Modifierevaluation(quesservice questionService) {
         this.questionService = questionService;
@@ -90,32 +95,68 @@ public class Modifierevaluation {
     private quesservice questionService = new quesservice();
     public void ajouter(ActionEvent actionEvent) {
         // Obtenir les éléments sélectionnés
-        ObservableList<question> selectedQuestions = questionListView.getSelectionModel().getSelectedItems();
+        ObservableList<String> selectedQuestions = questionListView.getSelectionModel().getSelectedItems();
 
         // Afficher les IDs des questions sélectionnées
         System.out.println("IDs des questions sélectionnées :");
-        for (question selectedQuestion : selectedQuestions) {
-            System.out.println(selectedQuestion.getIdQuestion()); // Remplacez getId() par la méthode réelle pour obtenir l'ID de la question
+        for (String selectedQuestion : selectedQuestions) {
+            int id = extractIdFromQuestionString(selectedQuestion);
+            System.out.println(id);
 
-            // Ajouter l'ID à la questionselectioner
-            questionselectioner.getItems().add(new question(selectedQuestion.getIdQuestion()));
-    }}
-    @FXML
-    public void initialize() {
-        chargerQuestions();
-        // Configurer la ListView pour permettre la sélection multiple
-        questionListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            // Ajouter l'objet question à la questionselectioner
+            questionselectioner.getItems().add(new question(id));
+        }
     }
 
-    private void chargerQuestions() {
+    private int extractIdFromQuestionString(String questionString) {
+        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(questionString);
+
+        if (matcher.find()) {
+            try {
+                return Integer.parseInt(matcher.group());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+    @FXML
+    public void initialize() {
         try {
             List<question> questions = questionService.afficher();
-            ObservableList<question> observableQuestions = FXCollections.observableArrayList(questions);
-
-            // Remplir la ListView avec les questions
-            questionListView.setItems(observableQuestions);
+            displayQuestions(questions);
         } catch (SQLException e) {
-            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+        // Configurer la ListView pour permettre la sélection multiple
+        questionListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        try {
+            List<evaluation> evaluations = evalService.afficher();
+            displayEvaluations(evaluations);
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+
+
+    }
+
+
+    private void displayEvaluations(List<evaluation> evaluations) {
+        for (evaluation eval : evaluations) {
+            String evaluationText = "Le Titre de l'évaluation : " + eval.getId_evaluation() + " - " + eval.getTitre_evaluation();
+            evaluationListView.getItems().add(evaluationText);
+        }
+    }
+
+
+
+
+
+    private void displayQuestions(List<question> questions) {
+        for (question q : questions) {
+            String questionText =  q.getEnonce() + " - " +q.getIdQuestion() ; // Assurez-vous d'adapter cela à votre classe Question
+            questionListView.getItems().add(questionText);
         }
     }
     public void ajouterevaluation(ActionEvent actionEvent) throws ParseException {
@@ -142,7 +183,7 @@ public class Modifierevaluation {
 
         try {
             // Appel de la méthode de modification dans le service
-            eval.modifier(evaluation);
+                eval.modifier(evaluation);
 
             // Fetch question IDs associated with the evaluation
             List<Integer> existingQuestionIds = eval.getQuestionsByEvaluationId(evaluation.getId_evaluation());
@@ -168,25 +209,21 @@ public class Modifierevaluation {
         }
 
     }
+    private void displaySelectedEvaluations(List<evaluation> selectedEvaluations) {
+        // Effacez la liste actuelle avant d'afficher les résultats
+        evaluationListView.getItems().clear();
 
-
-    public void supprimer(ActionEvent actionEvent) throws SQLException {
-        evaluation evaluation = new evaluation();
-        int idEvaluation = Integer.parseInt(ideval.getText());
-        List<Integer> questionIds = eval.getQuestionsByEvaluationId(idEvaluation);
-
-        // Fetch corresponding questions using the getQuestionById method
-        for (int questionId : questionIds) {
-            question q = questionService.getQuestionById(questionId);
-            if (q != null) {
-                selectedQuestions.add(q);
-            }
+        // Afficher les évaluations sélectionnées
+        System.out.println("Évaluations sélectionnées :");
+        for (evaluation selectedEvaluation : selectedEvaluations) {
+            String evaluationText = "Le Titre de l'évaluation : " + selectedEvaluation.getId_evaluation() + " - " + selectedEvaluation.getTitre_evaluation();
+            System.out.println("ID de l'évaluation : " + selectedEvaluation.getId_evaluation());
+            evaluationListView.getItems().add(evaluationText);
         }
-
-        // Display questions in the questionselectioner ListView
-        ObservableList<question> observableSelectedQuestions = FXCollections.observableArrayList(selectedQuestions);
-        questionselectioner.setItems(observableSelectedQuestions);
     }
+
+
+
     private void ajoutIdEvaluationQuestion(int idEvaluation, int idQuestion) throws SQLException {
         String req = "INSERT INTO evaluationquestion (id_evaluation, id_question) VALUES (?, ?)";
         try (PreparedStatement st = connection.prepareStatement(req)) {
@@ -217,11 +254,12 @@ public class Modifierevaluation {
         }
     }
 
-    public void recuperer(ActionEvent actionEvent) {
+    public void recuperer(ActionEvent actionEvent) throws SQLException {
     EvalService eval = new EvalService();
         try {
             // Get the evaluation ID from the user input or any other source
-            int evaluationIdToRetrieve = Integer.parseInt(ideval.getText());
+            int evaluationIdToRetrieve = afficherIdEvaluationSelectionnee();
+            System.out.println("voila id selectinner " + evaluationIdToRetrieve);
 
             // Call the getEvaluationById method to retrieve the evaluation
             evaluation retrievedEvaluation = eval.getEvaluationById(evaluationIdToRetrieve);
@@ -248,6 +286,70 @@ public class Modifierevaluation {
             }
         } catch (NumberFormatException | SQLException e) {
             e.printStackTrace(); // Handle the exception appropriately in your application
+        }
+        evaluation evaluation = new evaluation();
+        int idEvaluation = afficherIdEvaluationSelectionnee();
+        List<Integer> questionIds = eval.getQuestionsByEvaluationId(idEvaluation);
+
+        // Fetch corresponding questions using the getQuestionById method
+        for (int questionId : questionIds) {
+            question q = questionService.getQuestionById(questionId);
+            if (q != null) {
+                selectedQuestions.add(q);
+            }
+        }
+
+        // Display questions in the questionselectioner ListView
+        ObservableList<question> observableSelectedQuestions = FXCollections.observableArrayList(selectedQuestions);
+        questionselectioner.setItems(observableSelectedQuestions);
+
+
+
+    }
+    public int afficherIdEvaluationSelectionnee() {
+        // Obtenez le modèle de sélection de la ListView
+        MultipleSelectionModel<String> selectionModel = evaluationListView.getSelectionModel();
+
+        // Obtenez l'élément sélectionné (ici, une chaîne représentant une évaluation)
+        String selectedEvaluation = selectionModel.getSelectedItem();
+
+        if (selectedEvaluation != null) {
+            // Utilisez une expression régulière pour extraire l'ID de l'élément sélectionné
+            java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(selectedEvaluation);
+
+            if (matcher.find()) {
+                // Convertissez l'ID en entier
+                try {
+                    int idEvaluation = Integer.parseInt(matcher.group());
+                    return idEvaluation;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public void afficherIdEvaluationSelectionnee(ActionEvent actionEvent) {
+        afficherIdEvaluationSelectionnee();
+    }
+
+    public void recherche(ActionEvent actionEvent) {
+        try {
+            // Obtenez le texte de recherche
+            String rechercheText = textrecherche.getText();
+
+            // Appeler la méthode de recherche dans le service
+            List<evaluation> evaluationsTrouvees = evalService.rechercherParCaractere(rechercheText);
+
+            // Effacer la liste actuelle avant d'afficher les résultats de la recherche
+            evaluationListView.getItems().clear();
+
+            // Afficher les évaluations trouvées
+            displayEvaluations(evaluationsTrouvees);
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
         }
 
 

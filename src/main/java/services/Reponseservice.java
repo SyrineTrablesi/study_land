@@ -43,9 +43,6 @@ public class Reponseservice implements EvaluationService<response> {
                 reqBuilder.append(" contenu=?,");
             }
 
-            if (response.getIdQuestion() != 0) {
-                reqBuilder.append(" idQuestion=?,");
-            }
 
             if (response.getStatus() != null) {
                 reqBuilder.append(" status=?,");
@@ -67,9 +64,7 @@ public class Reponseservice implements EvaluationService<response> {
                 pre.setString(parameterIndex++, response.getContenu());
             }
 
-            if (response.getIdQuestion() != 0) {
-                pre.setInt(parameterIndex++, response.getIdQuestion());
-            }
+
 
             if (response.getStatus() != null) {
                 pre.setString(parameterIndex++, response.getStatus().toString());
@@ -125,5 +120,71 @@ public class Reponseservice implements EvaluationService<response> {
         }
         return replist;
     }
+    public response getResponseById(int idReponse) throws SQLException {
+        String req = "SELECT * FROM reponse WHERE idReponse = ?";
+
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setInt(1, idReponse);
+
+            try (ResultSet res = pre.executeQuery()) {
+                if (res.next()) {
+                    response resp = new response();
+                    resp.setIdReponse(res.getInt("idReponse"));
+                    resp.setContenu(res.getString("contenu"));
+                    resp.setIdQuestion(res.getInt("idQuestion"));
+
+                    String statusValue = res.getString("status");
+                    status status;
+
+                    if ("ONE".equalsIgnoreCase(statusValue)) {
+                        status = response.status.ONE;
+                    } else if ("ZERO".equalsIgnoreCase(statusValue)) {
+                        status = response.status.ZERO;
+                    } else {
+                        throw new IllegalArgumentException("Invalid status value in the database");
+                    }
+
+                    resp.setStatus(status);
+                    return resp;
+                }
+            }
+        }
+
+        return null;  // Return null if no response with the given ID is found
+    }
+    public List<response> rechercherParCaractere(String caractereRecherche) throws SQLException {
+        List<response> responsesTrouvees = new ArrayList<>();
+        String req = "SELECT * FROM reponse WHERE contenu LIKE ?";
+
+        try (PreparedStatement st = connection.prepareStatement(req)) {
+            st.setString(1, "%" + caractereRecherche + "%");
+
+            try (ResultSet res = st.executeQuery()) {
+                while (res.next()) {
+                    response resp = new response();
+                    resp.setIdReponse(res.getInt("idReponse"));
+                    resp.setContenu(res.getString("contenu"));
+                    resp.setIdQuestion(res.getInt("idQuestion"));
+
+                    String statusValue = res.getString("status");
+                    status status;
+
+                    if ("ONE".equalsIgnoreCase(statusValue)) {
+                        status = response.status.ONE;
+                    } else if ("ZERO".equalsIgnoreCase(statusValue)) {
+                        status = response.status.ZERO;
+                    } else {
+                        throw new IllegalArgumentException("Invalid status value in the database");
+                    }
+
+                    resp.setStatus(status);
+                    responsesTrouvees.add(resp);
+                }
+            }
+        }
+
+        return responsesTrouvees;
+    }
+
 
 }

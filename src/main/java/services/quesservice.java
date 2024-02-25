@@ -8,7 +8,7 @@ import java.util.List;
 
 public class quesservice implements EvaluationService<question> {
 
-    public Connection connection;
+    public static Connection connection;
 
     public quesservice() {
         connection = MyDB.getInstance().getConnection();    }
@@ -72,7 +72,7 @@ public class quesservice implements EvaluationService<question> {
 
             return questionList;
         }
-    public question getQuestionById(int idQuestion) throws SQLException {
+    public static question getQuestionById(int idQuestion) throws SQLException {
         String query = "SELECT * FROM question WHERE idQuestion = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -92,5 +92,27 @@ public class quesservice implements EvaluationService<question> {
         // Return null if no question is found with the specified ID
         return null;
     }
+    public List<question> rechercherParCaractere(String caractereRecherche) throws SQLException {
+        List<question> questionsTrouvees = new ArrayList<>();
+        String req = "SELECT * FROM question WHERE enonce LIKE ?";
+
+        try (PreparedStatement st = connection.prepareStatement(req)) {
+            st.setString(1, "%" + caractereRecherche + "%");
+
+            try (ResultSet res = st.executeQuery()) {
+                while (res.next()) {
+                    question q = new question();
+                    q.setIdQuestion(res.getInt("idQuestion"));
+                    q.setEnonce(res.getString("enonce"));
+                    q.setDomaine(res.getString("domaine"));
+
+                    questionsTrouvees.add(q);
+                }
+            }
+        }
+
+        return questionsTrouvees;
+    }
+
 }
 
