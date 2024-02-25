@@ -1,5 +1,6 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -84,6 +85,11 @@ public class Formation {
 
     public void setNiveau(String niveau) {
         this.niveau = niveau;
+    }
+    private String dateToString(Date date) {
+        // Format the date as "dd/MM/yyyy"
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(date);
     }
 
     @Override

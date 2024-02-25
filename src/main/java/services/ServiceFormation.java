@@ -46,6 +46,7 @@ public class ServiceFormation implements IService<Formation> {
             pre.setString(7, formation.getNiveau());
             pre.setInt(8, formation.getIdFormation());
             pre.executeUpdate();
+
         }
     }
 
@@ -128,6 +129,30 @@ public class ServiceFormation implements IService<Formation> {
             // If no result is found, return null or throw an exception
             return null;
             // Or throw new IllegalArgumentException("Formation with titre " + titre + " not found");
+        }
+    }
+    public Formation rechercherParId(int id) throws SQLException {
+        String req = "SELECT * FROM formation WHERE idFormation = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(req);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            // If a result is found, construct a Formation object and return it
+            Formation formation = new Formation();
+            formation.setIdFormation(resultSet.getInt("idFormation"));
+            formation.setTitre(resultSet.getString("titre"));
+            formation.setDescription(resultSet.getString("description"));
+            formation.setDuree(resultSet.getInt("duree"));
+            formation.setDateDebut(resultSet.getDate("dateDebut"));
+            formation.setDateFin(resultSet.getDate("dateFin"));
+            formation.setPrix(resultSet.getFloat("prix"));
+            formation.setNiveau(resultSet.getString("niveau"));
+            return formation;
+        } else {
+            // If no result is found, return null or throw an exception
+            return null;
+            // Or throw new IllegalArgumentException("Formation with ID " + id + " not found");
         }
     }
 

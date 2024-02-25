@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import entities.Formation;
 
@@ -141,17 +142,29 @@ public class AfficherFormationController {
     private TextField titreFormationTextField; // Assuming you have a TextField to input the ID
     private ServiceFormation formationService; // Instance of your service
 
+
     public AfficherFormationController() {
         this.formationService = new ServiceFormation();
     }
 
+    @FXML
+    private void handleLabelClick() {
+        // Handle label click event
+        System.out.println("Label clicked");
+    }
 
+    @FXML
+    private void handleImageViewClick() {
+        // Handle ImageView click event
+        System.out.println("ImageView clicked");
+    }
 
 
     @FXML
     void AfficherDB(ActionEvent event){
         try {
             List<Formation> formations = FS.afficher();
+
 
             // Clear any existing items in the VBox
             affichageformationvbox.getChildren().clear();
@@ -168,6 +181,11 @@ public class AfficherFormationController {
 
                     // Create labels for each property of the Formation object
                     Label titreLabel = new Label("Titre: " + formation.getTitre());
+                    // Add event handler to titreLabel
+                    titreLabel.setOnMouseClicked(mouseEvent -> {
+                        // Handle label click event
+                        System.out.println("Titre label clicked for formation: " + formation.getTitre());
+                    });
                     Label descriptionLabel = new Label("Description: " + formation.getDescription());
                     Label dureeLabel = new Label("Durée: " + formation.getDuree() + " heures");
                     Label dateDebutLabel = new Label("Date Début: " + formation.getDateDebut());
@@ -179,6 +197,8 @@ public class AfficherFormationController {
                     ImageView imageView = new ImageView(new Image("/src/cours.png"));
                     imageView.setFitWidth(100);
                     imageView.setPreserveRatio(true);
+
+
 
                     // Add labels and image to the current VBox
                     VBox formationBox = new VBox(imageView, titreLabel, descriptionLabel, dureeLabel, dateDebutLabel, dateFinLabel, prixLabel, niveauLabel);
@@ -197,8 +217,8 @@ public class AfficherFormationController {
                     supprimerButton.setOnAction(e -> supprimerFormation(formation)); // Attach the event handler
                     // Create the "Modifier" button
                     Button modifierButton = new Button("Modifier");
-
-                    rowBox.setOnMouseClicked(e -> modifier(new ActionEvent()));
+                    // Attach the event handler to the modifierButton, not the rowBox
+                    modifierButton.setOnAction(e -> modifier(new ActionEvent()));
 
                     // Optionally, you can add a picture next to the "Modifier" button
                     ImageView modifyIcon = new ImageView(new Image("/src/modifier.png"));
@@ -277,77 +297,61 @@ public class AfficherFormationController {
     }
 
 
+
+
+    // Helper method to convert Date to LocalDate
+    private LocalDate dateToLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
     public void modifier(ActionEvent actionEvent) {
-        try {
-            // Get the source of the event
-            Object source = actionEvent.getSource();
+        // Get the selected Formation object from the VBox
+        Node source = (Node) actionEvent.getSource();
+        VBox parentVBox = (VBox) source.getParent();
+        Formation formation = (Formation) parentVBox.getUserData();
 
-            if (source instanceof Button) {
-                Button modifierButton = (Button) source;
+        // Display a TextInputDialog to modify the titre
+        TextInputDialog dialog = new TextInputDialog(formation.getTitre());
+        dialog.setTitle("Modifier Titre");
+        dialog.setHeaderText("Modifier Titre de la Formation");
+        dialog.setContentText("Nouveau Titre:");
 
-                // Retrieve the Formation object from the user data of the modifier button
-                Formation formation = (Formation) modifierButton.getUserData();
-
-                if (formation != null) {
-                    // Create TextFields for each attribute to allow the user to input new values
-                    TextField descriptionField = new TextField();
-                    TextField dureeField = new TextField();
-                    TextField dateDebutField = new TextField();
-                    TextField dateFinField = new TextField();
-                    TextField prixField = new TextField();
-                    TextField niveauField = new TextField();
-
-                    // Create a GridPane to organize the TextFields
-                    GridPane gridPane = new GridPane();
-                    gridPane.setHgap(10);
-                    gridPane.setVgap(10);
-                    gridPane.addRow(0, new Label("Description:"), descriptionField);
-                    gridPane.addRow(1, new Label("Durée:"), dureeField);
-                    gridPane.addRow(2, new Label("Date Début (dd/MM/yyyy):"), dateDebutField);
-                    gridPane.addRow(3, new Label("Date Fin (dd/MM/yyyy):"), dateFinField);
-                    gridPane.addRow(4, new Label("Prix:"), prixField);
-                    gridPane.addRow(5, new Label("Niveau:"), niveauField);
-
-                    // Create an Alert with a custom dialog pane containing the GridPane
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Modifier Formation");
-                    alert.setHeaderText(null);
-                    alert.getDialogPane().setContent(gridPane);
-
-                    // Show the alert and wait for user input
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
-                        // Parse the input values
-                        String description = descriptionField.getText().trim();
-                        int duree = Integer.parseInt(dureeField.getText().trim());
-                        LocalDate dateDebut = LocalDate.parse(dateDebutField.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                        LocalDate dateFin = LocalDate.parse(dateFinField.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                        float prix = Float.parseFloat(prixField.getText().trim());
-                        String niveau = niveauField.getText().trim();
-
-                        // Update the Formation object with the new values
-                        formation.setDescription(description);
-                        formation.setDuree(duree);
-                        formation.setDateDebut(java.sql.Date.valueOf(dateDebut));
-                        formation.setDateFin(java.sql.Date.valueOf(dateFin));
-                        formation.setPrix(prix);
-                        formation.setNiveau(niveau);
-
-                        // Call the modifier method in your service class to update the formation in the database
-                        FS.modifier(formation);
-
-                        // Refresh the VBox
-                        AfficherDB(actionEvent);
-                    }
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "No item selected", "Please select a Formation to modify.");
-                }
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(newTitre -> {
+            try {
+                // Update the titre of the Formation object
+                formation.setTitre(newTitre);
+                // Call the modifier method in your service class to update the formation in the database
+                FS.modifier(formation);
+                // Optionally, provide feedback to the user that the modification was successful
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Modification Réussie");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("La formation a été modifiée avec succès.");
+                successAlert.showAndWait();
+                // Update the UI elements directly with the new titre
+                Label titleLabel = (Label) parentVBox.lookup("#titleLabel");
+                titleLabel.setText(newTitre);
+            } catch (SQLException e) {
+                System.out.println("Error modifying formation: " + e.getMessage());
+                // Provide feedback to the user about the error
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText("Erreur lors de la modification de la formation");
+                errorAlert.setContentText("Une erreur s'est produite lors de la modification de la formation. Veuillez réessayer plus tard.");
+                errorAlert.showAndWait();
+                // Handle the exception appropriately
             }
-        } catch (SQLException | NumberFormatException | DateTimeParseException e) {
-            e.printStackTrace(); // Handle the exception appropriately
-            // Show an error message to the user
-            showAlert(Alert.AlertType.ERROR, "Error", "Invalid input", "Please enter valid values for the Formation.");
-        }
+        });
+
+    }
+
+    // Method to update the UI with the modified Formation object
+
+    // Method to handle modification for a specific formation
+    private void handleModificationForFormation(String formationId) {
+        // Implement your logic to handle modification for the formation with the given ID
+        System.out.println("Handling modification for formation with ID: " + formationId);
     }
     // Helper method to show an alert dialog
     private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {

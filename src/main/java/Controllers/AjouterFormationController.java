@@ -77,10 +77,7 @@ public class AjouterFormationController {
     }
 
     public void AjouterFormation(ActionEvent actionEvent) {
-
-
-        {
-            // Check for empty input fields
+        {// Check for empty input fields
             if (NomF.getText().isEmpty() || Description.getText().isEmpty() || Duree.getText().isEmpty() || Prix.getText().isEmpty()
                     || Niveau.getText().isEmpty() || NomC.getText().isEmpty() || DD.getValue() == null || DF.getValue() == null) {
                 // Display error message to user
@@ -91,6 +88,30 @@ public class AjouterFormationController {
             // Convert date pickers to Date objects
             LocalDate startDate = DD.getValue();
             LocalDate endDate = DF.getValue();
+
+            // Check if the selected dates are from today onwards
+            LocalDate today = LocalDate.now();
+            if (startDate.isBefore(today) || endDate.isBefore(today)) {
+                // Display error message to user
+                // Display success message to user
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Wrong date");
+                successAlert.setHeaderText("Please select dates from today onwards");
+                successAlert.showAndWait();
+                return;
+            }
+
+            // Check if the start date is after the end date
+            if (startDate.isAfter(endDate)) {
+                // Display error message to user
+                System.out.println("Start date cannot be after end date");
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Wrong date");
+                successAlert.setHeaderText("Start date cannot be after end date");
+                successAlert.showAndWait();
+                return;
+            }
+
             Date dateDebut = convertToUtilDate(startDate);
             Date dateFin = convertToUtilDate(endDate);
 
@@ -99,6 +120,10 @@ public class AjouterFormationController {
             if (durationText.isEmpty() || !durationText.matches("\\d+")) {
                 // Handle invalid input
                 System.out.println("Invalid duration input");
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Wrong duration");
+                successAlert.setHeaderText("Invalid duration input");
+                successAlert.showAndWait();
                 return;
             }
             int duration = Integer.parseInt(durationText);
@@ -107,6 +132,10 @@ public class AjouterFormationController {
             if (priceText.isEmpty()) {
                 // Handle empty price input
                 System.out.println("Price input is empty");
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Wrong price");
+                successAlert.setHeaderText("Price input is empty");
+                successAlert.showAndWait();
                 return;
             }
 
@@ -136,10 +165,7 @@ public class AjouterFormationController {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-        }
-
-
-    }
+        }}
 
     public void accederCategorie(ActionEvent actionEvent) {
         FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Categorie.fxml"));
