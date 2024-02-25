@@ -8,78 +8,83 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="372.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InscriptionApprenant">
+<AnchorPane prefHeight="443.0" prefWidth="596.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InscriptionApprenant">
    <children>
-      <VBox alignment="CENTER" prefHeight="446.0" prefWidth="318.0" style="-fx-background-color: C2C2D2;">
-         <children>
-            <Label alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="75.0" prefWidth="282.0" style=" " text="StudyLand" textAlignment="RIGHT" textFill="#f8982a" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <ImageView disable="true" fitHeight="333.0" fitWidth="241.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@src/login.png" />
-               </image>
-            </ImageView>
-            <Label alignment="CENTER" contentDisplay="TOP" prefHeight="56.0" prefWidth="264.0" text="Rejoignez notre communauté " textAlignment="CENTER" textFill="#2f2b6d">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <ImageView fitHeight="72.0" fitWidth="56.0" layoutX="316.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="275.0" layoutY="128.0" prefHeight="42.0" prefWidth="139.0" promptText="Nom" scaleShape="false" styleClass="input-form" stylesheets="@styleDash.css" />
+      <TextField fx:id="id_prenom" alignment="CENTER" layoutX="428.0" layoutY="128.0" prefHeight="42.0" prefWidth="139.0" promptText="Prenom" stylesheets="@styleDash.css" />
+      <TextField fx:id="id_email" alignment="CENTER_RIGHT" layoutX="280.0" layoutY="189.0" prefHeight="42.0" prefWidth="294.0" promptText="\@gmail.com" styleClass="input-form" stylesheets="@styleDash.css">
+         <font>
+            <Font size="8.0" />
+         </font></TextField>
+      <PasswordField fx:id="id_confirmer" alignment="CENTER_RIGHT" layoutX="281.0" layoutY="247.0" prefHeight="42.0" prefWidth="139.0" promptText=" mot de passe" stylesheets="@styleDash.css">
+         <font>
+            <Font size="2.0" />
+         </font></PasswordField>
+
+            <Button fx:id="btn_ajouter" layoutX="336.0" layoutY="302.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="42.0" prefWidth="171.0" styleClass="button_inscrit" stylesheets="@styleDash.css" text="S’inscrire" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Hyperlink fx:id="seConnecter" layoutX="498.0" layoutY="17.0" onAction="#seConnecter" text="Se connecter">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Hyperlink>
+      <ImageView fitHeight="68.0" fitWidth="66.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="373.0" layoutY="73.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Nom" scaleShape="false" />
-      <TextField fx:id="id_prenom" alignment="CENTER" layoutX="375.0" layoutY="124.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Prenom" />
-      <TextField fx:id="id_email" layoutX="374.0" layoutY="176.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="exmple@gmail.com" />
-      <Label fx:id="errorEmailLabel" contentDisplay="TEXT_ONLY" layoutX="389.0" layoutY="215.0" prefHeight="26.0" prefWidth="166.0" textAlignment="CENTER" textFill="#f41414" />
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="393.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+      <PasswordField fx:id="id_mdp" alignment="CENTER_RIGHT" layoutX="434.0" layoutY="245.0" prefHeight="42.0" prefWidth="139.0" promptText="mot de passe" stylesheets="@styleDash.css" />
+      <ImageView disable="true" fitHeight="255.0" fitWidth="256.0" layoutX="8.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@src/utilisateur.png" />
+            <Image url="@src/login.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="394.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/gmail.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="392.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/utilisateur.png" />
-         </image>
-      </ImageView>
-      <PasswordField fx:id="id_mdp" alignment="CENTER_RIGHT" layoutX="375.0" layoutY="234.0" prefHeight="42.0" prefWidth="194.0" promptText="mot de passe" />
-      <PasswordField fx:id="id_confirmer" alignment="CENTER_RIGHT" layoutX="375.0" layoutY="290.0" prefHeight="42.0" prefWidth="194.0" promptText="Confirmer mot de passe" />
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="390.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/la-cyber-securite.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="394.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/la-cyber-securite.png" />
-         </image>
-      </ImageView>
-
-            <Button fx:id="btn_ajouter" layoutX="388.0" layoutY="340.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #2F2B6D;" text="S’inscrire" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Label alignment="CENTER" layoutX="231.0" layoutY="71.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="44.0" prefWidth="186.0" style=" " text="S'inscrire" textAlignment="RIGHT" textFill="#151515" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorMessage" layoutX="266.0" layoutY="365.0" prefHeight="44.0" prefWidth="302.0" textAlignment="CENTER" textFill="#f70404">
+         <font>
+            <Font name="Dubai Bold" size="12.0" />
+         </font>
+      </Label>
+      <Line endX="57.199981689453125" endY="163.19998168945312" layoutX="283.0" layoutY="199.0" startX="207.5999755859375" startY="163.19998168945312" stroke="#efeaea" strokeWidth="2.0" />
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="12.0" layoutY="337.0" prefHeight="56.0" prefWidth="264.0" text="Rejoignez notre communauté " textAlignment="CENTER" textFill="#151515">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
-      </Button>
-      <Hyperlink fx:id="seConnecter" layoutX="538.0" layoutY="32.0" onAction="#seConnecter" text="Se connecter" />
-      <Label fx:id="errorMessage" layoutX="365.0" layoutY="396.0" prefHeight="35.0" prefWidth="185.0" textFill="#f70404">
-         <font>
-            <Font name="System Bold Italic" size="12.0" />
-         </font>
       </Label>
+      <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="285.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/gens.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="453.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/gens.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="285.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/email.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="450.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/mot-de-passe.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="286.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/mot-de-passe.png" />
+         </image>
+      </ImageView>
    </children>
    
 </AnchorPane>

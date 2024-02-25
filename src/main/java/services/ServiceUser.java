@@ -41,6 +41,7 @@ public class ServiceUser {
             return null;
         }
     }
+
 //Update
 public  User UpdateMdp(User user,String password) throws  Exception{
     String req = "UPDATE user SET password=?, confirmer_password=? WHERE id_user=?";

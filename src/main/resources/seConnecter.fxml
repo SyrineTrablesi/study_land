@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -8,63 +9,76 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="416.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeConnecter">
+<AnchorPane prefHeight="443.0" prefWidth="596.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeConnecter">
    <children>
-      <VBox alignment="CENTER" layoutX="-11.0" layoutY="-2.0" prefHeight="445.0" prefWidth="319.0" style="-fx-background-color: C2C2D2;">
-         <children>
-            <Label alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="75.0" prefWidth="282.0" style=" " text="StudyLand" textAlignment="RIGHT" textFill="#f8982a" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <ImageView disable="true" fitHeight="333.0" fitWidth="241.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@src/iconeApprenant.png" />
-               </image>
-            </ImageView>
-            <Label alignment="CENTER" contentDisplay="TOP" prefHeight="74.0" prefWidth="282.0" text="Rejoignez notre communauté " textAlignment="CENTER" textFill="#2f2b6d">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <ImageView fitHeight="72.0" fitWidth="56.0" layoutX="310.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="72.0" fitWidth="56.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="id_email" layoutX="347.0" layoutY="120.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="193.0" promptText="exmple@gmail.com" />
-      <Label fx:id="errorEmailLabel" contentDisplay="TEXT_ONLY" layoutX="382.0" layoutY="193.0" prefHeight="18.0" prefWidth="150.0" textAlignment="CENTER" textFill="#f41414" />
-      <Label fx:id="errorMdpLabel" contentDisplay="TEXT_ONLY" layoutX="331.0" layoutY="367.0" prefHeight="68.0" prefWidth="252.0" textAlignment="RIGHT" textFill="#f41414">
+      <TextField fx:id="id_email" layoutX="310.0" layoutY="134.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="239.0" promptText="exmple@gmail.com" stylesheets="@styleDash.css" />
+      <Label fx:id="errorEmailLabel" contentDisplay="TEXT_ONLY" layoutX="406.0" layoutY="195.0" prefHeight="18.0" prefWidth="150.0" textAlignment="CENTER" textFill="#f41414" />
+      <Label fx:id="errorMdpLabel" contentDisplay="TEXT_ONLY" layoutX="17.0" layoutY="349.0" prefHeight="68.0" prefWidth="252.0" textAlignment="RIGHT" textFill="#f41414">
          <font>
             <Font name="Arial" size="12.0" />
          </font></Label>
-      <Button fx:id="btn_connecter" layoutX="392.0" layoutY="267.0" mnemonicParsing="false" onAction="#seConnecter" prefHeight="35.0" prefWidth="126.0" style="-fx-background-color: #2F2B6D;" text="Se connecter" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Button fx:id="btn_connecter" layoutX="308.0" layoutY="275.0" mnemonicParsing="false" onAction="#seConnecter" prefHeight="35.0" prefWidth="122.0" styleClass="button_inscrit" stylesheets="@styleDash.css" text="Se connecter" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Label layoutX="500.0" layoutY="342.0" />
-      <Button fx:id="btn_inscrit" layoutX="324.0" layoutY="333.0" mnemonicParsing="false" onAction="#pageInscription" prefHeight="35.0" prefWidth="126.0" text="s'inscrire" textAlignment="CENTER" textFill="#797777" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Label layoutX="524.0" layoutY="344.0" />
+      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="320.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/email.png" />
+         </image>
+      </ImageView>
+      <PasswordField fx:id="id_mdp" alignment="CENTER_RIGHT" layoutX="309.0" layoutY="198.0" prefHeight="50.0" prefWidth="239.0" promptText="mot de passe" stylesheets="@styleDash.css" />
+      <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="320.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/mot-de-passe.png" />
+         </image>
+      </ImageView>
+      <Hyperlink fx:id="id_mdp_oublier" layoutX="454.0" layoutY="322.0" onAction="#mdpOublier" text="mdp Oublier?" />
+      <Hyperlink fx:id="btn_inscrit" layoutX="464.0" layoutY="381.0" onAction="#pageInscription" text="Créez-en un instant ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Hyperlink>
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="260.0" layoutY="67.0" prefHeight="74.0" prefWidth="312.0" text="Veuillez vous connecter pour accéder à votre compte." textAlignment="CENTER" textFill="#2e2b6b3e">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="258.0" fitWidth="282.0" layoutX="8.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/login1.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="294.0" layoutY="53.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="44.0" prefWidth="186.0" style=" " text="Se connecter" textAlignment="RIGHT" textFill="#11142d" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <CheckBox layoutX="314.0" layoutY="254.0" mnemonicParsing="false" text="Rester en ligne " textFill="#000000af" />
+      <Label layoutX="294.0" layoutY="383.0" prefHeight="18.0" prefWidth="186.0" text="Avez-vous besoin d'un compte ? ">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="427.0" layoutY="365.0" startX="-100.0" stroke="#000000a9" strokeWidth="0.7" />
+      <Button fx:id="btn_connecter1" layoutX="445.0" layoutY="276.0" mnemonicParsing="false" onAction="#seConnecter" prefHeight="35.0" prefWidth="122.0" styleClass="button_inscrit" stylesheets="@styleDash.css" text="google" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="354.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="428.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@src/gmail.png" />
+            <Image url="@src/confusion.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="id_mdp" alignment="CENTER_RIGHT" layoutX="346.0" layoutY="196.0" prefHeight="50.0" prefWidth="200.0" promptText="mot de passe" />
-      <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="354.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/la-cyber-securite.png" />
-         </image>
-      </ImageView>
-      <Hyperlink fx:id="id_mdp_oublier" layoutX="503.0" layoutY="342.0" onAction="#mdpOublier" text="mdp Oublier?" />
    </children>
 </AnchorPane>

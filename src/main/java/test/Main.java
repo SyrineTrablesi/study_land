@@ -5,18 +5,15 @@ import services.ServiceAdmin;
 import services.ServiceApprenant;
 import services.ServiceFormateur;
 import utils.MyBD;
-
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
 
-
-
         MyBD db = MyBD.getInstance();
         String recipientEmail = "syrinet6@gmail.com";
-        EmailSender.sendVerificationCode(recipientEmail);
 
        /* Admin adminUser= new Admin(3,"trabelsi", "syrine", "syrinet6@gmail.com", "hama123");
         Formateur formateurUser = new Formateur(12,"5", "henda", "syrinet6@gmail.com", "henda");
@@ -94,9 +91,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 */
-        Apprenant ApprenantUser = new Apprenant("5", "1", "5@gmail.com", "email", "email");
-        ServiceApprenant serviceApprenant = new ServiceApprenant();
-        System.out.println(serviceApprenant.existeApprenant(ApprenantUser));
+
     }}
 
 

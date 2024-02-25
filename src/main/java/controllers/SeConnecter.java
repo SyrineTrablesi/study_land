@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.EmailSender;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,15 +56,16 @@ public class SeConnecter {
     void seConnecter(ActionEvent event) {
         String email = id_email.getText();
         String mdp = id_mdp.getText();
+        Session session = Session.getInstance();
+        session.login(id_email.getText(), id_mdp.getText());
+        UserInfo userinfo = Session.getInstance().userInfo;
 
         // Vérifier si les champs sont vides
         if (email.isEmpty() || mdp.isEmpty()) {
             errorMdpLabel.setText("Veuillez remplir tous les champs.");
             return;
         }
-        Session session = Session.getInstance();
-        session.login(id_email.getText(), id_mdp.getText());
-        UserInfo userinfo = Session.getInstance().userInfo;
+
         if (userinfo == null) {
             errorMdpLabel.setText("Veuillez vérifier vos informations.");
             return;
