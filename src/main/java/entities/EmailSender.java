@@ -58,9 +58,6 @@ public class EmailSender {
             message.setFrom(new InternetAddress(EMAIL_USERNAME));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject("StudyLand Resultat concours");
-            message.setText("");
-            Transport.send(message);
-
             Multipart multipart = new MimeMultipart();
             String emailContentWithSignature = "<html>" +
                     "<body>" +
@@ -116,7 +113,6 @@ public class EmailSender {
             imagePart1.setHeader("Content-ID", "<cov>");
             imagePart1.setDisposition(MimeBodyPart.INLINE);
             multipart.addBodyPart(imagePart1);
-
             message.setContent(multipart);
             Transport.send(message);
         } catch (MessagingException e) {
@@ -132,9 +128,6 @@ public class EmailSender {
             message.setFrom(new InternetAddress(EMAIL_USERNAME));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject("Vérification d'authentification StudyLand");
-            message.setText("");
-            Transport.send(message);
-
             Multipart multipart = new MimeMultipart();
             String emailContentWithSignature = "<html>" +
                     "<body>" +

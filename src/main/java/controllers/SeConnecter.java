@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.EmailSender;
+import entities.ValidationFormuaire;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,13 +61,11 @@ public class SeConnecter {
         session.login(id_email.getText(), id_mdp.getText());
         UserInfo userinfo = Session.getInstance().userInfo;
 
-        // Vérifier si les champs sont vides
         if (email.isEmpty() || mdp.isEmpty()) {
             errorMdpLabel.setText("Veuillez remplir tous les champs.");
-            return;
-        }
-
-        if (userinfo == null) {
+        } else if (!ValidationFormuaire.isEmail(email) && !mdp.isEmpty()) {
+            errorMdpLabel.setText("Email invalide !");
+        } else if (userinfo == null) {
             errorMdpLabel.setText("Veuillez vérifier vos informations.");
             return;
         }
@@ -78,7 +77,6 @@ public class SeConnecter {
                 controller.getId_nom().setText(userinfo.nom.toString());
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
-                System.out.println(e.getMessage());
             }
         } else if (userinfo.role.equals("Admin")) {
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/DashboardAdmin.fxml"));
@@ -87,7 +85,6 @@ public class SeConnecter {
                 DashboardAdmin controller = loader1.getController();
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
-                System.out.println(e.getMessage());
             }
         }
     }

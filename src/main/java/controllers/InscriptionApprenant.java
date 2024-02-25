@@ -15,6 +15,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import services.ServiceApprenant;
+import services.ServiceUser;
+
 import java.io.IOException;
 import java.sql.SQLException;
 public class InscriptionApprenant {
@@ -63,15 +65,40 @@ public class InscriptionApprenant {
     //Inscrit
     @FXML
     void Ajouter(ActionEvent event) {
+        if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty() || id_confirmer.getText().isEmpty()) {
+            errorMessage.setText("Veuillez remplir tous les champs.");
+            return;
+        }
+
         Apprenant apprenant = new Apprenant(id_nom.getText(), id_prenom.getText(), id_email.getText(), id_mdp.getText(), id_confirmer.getText());
+
         if (!apprenant.isEmailValid(id_email.getText())) {
             errorMessage.setText("Adresse e-mail invalide !");
-        } else if (!ValidationFormuaire.isValidPassword(id_mdp.getText())) {
+            return;
+        }
+
+        if (!ValidationFormuaire.isValidPassword(id_mdp.getText())) {
             errorMessage.setText("Le mot de passe est faible ");
-        } else if (!id_confirmer.getText().equals(apprenant.getPassword())) {
+            return;
+        }
+
+        if (!id_mdp.getText().equals(apprenant.getConfirmerPassword())) {
             errorMessage.setText("Le mot de passe de confirmation ne correspond pas au mot de passe");
-        } else if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty() || id_confirmer.getText().isEmpty()) {
-            errorMessage.setText("Veuillez remplir tous les champs.");
+            return;
+        }
+
+        User userRech = new User();
+        try {
+            ServiceUser serviceUser = new ServiceUser();
+            userRech = serviceUser.rechercheUserParEmail(id_email.getText());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (userRech != null) {
+            showToastMessage("Ce email est deja utiliser ");
+            //redecrtion sans mdp:
+            rederctionsansMdp(userRech);
+
         } else {
             showToastMessage("Veuillez patienter pendant l'envoi de l'e-mail...");
             Task<Void> verificationEmailTask = new Task<Void>() {
@@ -81,6 +108,7 @@ public class InscriptionApprenant {
                     return null;
                 }
             };
+
             verificationEmailTask.setOnSucceeded(e -> {
                 showToastMessage("E-mail de vérification envoyé avec succès !");
                 try {
@@ -92,18 +120,20 @@ public class InscriptionApprenant {
                 Task<Void> emailTask = new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        EmailSender.sendWelcomeEmailWithSignature(apprenant.getEmail(), apprenant.getNom()+" "+apprenant.getPrenom());
-                        return null;}
+                        EmailSender.sendWelcomeEmailWithSignature(apprenant.getEmail(), apprenant.getNom() + " " + apprenant.getPrenom());
+                        return null;
+                    }
                 };
 
-                emailTask.setOnSucceeded(e1 ->{
+                emailTask.setOnSucceeded(e1 -> {
                 });
 
-                emailTask.setOnFailed(e1->{
+                emailTask.setOnFailed(e1 -> {
                 });
 
                 new Thread(emailTask).start();
             });
+
             verificationEmailTask.setOnFailed(e -> {
                 Throwable exception = verificationEmailTask.getException();
                 showToastMessage("Erreur lors de l'envoi de l'e-mail de vérification : " + exception.getMessage());
@@ -111,8 +141,7 @@ public class InscriptionApprenant {
             new Thread(verificationEmailTask).start();
         }
     }
-
-    private void redirectToSeConnecter(Apprenant apprenant) {
+    private void redirectToSeConnecter(User apprenant) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
         try {
             Parent root = loader.load();
@@ -134,6 +163,17 @@ public class InscriptionApprenant {
         try {
             Parent root = loader1.load();
             SeConnecter controller = loader1.getController();
+            id_email.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    void rederctionsansMdp(User user){
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
+        try {
+            Parent root = loader1.load();
+            SeConnecter controller = loader1.getController();
+            controller.getId_email().setText(user.getEmail());
             id_email.getScene().setRoot(root);
         } catch (IOException e) {
             System.out.println(e.getMessage());

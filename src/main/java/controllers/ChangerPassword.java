@@ -1,40 +1,69 @@
 package controllers;
 
 import entities.User;
+import entities.ValidationFormuaire;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import services.ServiceUser;
+
+import java.io.IOException;
 
 public class ChangerPassword {
     @FXML
-    private Button btn_modifier_mdp;
-
+    private Label erroMessage;
     @FXML
     private PasswordField confirmer_new_password;
 
     @FXML
     private PasswordField new_password;
+
     static  public User user;
 
     @FXML
     void modifier_mdp(ActionEvent event) {
         String newPassword = new_password.getText();
         String confirmedPassword = confirmer_new_password.getText();
-
         if (!newPassword.isEmpty() && newPassword.equals(confirmedPassword)) {
+            if (!ValidationFormuaire.isValidPassword(newPassword)) {
+                erroMessage.setText("Le mot de passe est faible (moins de 5 caractères).");
+                return;
+            }
             ServiceUser serviceUser = new ServiceUser();
             try {
-                // Mettre à jour le mot de passe de l'utilisateur avec le nouveau mot de passe
-               user=serviceUser.UpdateMdp(user,newPassword);
-                System.out.println("Mot de passe mis à jour avec succès !");
-                System.out.println(user +"aprés la modification");
+                user = serviceUser.UpdateMdp(user, newPassword);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileUser.fxml"));
+                try {
+                    Parent root = loader.load();
+                    ProfileApprenant controller = loader.getController();
+                    controller.getId_nom().setText(user.getNom());
+                    new_password.getScene().setRoot(root);
+                } catch (IOException e) {
+                }
             } catch (Exception e) {
-                throw new RuntimeException("Erreur lors de la mise à jour du mot de passe : " + e.getMessage());
             }
         } else {
-            System.out.println("Les champs de mot de passe ne correspondent pas ou sont vides.");
+            erroMessage.setText("Les champs de mot de passe ne correspondent pas ou sont vides.");
         }
-    }}
+    }
+    @FXML
+    void Mdp1(MouseEvent event) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/mdpOublie.fxml"));
+        try {
+            Parent root = loader1.load();
+            SeConnecter controller = loader1.getController();
+            new_password.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+}
 
