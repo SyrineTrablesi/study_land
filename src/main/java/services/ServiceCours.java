@@ -32,12 +32,10 @@ public class ServiceCours implements IService<Cours>{
     }
     @Override
     public void modifier(Cours cours) throws SQLException {
-        String sql = "UPDATE cour_formation SET Nom_Cours = ?, Description_Cours = ?, idFormation = ? WHERE idCour = ?";
+        String sql = "UPDATE cour_formation SET Nom_Cours = ? WHERE idCour = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, cours.getNom_Cours());
-        statement.setBytes(2, cours.getDescription_Cours());
-        statement.setInt(3, cours.getIdFormation());
-        statement.setInt(4, cours.getIdCour());
+        statement.setInt(2, cours.getIdCour());
         statement.executeUpdate();
     }
 
@@ -54,7 +52,13 @@ public class ServiceCours implements IService<Cours>{
         statement.executeUpdate();
 
     }
-
+    // New method to delete related records by idFormation
+    public void deleteCourById(int IdCour) throws SQLException {
+        String sql = "DELETE FROM cour_formation WHERE IdCour = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, IdCour);
+        statement.executeUpdate();
+    }
     @Override
     public List<Cours> afficher() throws SQLException {
         String sql = "SELECT * FROM cour_formation";

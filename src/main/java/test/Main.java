@@ -221,27 +221,27 @@ public class Main {
         }
 
         // Verify that the course was modified
-        try {
-            List<Cours> coursList = serviceC.afficher();
-            boolean courseModified = false;
-            for (Cours cours : coursList) {
-                if (cours.getIdCour() == cr.getIdCour()) {
-                    if (cours.getNom_Cours().equals(cr.getNom_Cours()) &&
-                            Arrays.equals(cours.getDescription_Cours(), cr.getDescription_Cours()) &&
-                            cours.getIdFormation() == cr.getIdFormation()) {
-                        courseModified = true;
-                        break;
-                    }
-                }
-            }
-            if (courseModified) {
-                System.out.println("Course modified successfully!");
-            } else {
-                System.out.println("Error: Course not modified.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error retrieving courses: " + e.getMessage());
-        }
+//        try {
+//            List<Cours> coursList = serviceC.afficher();
+//            boolean courseModified = false;
+//            for (Cours cours : coursList) {
+//                if (cours.getIdCour() == cr.getIdCour()) {
+//                    if (cours.getNom_Cours().equals(cr.getNom_Cours()) &&
+//                            Arrays.equals(cours.getDescription_Cours(), cr.getDescription_Cours()) &&
+//                            cours.getIdFormation() == cr.getIdFormation()) {
+//                        courseModified = true;
+//                        break;
+//                    }
+//                }
+//            }
+//            if (courseModified) {
+//                System.out.println("Course modified successfully!");
+//            } else {
+//                System.out.println("Error: Course not modified.");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error retrieving courses: " + e.getMessage());
+//        }
     }
 
 

@@ -8,6 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -15,11 +20,13 @@ import services.ServiceCours;
 import services.ServiceFormation;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +36,18 @@ public class CoursController {
 
     @FXML
     private ComboBox<Formation> idFormation;
+    @FXML
+    private HBox affichagecoursvbox;
+
 
     @FXML
     private WebView pdf;
     @FXML
     private ListView<Cours> CoursListView;
+    @FXML
+    private VBox afficherpdf;
+    @FXML
+    private Label nomCategorie;
 
     private ServiceCours serviceC = new ServiceCours();
     private ServiceFormation serviceFormation = new ServiceFormation();
@@ -60,6 +74,8 @@ public class CoursController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        pdf = new WebView(); // Initialize the WebView object
+
     }
 
     @FXML
@@ -120,44 +136,177 @@ public class CoursController {
         }
     }
 
-    @FXML
-    void supprimerCours(ActionEvent event) {
-        // Get the selected Cours object from the ListView
-        Cours selectedCours = CoursListView.getSelectionModel().getSelectedItem();
 
-        if (selectedCours != null) {
-            try {
-                // Delete the course from the database
-                serviceC.supprimer(selectedCours);
-
-                // Refresh the ListView
-                AfficherCours(event);
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-                // Handle the exception appropriately
-            }
-        } else {
-            System.out.println("No item selected.");
-        }
-    }
 
     @FXML
     void AfficherCours(ActionEvent event) {
         try {
-            List<Cours> courses = serviceC.afficher(); // Assuming this method retrieves a list of all courses
-            CoursListView.getItems().clear();
+            // Clear the existing content in the VBox
+            affichagecoursvbox.getChildren().clear();
 
-            for (Cours Cours : courses) {
-                CoursListView.getItems().add(Cours);
+            // Retrieve the list of courses from the database
+            List<Cours> coursList = serviceC.afficher();
+
+            if (coursList.isEmpty()) {
+                showAlert(Alert.AlertType.INFORMATION, "Information", "No Courses", "There are no courses to display.");
+                return;
             }
 
+            // Create a HBox to hold courses in a row
+            HBox rowBox = new HBox();
+            rowBox.setSpacing(10); // Adjust spacing between courses
+
+            int count = 0; // Counter for courses in the current row
+
+            // Loop through the list of courses
+            for (Cours cours : coursList) {
+                // Create labels to display course details
+                Label coursLabel = new Label("Nom: " + cours.getNom_Cours());
+
+                // Decode the description from byte array to string
+                String description = new String(cours.getDescription_Cours());
+                Label descriptionLabel = new Label("Description: " + description);
+
+                // Create a WebView to display the PDF content
+                WebView webView = new WebView();
+                webView.setPrefSize(800, 600); // Set WebView size
+                loadPDFContent(cours.getDescription_Cours(), webView);
+
+                // Optionally, you can add an image to represent the course
+                ImageView imageView = new ImageView(new Image("/src/cours.png"));
+                imageView.setFitWidth(100);
+                imageView.setPreserveRatio(true);
+
+                // Create a VBox to hold course details and WebView
+                VBox courseBox = new VBox(imageView, coursLabel, descriptionLabel, webView);
+                courseBox.setSpacing(5); // Adjust spacing between elements
+
+                // Create the "Supprimer" button
+                Button deleteButton = new Button("supprimer");
+                ImageView deleteIcon = new ImageView(new Image("/src/supprimer.png"));
+                deleteIcon.setFitWidth(20);
+                deleteIcon.setPreserveRatio(true);
+
+                deleteButton.setGraphic(deleteIcon);
+                deleteButton.setOnAction(e -> supprimerCours(cours)); // Attach the event handler
+
+                // Optionally, you can add a button for editing
+                Button modifierButton = new Button("Modifier");
+                modifierButton.setOnAction(e -> ModiferButton(cours));
+
+                // Add buttons to the VBox
+                courseBox.getChildren().addAll(deleteButton, modifierButton);
+
+                // Add the courseBox to the current row
+                rowBox.getChildren().add(courseBox);
+                count++;
+
+                // Check if the maximum number of courses per line is reached
+                if (count == 4) {
+                    // Add the current row to the main VBox
+                    affichagecoursvbox.getChildren().add(rowBox);
+                    rowBox = new HBox(); // Create a new row
+                    rowBox.setSpacing(10); // Adjust spacing between courses
+                    count = 0; // Reset the counter for the next row
+                }
+            }
+
+            // Add the last row if it contains fewer than four courses
+            if (!rowBox.getChildren().isEmpty()) {
+                affichagecoursvbox.getChildren().add(rowBox);
+            }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            // Handle the exception appropriately
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Database Error", "An error occurred while retrieving courses from the database.");
+        }
+    }
+    private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    // Helper method to convert byte array to Base64 and embed it into HTML for WebView
+    private String getPDFContent(byte[] pdfData) {
+        try {
+            // Check if the provided PDF data is null or empty
+            if (pdfData == null || pdfData.length == 0) {
+                // Handle the case of empty or null PDF data
+                return "<p>No PDF content available</p>";
+            }
+
+            // Convert byte array to Base64 encoding
+            String base64Encoded = Base64.getEncoder().encodeToString(pdfData);
+
+            // Construct HTML content to embed the PDF
+            String htmlContent = "<embed width='100%' height='100%' name='plugin' type='application/pdf' src='data:application/pdf;base64," + base64Encoded + "' />";
+
+            return htmlContent;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<p>Error loading PDF content</p>";
         }
     }
 
+
+    private void loadPDFContent(byte[] pdfData, WebView webView) {
+        try {
+            // Check if the provided PDF data is null or empty
+            if (pdfData == null || pdfData.length == 0) {
+                // Handle the case of empty or null PDF data
+                showAlert(Alert.AlertType.WARNING, "Warning", "Empty PDF", "The PDF content is empty.");
+                return;
+            }
+
+            // Load the PDF content into the WebView
+            webView.getEngine().loadContent(getPDFContent(pdfData), "application/pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "PDF Loading Error", "An error occurred while loading PDF content.");
+        }
+    }
+
+
+
+
     @FXML
-    void ModifierCours(ActionEvent event) {
+    void ModiferButton(ActionEvent event) {
+        // Get the selected course from the ListView
+        Cours selectedCours = CoursListView.getSelectionModel().getSelectedItem();
+
+        if (selectedCours != null) {
+            // Open a dialog box or a form to allow the user to modify the course details
+
+            // For example, you can use TextInputDialog to get the new course name
+            TextInputDialog dialog = new TextInputDialog(selectedCours.getNom_Cours());
+            dialog.setTitle("Modify Course");
+            dialog.setHeaderText(null);
+            dialog.setContentText("Enter the new course name:");
+
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(newName -> {
+                // Update the course name
+                selectedCours.setNom_Cours(newName);
+
+                try {
+                    // Call the modifier method to update the course in the database
+                    serviceC.modifier(selectedCours);
+
+                    // Refresh the view
+                    AfficherCours(new ActionEvent());
+
+                    // Show a success message
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Course Modified", "Course details have been updated successfully.");
+                } catch (SQLException e) {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Database Error", "An error occurred while modifying the course: " + e.getMessage());
+                }
+            });
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Warning", "No Course Selected", "Please select a course to modify.");
+        }
     }
 
 
@@ -173,4 +322,48 @@ public class CoursController {
 
         }
     }
+    private void ModiferButton(Cours cours) {
+        try {
+            // Call the modifier method in your service class to update the course
+            serviceC.modifier(cours);
+
+            // Refresh the ListView
+            AfficherCours(new ActionEvent());
+        } catch (SQLException e) {
+            System.out.println("Error modifying course: " + e.getMessage());
+        }
+    }
+    private void supprimerCours(Cours cours) {
+        try {
+            // Delete related records in the cour_formation table
+            serviceC.deleteCourById(cours.getIdCour());
+
+            // Delete the Formation from the database
+            serviceC.supprimer(cours);
+
+            // Refresh the ListView
+            AfficherCours(new ActionEvent());
+        } catch (SQLException e) {
+            System.out.println("Error deleting formation: " + e.getMessage());
+        }
+    }
+        public void supprimerCours(ActionEvent actionEvent) {
+            // Get the selected Cours object from the ListView
+            Cours selectedCours = CoursListView.getSelectionModel().getSelectedItem();
+
+            if (selectedCours != null) {
+                try {
+                    // Delete the selected course from the database
+                    serviceC.supprimer(selectedCours);
+
+                    // Remove the deleted course from the ListView
+                    CoursListView.getItems().remove(selectedCours);
+
+                } catch (SQLException e) {
+                    System.out.println("Error deleting course: " + e.getMessage());
+                    // Handle the exception appropriately
+                }
+            } else {
+                System.out.println("No item selected.");
+            }}
 }

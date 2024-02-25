@@ -1,60 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.FXCollections?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="531.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursController">
+<AnchorPane prefHeight="724.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursController">
    <children>
-      <Button layoutX="679.0" layoutY="219.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cours" />
-      <TextField fx:id="NomCours" layoutX="575.0" layoutY="122.0" promptText="Nom du cours" stylesheets="@styles.css" />
-      <WebView fx:id="pdf" layoutX="576.0" layoutY="179.0" prefHeight="22.0" prefWidth="172.0" stylesheets="@styles.css">
-         <effect>
-            <GaussianBlur />
-         </effect></WebView>
-      <Label layoutX="414.0" layoutY="179.0" prefHeight="21.0" prefWidth="246.0" stylesheets="@styles.css" text="Taper sur ajouter pour choisir un pdf" />
-      <ComboBox fx:id="idFormation" layoutX="575.0" layoutY="61.0" prefHeight="38.0" prefWidth="172.0" promptText="Id de formation" stylesheets="@styles.css" />
+      <Button layoutX="566.0" layoutY="221.0" mnemonicParsing="false" onAction="#AjouterCours" stylesheets="@styles.css" text="Ajouter Cours" />
+      <TextField fx:id="NomCours" layoutX="462.0" layoutY="124.0" promptText="Nom du cours" stylesheets="@styles.css" />
+
+      <Label layoutX="433.0" layoutY="175.0" prefHeight="21.0" prefWidth="246.0" stylesheets="@styles.css" text="Taper sur ajouter pour choisir un pdf" />
+      <ComboBox fx:id="idFormation" layoutX="462.0" layoutY="63.0" prefHeight="38.0" prefWidth="172.0" promptText="Id de formation" stylesheets="@styles.css" />
       <ImageView fitHeight="422.0" fitWidth="327.0" layoutX="11.0" layoutY="54.0" pickOnBounds="true">
          <image>
-            <Image url="@src/3974104-removebg-preview%20(1).png" />
+            <Image url="@src/3974104-removebg-preview.png" />
          </image>
       </ImageView>
-      <Button layoutX="803.0" layoutY="455.0" mnemonicParsing="false" onAction="#ModifierCours" stylesheets="@styles.css" text="Modifier cours" />
-      <Button layoutX="454.0" layoutY="455.0" mnemonicParsing="false" onAction="#supprimerCours" stylesheets="@styles.css" text="Supprimer Cours" />
-      <Button layoutX="638.0" layoutY="455.0" mnemonicParsing="false" onAction="#AfficherCours" prefHeight="22.0" prefWidth="109.0" stylesheets="@styles.css" text="Afficher cours" />
-      <ListView fx:id="CoursListView" layoutX="417.0" layoutY="257.0" prefHeight="174.0" prefWidth="470.0">
-         <!-- Specify the generic type of the ListView -->
-         <items>
-            <FXCollections fx:factory="observableArrayList">
-               <!-- Add Formation items here -->
-            </FXCollections>
-         </items>
-      </ListView>
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="417.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/supprimer.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="585.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="519.0" layoutY="331.0" mnemonicParsing="false" onAction="#AfficherCours" prefHeight="22.0" prefWidth="109.0" stylesheets="@styles.css" text="Afficher cours" />
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="466.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/panneau-daffichage.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="38.0" fitWidth="37.0" layoutX="766.0" layoutY="449.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/bouton-modifier.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="799.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="533.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/ajouter-le-fichier.png" />
          </image>
@@ -65,5 +42,33 @@
          </image>
       </ImageView>
       <Button layoutX="11.0" layoutY="418.0" mnemonicParsing="false" onAction="#RetournerFormation" stylesheets="@styles.css" text="Retour vers Formation" />
-      <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="445.0" layoutY="136.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />   </children>
+      <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="445.0" layoutY="136.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
+      <HBox fx:id="affichagecoursvbox" layoutX="368.0" layoutY="402.0" prefHeight="200.0" prefWidth="900.0">
+         <children>
+            <ImageView fitHeight="104.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="nomCategorie" text="Nom categorie" />
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#supprimerCours" prefHeight="26.0" prefWidth="92.0" stylesheets="@styles.css" text="Supprimer" />
+               </children>
+            </VBox>
+            <VBox fx:id="afficherpdf" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <WebView fx:id="pdf" prefHeight="200.0" prefWidth="200.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#ModiferButton" prefHeight="26.0" prefWidth="110.0" stylesheets="@styles.css" text="Modifier">
+                           <stylesheets>
+                              <URL value="@styles.css" />
+                              <URL value="@styles.css" />
+                           </stylesheets></Button>
+                     </children>
+                  </HBox>
+               </children></VBox>
+         </children>
+      </HBox>   </children>
 </AnchorPane>

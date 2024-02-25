@@ -65,4 +65,8 @@ public class Cours {
 
     public Cours() {
     }
+    public byte[] getPdfContent() {
+        return Description_Cours;
+    }
+
 }

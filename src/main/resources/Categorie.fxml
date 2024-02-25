@@ -7,6 +7,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
 <AnchorPane prefHeight="575.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
@@ -16,8 +18,6 @@
       <Button layoutX="789.0" layoutY="94.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="29.0" prefWidth="71.0" stylesheets="@styles.css" text="Ajouter" />
       <Button layoutX="643.0" layoutY="367.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
       <ListView fx:id="categorieListView" layoutX="415.0" layoutY="158.0" prefHeight="190.0" prefWidth="532.0" stylesheets="@styles.css" />
-      <!-- Add the Delete Button -->
-      <Button layoutX="479.0" layoutY="367.0" mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
       <Button layoutX="814.0" layoutY="362.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
       <ImageView fitHeight="388.0" fitWidth="326.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true">
          <image>
@@ -30,11 +30,6 @@
          </image>
       </ImageView>
       <Button fx:id="accederFormation" layoutX="25.0" layoutY="485.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
-      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="429.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/supprimer.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="600.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/panneau-daffichage.png" />
@@ -56,6 +51,28 @@
             <Image url="@src/ajouter-le-fichier.png" />
          </image>
       </ImageView>
+      <VBox layoutX="412.0" layoutY="411.0" prefHeight="200.0" prefWidth="230.0">
+         <children>
+            <HBox fx:id="affichagecoursvbox" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="104.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="nomCategorie" text="Nom categorie" />
+                  <VBox fx:id="afficherpdf" prefHeight="200.0" prefWidth="100.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@src/supprimer.png" />
+                     </image>
+                  </ImageView>
+                  <!-- Add the Delete Button -->
+                  <Button mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
 
    </children>
 </AnchorPane>
