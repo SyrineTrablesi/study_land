@@ -137,7 +137,13 @@ public class AfficherFormationController {
     private List<Formation> formations;
     @FXML
     private VBox affichageformationvbox;
+    @FXML
+    private TextField titreFormationTextField; // Assuming you have a TextField to input the ID
+    private ServiceFormation formationService; // Instance of your service
 
+    public AfficherFormationController() {
+        this.formationService = new ServiceFormation();
+    }
 
 
 
@@ -351,6 +357,39 @@ public class AfficherFormationController {
         alert.setContentText(contentText);
         alert.showAndWait();
     }
+
+    public void rechercherFormation(ActionEvent actionEvent) {
+        String titre = titreFormationTextField.getText(); // Assuming you have a text field for the title input
+        if (titre.isEmpty()) {
+            // Show an alert if the title field is empty
+            showAlert("Error", "Title field is empty", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            Formation formation = formationService.rechercherParTitre(titre);
+            if (formation != null) {
+                // If formation is found, you can display its details or perform any actions
+                // For example, you can set the details in other fields or display them in a dialog
+                showAlert("Success", "Formation found: " + formation.getTitre(), Alert.AlertType.INFORMATION);
+            } else {
+                showAlert("Error", "Formation with title '" + titre + "' not found", Alert.AlertType.ERROR);
+            }
+        } catch (SQLException e) {
+            showAlert("Error", "Error occurred while searching for formation", Alert.AlertType.ERROR);
+            e.printStackTrace(); // Print the stack trace for debugging purposes
+        }
+
+    }
+    // Helper method to show an alert dialog
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     public static class TitreComparator implements Comparator<Formation> {
         @Override
         public int compare(Formation f1, Formation f2) {

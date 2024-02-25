@@ -106,10 +106,10 @@ public class ServiceFormation implements IService<Formation> {
             return f1.getTitre().compareTo(f2.getTitre());
         }
     }
-    public Formation rechercherParId(int id) throws SQLException {
-        String req = "SELECT * FROM formation WHERE idFormation = ?";
+    public Formation rechercherParTitre(String titre) throws SQLException {
+        String req = "SELECT * FROM formation WHERE titre = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(req);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setString(1, titre);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
@@ -127,7 +127,7 @@ public class ServiceFormation implements IService<Formation> {
         } else {
             // If no result is found, return null or throw an exception
             return null;
-            // Or throw new IllegalArgumentException("Formation with ID " + id + " not found");
+            // Or throw new IllegalArgumentException("Formation with titre " + titre + " not found");
         }
     }
 
