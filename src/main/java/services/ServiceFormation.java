@@ -35,20 +35,22 @@ public class ServiceFormation implements IService<Formation> {
 
     @Override
     public void modifier(Formation formation) throws SQLException {
-        String req = "UPDATE formation SET titre=?, description=?, duree=?, dateDebut=?, dateFin=?, prix=?, niveau=? WHERE idFormation=?";
+        String req = "UPDATE formation SET titre=? WHERE idFormation=?";
         try (PreparedStatement pre = connection.prepareStatement(req)) {
+            // Log the values being set in the SQL statement
+            System.out.println("Updating formation with ID: " + formation.getIdFormation() + ", New title: " + formation.getTitre());
+
             pre.setString(1, formation.getTitre());
-            pre.setString(2, formation.getDescription());
-            pre.setInt(3, formation.getDuree());
-            pre.setDate(4, new java.sql.Date(formation.getDateDebut().getTime()));
-            pre.setDate(5, new java.sql.Date(formation.getDateFin().getTime()));
-            pre.setFloat(6, formation.getPrix());
-            pre.setString(7, formation.getNiveau());
-            pre.setInt(8, formation.getIdFormation());
+            pre.setInt(2, formation.getIdFormation());
             pre.executeUpdate();
 
+            System.out.println("Formation updated successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error updating formation: " + e.getMessage());
+            throw e; // Rethrow the exception to propagate it up the call stack
         }
     }
+
 
     @Override
     public void supprimer(Formation formation) throws SQLException {

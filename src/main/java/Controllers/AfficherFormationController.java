@@ -26,6 +26,7 @@ import Controllers.AjouterFormationController;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -141,27 +142,52 @@ public class AfficherFormationController {
     @FXML
     private TextField titreFormationTextField; // Assuming you have a TextField to input the ID
     private ServiceFormation formationService; // Instance of your service
+    private String selectedItem;
+    private Formation selectedFormation;
 
 
     public AfficherFormationController() {
         this.formationService = new ServiceFormation();
     }
 
+
+
     @FXML
-    private void handleLabelClick() {
-        // Handle label click event
-        System.out.println("Label clicked");
+    private void handleLabelClick(MouseEvent event) {
+
+        Node source = (Node) event.getSource();
+
+        if (source instanceof Label) {
+            Label clickedLabel = (Label) source;
+
+            String titre = clickedLabel.getText();
+
+            System.out.println("Clicked label text: " + titre); // Debugging output
+
+            if (titre != null && !titre.isEmpty()) {
+                try {
+                    // Search for the formation by its title
+                    Formation formation = formationService.rechercherParTitre(titre);
+
+                    if (formation != null) {
+                        // Display both the title and the ID of the selected formation
+                        String message = "Titre label clicked for formation: " + titre + "\n";
+                        message += "Formation ID: " + formation.getIdFormation();
+                        FromDB.setText(message);
+                    } else {
+                        System.out.println("Formation with title '" + titre + "' not found.");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error occurred while searching for formation: " + e.getMessage());
+                }
+            } else {
+                System.out.println("No item selected.");
+            }
+        }
     }
 
     @FXML
-    private void handleImageViewClick() {
-        // Handle ImageView click event
-        System.out.println("ImageView clicked");
-    }
-
-
-    @FXML
-    void AfficherDB(ActionEvent event){
+    void AfficherDB(ActionEvent event) {
         try {
             List<Formation> formations = FS.afficher();
 
@@ -181,6 +207,9 @@ public class AfficherFormationController {
 
                     // Create labels for each property of the Formation object
                     Label titreLabel = new Label("Titre: " + formation.getTitre());
+                    // Set the ID of the label to the ID of the formation
+                    titreLabel.setId(String.valueOf(formation.getIdFormation()));
+
                     // Add event handler to titreLabel
                     titreLabel.setOnMouseClicked(mouseEvent -> {
                         // Handle label click event
@@ -197,7 +226,6 @@ public class AfficherFormationController {
                     ImageView imageView = new ImageView(new Image("/src/cours.png"));
                     imageView.setFitWidth(100);
                     imageView.setPreserveRatio(true);
-
 
 
                     // Add labels and image to the current VBox
@@ -247,7 +275,8 @@ public class AfficherFormationController {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }}
+        }
+    }
 
     // Method to handle formation deletion
     private void supprimerFormation(Formation formation) {
@@ -264,6 +293,7 @@ public class AfficherFormationController {
             System.out.println("Error deleting formation: " + e.getMessage());
         }
     }
+
     @FXML
     void supprimer(ActionEvent event) {
 // Get the selected Formation object from the ListView
@@ -287,7 +317,6 @@ public class AfficherFormationController {
     }
 
 
-
     // Helper method to parse the ID from the string representation of a Formation object
     private int parseIdFromSelectedItem(String selectedItem) {
         // Assuming your string representation is in the format "Formation{idFormation=<id>, ...}"
@@ -297,61 +326,43 @@ public class AfficherFormationController {
     }
 
 
-
-
     // Helper method to convert Date to LocalDate
     private LocalDate dateToLocalDate(Date date) {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     public void modifier(ActionEvent actionEvent) {
-        // Get the selected Formation object from the VBox
-        Node source = (Node) actionEvent.getSource();
-        VBox parentVBox = (VBox) source.getParent();
-        Formation formation = (Formation) parentVBox.getUserData();
+        if (selectedFormation != null) {
+            // Show a dialog to prompt the user for the new title
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Modifier formation");
+            dialog.setHeaderText("Modifier le titre de la formation");
+            dialog.setContentText("Nouveau titre:");
 
-        // Display a TextInputDialog to modify the titre
-        TextInputDialog dialog = new TextInputDialog(formation.getTitre());
-        dialog.setTitle("Modifier Titre");
-        dialog.setHeaderText("Modifier Titre de la Formation");
-        dialog.setContentText("Nouveau Titre:");
+            // Get user input
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(newTitre -> {
+                if (!newTitre.isEmpty()) {
+                    try {
+                        // Create a new Formation object with the updated title and existing attributes
+                        Formation updatedFormation = new Formation(selectedFormation.getIdFormation(), newTitre);
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(newTitre -> {
-            try {
-                // Update the titre of the Formation object
-                formation.setTitre(newTitre);
-                // Call the modifier method in your service class to update the formation in the database
-                FS.modifier(formation);
-                // Optionally, provide feedback to the user that the modification was successful
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Modification Réussie");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("La formation a été modifiée avec succès.");
-                successAlert.showAndWait();
-                // Update the UI elements directly with the new titre
-                Label titleLabel = (Label) parentVBox.lookup("#titleLabel");
-                titleLabel.setText(newTitre);
-            } catch (SQLException e) {
-                System.out.println("Error modifying formation: " + e.getMessage());
-                // Provide feedback to the user about the error
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("Erreur");
-                errorAlert.setHeaderText("Erreur lors de la modification de la formation");
-                errorAlert.setContentText("Une erreur s'est produite lors de la modification de la formation. Veuillez réessayer plus tard.");
-                errorAlert.showAndWait();
-                // Handle the exception appropriately
-            }
-        });
+                        // Call the modifier method in your ServiceFormation class to update the formation title in the database
+                        formationService.modifier(updatedFormation);
 
-    }
-
-    // Method to update the UI with the modified Formation object
-
-    // Method to handle modification for a specific formation
-    private void handleModificationForFormation(String formationId) {
-        // Implement your logic to handle modification for the formation with the given ID
-        System.out.println("Handling modification for formation with ID: " + formationId);
+                        // Provide feedback to the user
+                        showAlert("Success", "Formation title updated successfully.", Alert.AlertType.INFORMATION);
+                    } catch (SQLException e) {
+                        System.out.println("Error updating formation title: " + e.getMessage());
+                        showAlert("Error", "Failed to update formation title: " + e.getMessage(), Alert.AlertType.ERROR);
+                    }
+                } else {
+                    showAlert("Error", "New title cannot be empty.", Alert.AlertType.ERROR);
+                }
+            });
+        } else {
+            showAlert("Error", "No formation selected.", Alert.AlertType.ERROR);
+        }
     }
     // Helper method to show an alert dialog
     private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {

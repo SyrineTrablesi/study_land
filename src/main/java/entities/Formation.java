@@ -133,4 +133,9 @@ public class Formation {
         this.niveau = niveau;
         this.nomCategorie = nomCategorie;
     }
+
+    public Formation(int idFormation, String titre) {
+        this.idFormation = idFormation;
+        this.titre = titre;
+    }
 }
