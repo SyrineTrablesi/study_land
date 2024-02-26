@@ -34,6 +34,11 @@ public class CategorieController {
     public void AjouterCategorie(ActionEvent actionEvent) {
         if (NomC.getText().isEmpty()) {
             System.out.println("Please fill in all fields");
+            // Display error message to user
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Categorie vide");
+            successAlert.setHeaderText("Veuillez remplir le formulaire pour ajouter un Categorie !!");
+            successAlert.showAndWait();
             return;
         }
         try {

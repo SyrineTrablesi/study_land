@@ -7,11 +7,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.time.LocalDate;
@@ -36,7 +38,7 @@ import javafx.scene.web.WebView;
 import services.ServiceFormation;
 
 
-public class AfficherFormationController {
+public class AfficherFormationController implements Initializable {
 
     @FXML
     private Label DD;
@@ -151,7 +153,11 @@ public class AfficherFormationController {
         this.formationService = new ServiceFormation();
     }
 
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialize the "FromDB" Label here
+        FromDB = new Label();
+    }
 
     @FXML
     private void handleLabelClick(MouseEvent event) {

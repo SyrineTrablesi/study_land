@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="675.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AjouterFormationController">
+<AnchorPane prefHeight="675.0" prefWidth="845.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AjouterFormationController">
    <children>
       <Button layoutX="525.0" layoutY="523.0" mnemonicParsing="false" onAction="#AjouterFormation" stylesheets="@styles.css" text="Ajouter" textFill="RED" />
       <TextField fx:id="NomF" layoutX="544.0" layoutY="82.0" prefHeight="30.0" prefWidth="210.0" promptText="Nom Formation">

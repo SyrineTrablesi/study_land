@@ -95,7 +95,11 @@ public class CoursController {
         // Retrieve the selected formation from the ComboBox
         Formation selectedFormation = idFormation.getValue();
         if (selectedFormation == null) {
-            // No formation selected, return
+            // Display error message to user
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("cours vide");
+            successAlert.setHeaderText("Veuillez remplir le formulaire pour ajouter un cours !!");
+            successAlert.showAndWait();
             return;
         }
 

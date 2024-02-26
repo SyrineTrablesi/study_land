@@ -11,26 +11,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="575.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
+<AnchorPane prefHeight="575.0" prefWidth="867.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
    <children>
-      <Label layoutX="479.0" layoutY="100.0" stylesheets="@styles.css" text="Nom categorie" />
-      <TextField fx:id="NomC" layoutX="595.0" layoutY="96.0" stylesheets="@styles.css" />
-      <Button layoutX="789.0" layoutY="94.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="29.0" prefWidth="71.0" stylesheets="@styles.css" text="Ajouter" />
-      <Button layoutX="643.0" layoutY="367.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
-      <ListView fx:id="categorieListView" layoutX="415.0" layoutY="158.0" prefHeight="190.0" prefWidth="532.0" stylesheets="@styles.css" />
-      <Button layoutX="814.0" layoutY="362.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
-      <ImageView fitHeight="388.0" fitWidth="326.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true">
+      <Label layoutX="418.0" layoutY="124.0" stylesheets="@styles.css" text="Nom categorie" />
+      <TextField fx:id="NomC" layoutX="534.0" layoutY="120.0" stylesheets="@styles.css" />
+      <Button layoutX="728.0" layoutY="118.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="29.0" prefWidth="71.0" stylesheets="@styles.css" text="Ajouter" />
+      <Button layoutX="452.0" layoutY="380.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
+      <ListView fx:id="categorieListView" layoutX="397.0" layoutY="176.0" prefHeight="190.0" prefWidth="470.0" stylesheets="@styles.css" />
+      <ImageView fitHeight="388.0" fitWidth="300.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true">
          <image>
             <Image url="@src/Categorie.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="44.0" fitWidth="37.0" layoutX="425.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="44.0" fitWidth="37.0" layoutX="364.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/categories.png" />
          </image>
       </ImageView>
-      <Button fx:id="accederFormation" layoutX="25.0" layoutY="485.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="600.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="accederFormation" layoutX="24.0" layoutY="498.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="415.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/panneau-daffichage.png" />
          </image>
@@ -45,8 +44,8 @@
             <Image url="@src/thumbnail_logo.png" />
          </image>
       </ImageView>
-      <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="475.0" layoutY="158.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
-      <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="876.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+      <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="450.0" layoutY="155.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
+      <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="815.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/ajouter-le-fichier.png" />
          </image>
@@ -69,6 +68,7 @@
                   </ImageView>
                   <!-- Add the Delete Button -->
                   <Button mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
+                  <Button mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
                </children>
             </HBox>
          </children>

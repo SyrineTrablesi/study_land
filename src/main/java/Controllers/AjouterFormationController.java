@@ -83,7 +83,7 @@ public class AjouterFormationController {
                 // Display error message to user
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                 successAlert.setTitle("Formulaire vide");
-                successAlert.setHeaderText("Veuillez remplir le formulaire de formation");
+                successAlert.setHeaderText("Veuillez remplir tous les champs du formulaire de la formation");
                 successAlert.showAndWait();
                 return;
             }

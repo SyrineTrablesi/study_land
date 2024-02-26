@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="664.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AfficherFormationController">
+<AnchorPane prefHeight="664.0" prefWidth="954.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AfficherFormationController">
    <children>
       <!-- Labels -->
       <Label fx:id="NomF" layoutX="189.0" layoutY="142.0" stylesheets="@styles.css" text="NomF" />
