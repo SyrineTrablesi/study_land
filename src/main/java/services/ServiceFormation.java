@@ -52,6 +52,23 @@ public class ServiceFormation implements IService<Formation> {
     }
 
 
+    public void modifierById(int id ,Formation formation) throws SQLException {
+        String req = "UPDATE formation SET titre=? WHERE idFormation=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            // Log the values being set in the SQL statement
+            System.out.println("Updating formation with ID:  syrine");
+            pre.setString(1, formation.getTitre());
+            pre.setInt(2, formation.getIdFormation());
+            pre.executeUpdate();
+
+            System.out.println("Formation updated successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error updating formation: " + e.getMessage());
+            throw e; // Rethrow the exception to propagate it up the call stack
+        }
+    }
+
+
     @Override
     public void supprimer(Formation formation) throws SQLException {
         // Delete related records in the cour_formation table
@@ -109,6 +126,7 @@ public class ServiceFormation implements IService<Formation> {
             return f1.getTitre().compareTo(f2.getTitre());
         }
     }
+
     public Formation rechercherParTitre(String titre) throws SQLException {
         String req = "SELECT * FROM formation WHERE titre = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(req);

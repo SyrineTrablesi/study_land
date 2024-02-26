@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -154,38 +155,27 @@ public class AfficherFormationController {
 
     @FXML
     private void handleLabelClick(MouseEvent event) {
-
         Node source = (Node) event.getSource();
 
         if (source instanceof Label) {
             Label clickedLabel = (Label) source;
 
-            String titre = clickedLabel.getText();
+            // Retrieve the Formation object associated with the clicked label
+            Formation clickedFormation = (Formation) clickedLabel.getUserData();
 
-            System.out.println("Clicked label text: " + titre); // Debugging output
+            if (clickedFormation != null) {
+                // Set the selectedFormation to the clickedFormation
+                selectedFormation = clickedFormation;
 
-            if (titre != null && !titre.isEmpty()) {
-                try {
-                    // Search for the formation by its title
-                    Formation formation = formationService.rechercherParTitre(titre);
-
-                    if (formation != null) {
-                        // Display both the title and the ID of the selected formation
-                        String message = "Titre label clicked for formation: " + titre + "\n";
-                        message += "Formation ID: " + formation.getIdFormation();
-                        FromDB.setText(message);
-                    } else {
-                        System.out.println("Formation with title '" + titre + "' not found.");
-                    }
-                } catch (SQLException e) {
-                    System.out.println("Error occurred while searching for formation: " + e.getMessage());
-                }
+                // Display both the title and the ID of the selected formation
+                String message = "Titre label clicked for formation: " + clickedFormation.getTitre() + "\n";
+                message += "Formation ID: " + clickedFormation.getIdFormation();
+                FromDB.setText(message);
             } else {
-                System.out.println("No item selected.");
+                System.out.println("No formation associated with the clicked label.");
             }
         }
     }
-
     @FXML
     void AfficherDB(ActionEvent event) {
         try {
@@ -210,17 +200,24 @@ public class AfficherFormationController {
                     // Set the ID of the label to the ID of the formation
                     titreLabel.setId(String.valueOf(formation.getIdFormation()));
 
+                    // Set the Formation object as the user data for the label
+                    titreLabel.setUserData(formation);
+
                     // Add event handler to titreLabel
-                    titreLabel.setOnMouseClicked(mouseEvent -> {
-                        // Handle label click event
-                        System.out.println("Titre label clicked for formation: " + formation.getTitre());
-                    });
+                    titreLabel.setOnMouseClicked(this::handleLabelClick);
+
+                    // Create other labels for the remaining properties of the Formation object
+                    // (Description, Durée, Date Début, Date Fin, Prix, Niveau)
                     Label descriptionLabel = new Label("Description: " + formation.getDescription());
                     Label dureeLabel = new Label("Durée: " + formation.getDuree() + " heures");
                     Label dateDebutLabel = new Label("Date Début: " + formation.getDateDebut());
+                    dateDebutLabel.setPrefWidth(120); // Set the preferred width as needed
                     Label dateFinLabel = new Label("Date Fin: " + formation.getDateFin());
+                    dateFinLabel.setPrefWidth(120); // Set the preferred width as needed
                     Label prixLabel = new Label("Prix: " + formation.getPrix() + " DT");
                     Label niveauLabel = new Label("Niveau: " + formation.getNiveau());
+
+
 
                     // Optionally, you can add an image to the formation
                     ImageView imageView = new ImageView(new Image("/src/cours.png"));
@@ -298,6 +295,7 @@ public class AfficherFormationController {
     void supprimer(ActionEvent event) {
 // Get the selected Formation object from the ListView
         String selectedItem = formationListView.getSelectionModel().getSelectedItem();
+        System.out.println(selectedItem);
         if (selectedItem != null) {
             // Parse the ID from the selected item
             int id = parseIdFromSelectedItem(selectedItem);
@@ -325,6 +323,23 @@ public class AfficherFormationController {
         return Integer.parseInt(selectedItem.substring(startIndex, endIndex));
     }
 
+    //test syrine
+    private Formation parseIdFromSelecte(String selectedItem) {
+        ServiceFormation serviceFormation= new ServiceFormation() ;
+        int startIndex = selectedItem.indexOf("idFormation=") + "idFormation=".length();
+        int endIndex = selectedItem.indexOf(",", startIndex);
+        try {
+            System.out.println(serviceFormation.rechercherParId(startIndex));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            return serviceFormation.rechercherParId(startIndex);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     // Helper method to convert Date to LocalDate
     private LocalDate dateToLocalDate(Date date) {
@@ -346,6 +361,7 @@ public class AfficherFormationController {
                     try {
                         // Create a new Formation object with the updated title and existing attributes
                         Formation updatedFormation = new Formation(selectedFormation.getIdFormation(), newTitre);
+                        System.out.println(selectedFormation.getIdFormation()+"form syrineee");
 
                         // Call the modifier method in your ServiceFormation class to update the formation title in the database
                         formationService.modifier(updatedFormation);

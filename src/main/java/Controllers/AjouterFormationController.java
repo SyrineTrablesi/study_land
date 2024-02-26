@@ -81,7 +81,10 @@ public class AjouterFormationController {
             if (NomF.getText().isEmpty() || Description.getText().isEmpty() || Duree.getText().isEmpty() || Prix.getText().isEmpty()
                     || Niveau.getText().isEmpty() || NomC.getText().isEmpty() || DD.getValue() == null || DF.getValue() == null) {
                 // Display error message to user
-                System.out.println("Please fill in all fields");
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Formulaire vide");
+                successAlert.setHeaderText("Veuillez remplir le formulaire de formation");
+                successAlert.showAndWait();
                 return;
             }
 
@@ -162,6 +165,10 @@ public class AjouterFormationController {
             } catch (NumberFormatException e) {
                 // Handle invalid price input
                 System.out.println("Invalid price input: " + e.getMessage());
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Invalid price input");
+                successAlert.setHeaderText("Put a price");
+                successAlert.showAndWait();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }

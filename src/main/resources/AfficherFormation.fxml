@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<?import javafx.scene.control.ListView?>
 <AnchorPane prefHeight="664.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AfficherFormationController">
    <children>
       <!-- Labels -->
@@ -34,7 +33,7 @@
             <Image url="@src/panneau-daffichage.png" />
          </image>
       </ImageView>
-      <VBox fx:id="affichageformationvbox" layoutX="364.0" layoutY="67.0" prefHeight="253.0" prefWidth="253.0" stylesheets="@styles.css">
+      <VBox fx:id="affichageformationvbox" layoutX="364.0" layoutY="67.0" prefHeight="430.0" prefWidth="353.0" stylesheets="@styles.css">
          <children>
             <ImageView fitHeight="133.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -42,7 +41,7 @@
                </image>
             </ImageView>
 
-            <Label fx:id="titreLabel" prefHeight="18.0" prefWidth="95.0" text="Titre:" onMouseClicked="#handleLabelClick" />
+            <Label fx:id="titreLabel" onMouseClicked="#handleLabelClick" prefHeight="18.0" prefWidth="95.0" text="Titre:" />
             <Label fx:id="descriptionLabel" text="Description:" />
             <Label fx:id="dureeLabel" text="Durée:" />
             <Label fx:id="dateDebutLabel" text="Date Début:" />
