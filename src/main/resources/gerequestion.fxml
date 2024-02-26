@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1573.0" prefWidth="1177.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Gerequestion">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1245.0" prefWidth="1308.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Gerequestion">
    <content>
       <AnchorPane prefHeight="1564.0" prefWidth="1355.0" style="-fx-background-color: #ffffff;">
          <styleClass>
@@ -51,20 +51,20 @@
                   <TableColumn fx:id="columnenonce" prefWidth="468.7998962402344" text="ènoncé" />
                </columns>
             </TableView>
-            <TextField layoutX="96.0" layoutY="1063.0" prefHeight="36.0" prefWidth="232.0" />
-            <AnchorPane layoutY="68.0" prefHeight="289.0" prefWidth="1159.0" style="-fx-background-image: #ffffff; -fx-background-color: #EAEDF0;">
+            <TextField fx:id="idchercher" layoutX="96.0" layoutY="1063.0" prefHeight="36.0" prefWidth="232.0" />
+            <AnchorPane layoutY="68.0" prefHeight="290.0" prefWidth="1205.0" style="-fx-background-image: #ffffff; -fx-background-color: #EAEDF0;">
                <children>
                   <ImageView fitHeight="278.0" fitWidth="316.0" layoutX="820.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@src/q1-removebg-preview.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="49.0" layoutY="98.0" prefHeight="46.0" prefWidth="404.0" text="Tu peux ajouter des questions">
+                  <Label layoutX="49.0" layoutY="98.0" prefHeight="46.0" prefWidth="404.0" text="ajouter des questions">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="145.0" layoutY="161.0" prefHeight="46.0" prefWidth="442.0" text="Tu peux modifier des questions">
+                  <Label layoutX="145.0" layoutY="161.0" prefHeight="46.0" prefWidth="442.0" text="modifier des questions">
                      <font>
                         <Font size="30.0" />
                      </font>

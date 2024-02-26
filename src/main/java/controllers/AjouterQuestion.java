@@ -17,6 +17,7 @@ import services.quesservice;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class AjouterQuestion {
 
@@ -131,14 +132,24 @@ public class AjouterQuestion {
             {
                 button.setOnAction(event -> {
                     question q = getTableView().getItems().get(getIndex());
-                    // Add your delete logic here
-                    try {
-                        // Call your service method to delete the question
-                        sq.supprimer(q);
-                        // Update the TableView
-                        tab.getItems().remove(q);
-                    } catch (SQLException e) {
-                        e.printStackTrace();  // Handle the exception appropriately
+
+                    // Ajoutez une boîte de dialogue de confirmation
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation");
+                    alert.setHeaderText("Confirmation de la suppression");
+                    alert.setContentText("Voulez-vous vraiment supprimer cette question ?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        try {
+                            // Appel à la méthode de service pour supprimer la question
+                            sq.supprimer(q);
+                            // Mise à jour du TableView
+                            tab.getItems().remove(q);
+                        } catch (SQLException e) {
+                            e.printStackTrace();  // Gérez l'exception de manière appropriée
+                        }
                     }
                 });
             }

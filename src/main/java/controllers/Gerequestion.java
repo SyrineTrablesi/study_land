@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.controlsfx.control.Notifications;
 import services.quesservice;
 
 import java.io.IOException;
@@ -21,6 +22,8 @@ import java.util.List;
 public class Gerequestion {
     quesservice sq =new quesservice();
 
+    @FXML
+    private TextField idchercher;
     @FXML
     private TextField ajoutdomain;
 
@@ -57,58 +60,68 @@ public class Gerequestion {
         }
     }
 
-    public void btnajouter(javafx.event.ActionEvent actionEvent) {  try {
-        // Récupérer les valeurs des champs
-        String enonce = ajouteneonce.getText().trim();
-        String domain = ajoutdomain.getText().trim();
 
-        // Vérifier que les champs ne sont pas vides
-        if (enonce.isEmpty() && domain.isEmpty()) {
-            afficherAlerte("Champs vides", "Les champs énoncé et domaine sont vides. Veuillez les remplir.");
-            return;
+
+
+    public void btnajouter(javafx.event.ActionEvent actionEvent) {
+        try {
+            // Récupérer les valeurs des champs
+            String enonce = ajouteneonce.getText().trim();
+            String domain = ajoutdomain.getText().trim();
+
+            // Vérifier que les champs ne sont pas vides et respectent les types
+            if (enonce.isEmpty() || domain.isEmpty()) {
+                showWarning("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            // Vérifier que les champs sont des chaînes de caractères
+            if (!enonce.matches("^[a-zA-Z0-9]+$") || !domain.matches("^[a-zA-Z0-9]+$")) {                showWarning("Veuillez saisir des chaînes de caractères valides.");
+                return;
+            }
+
+            // Ajouter la question dans la base de données
+            sq.ajouter(new question(enonce, domain));
+        } catch (SQLException e) {
+            showWarning("Erreur lors de l'ajout de la question.");
+            e.printStackTrace();
         }
+    }
 
-        if (enonce.isEmpty()) {
-            afficherAlerte("Champ énoncé vide", "Le champ énoncé est vide. Veuillez le remplir.");
-            return;
+    public void btnmodifier(javafx.event.ActionEvent actionEvent) {
+        try {
+            question selectedQuestion = tab.getSelectionModel().getSelectedItem();
+
+            if (selectedQuestion != null) {
+                int questionIdToUpdate = selectedQuestion.getIdQuestion();
+
+                // Récupérer les valeurs des champs de modification
+                String newEnonce = modifeneonce.getText().trim();
+                String newDomain = modfdomaine.getText().trim();
+
+                // Vérifier que les champs ne sont pas vides et respectent les types
+                if (newEnonce.isEmpty() || newDomain.isEmpty()) {
+                    showWarning("Veuillez remplir tous les champs de modification.");
+                    return;
+                }
+
+                // Modifier la question dans la base de données
+                sq.modifier(new question(questionIdToUpdate, newEnonce, newDomain));
+            } else {
+                showWarning("Aucune question sélectionnée.");
+            }
+        } catch (SQLException e) {
+            showWarning("Erreur lors de la modification de la question.");
+            e.printStackTrace();
         }
-
-        if (domain.isEmpty()) {
-            afficherAlerte("Champ domaine vide", "Le champ domaine est vide. Veuillez le remplir.");
-            return;
-        }
-
-        // Ajouter la question dans la base de données
-        sq.ajouter(new question(enonce, domain));
-
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
     }
+    private void showWarning(String message) {
+        Notifications.create()
+                .title("Avertissement")
+                .text(message)
+                .showWarning();
     }
-    private void afficherAlerte(String titre, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur");
-        alert.setHeaderText(titre);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    public void btnmodifier(javafx.event.ActionEvent actionEvent)
-       {
-           try{
-           question selectedQuestion = tab.getSelectionModel().getSelectedItem();
 
-           if (selectedQuestion != null) {
-               int questionIdToUpdate = selectedQuestion.getIdQuestion();
-
-               // Call the modifier method with the selected question's ID and updated values
-               sq.modifier(new question(questionIdToUpdate, modifeneonce.getText(), modfdomaine.getText()));
-           } else {
-               System.out.println("No question selected.");
-           }
-       } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-}
     @FXML
     public void initialize() {
         // Initialisez les colonnes ici
@@ -198,5 +211,27 @@ public class Gerequestion {
 }
 
     public void recherche(ActionEvent actionEvent) {
+        try {
+            // Obtenir le texte de recherche
+            String caractereRecherche = idchercher.getText();
+
+            // Vérifier si le champ de recherche n'est pas vide
+            if (!caractereRecherche.isEmpty()) {
+                // Effectuer la recherche en utilisant le service quesservice
+                List<question> questionsTrouvees = sq.rechercherParCaractere(caractereRecherche);
+
+                // Mettre à jour la liste observable pour le TableView
+                ObservableList<question> observableQuestions = FXCollections.observableArrayList(questionsTrouvees);
+
+                // Associez la liste observable au TableView
+                tab.setItems(observableQuestions);
+            } else {
+                // Si le champ de recherche est vide, afficher toutes les questions
+                initTable(); // Vous pouvez également appeler votre méthode initTable() pour charger toutes les questions
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
     }
+
 }

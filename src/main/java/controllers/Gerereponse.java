@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.controlsfx.control.Notifications;
 import services.Reponseservice;
 import services.quesservice;
 
@@ -24,6 +25,11 @@ import java.util.Optional;
 
 public class Gerereponse {
     Reponseservice reponseservice =new Reponseservice();
+    @FXML
+    private TextField recherchequestion;
+
+    @FXML
+    private TextField recherchereponse;
     @FXML
     private TableColumn<response, Void> supprimer;
     @FXML
@@ -181,63 +187,90 @@ quesservice ques= new quesservice();
 
     public void btnajouter(ActionEvent actionEvent) {
         try {
+            // Récupérer les valeurs des champs
+            String newContenu = idtep12.getText().trim();
+            boolean isSelected = oui.isSelected();
+            String statusString = isSelected ? "ONE" : "ZERO";
+
             // Vérifier que les champs ne sont pas vides
-            if (idtep12.getText().isEmpty() && (!oui.isSelected() && !non.isSelected())) {
-                afficherAlerte("Champs vides", "Les champs réponse et statut sont vides. Veuillez les remplir.");
+            if (newContenu.isEmpty()) {
+                showWarning("Champ réponse vide Le champ réponse est vide. Veuillez le remplir.");
                 return;
             }
 
-            if (idtep12.getText().isEmpty()) {
-                afficherAlerte("Champ réponse vide", "Le champ réponse est vide. Veuillez le remplir.");
+            // Vérifier que le champ Réponse respecte le type de données attendu (chaine de caractères)
+            if (!newContenu.matches("^[a-zA-Z0-9_ ]+$")) {
+                showWarning("Format invalide Le champ réponse doit contenir uniquement des caractères alphanumériques.");
                 return;
             }
 
+            // Vérifier qu'au moins une option CheckBox est sélectionnée
             if (!oui.isSelected() && !non.isSelected()) {
-                afficherAlerte("Champ statut vide", "Le champ statut est vide. Veuillez le remplir.");
+                showWarning("Champ statut vide Le champ statut est vide. Veuillez le remplir.");
                 return;
             }
-            response updatedResponse = new response();
-            updatedResponse.setContenu((idtep12.getText()));
 
-            updatedResponse.setIdQuestion((selectedQuestionId));
-            updatedResponse.setStatus(response.status.valueOf(oui.isSelected() ? "ONE" : "ZERO"));
+            response newResponse = new response();
+            newResponse.setContenu(newContenu);
+            newResponse.setIdQuestion(selectedQuestionId);
+            newResponse.setStatus(response.status.valueOf(statusString));
 
-            // Modifier la response dans la base de données
-            reponseservice.ajouter(updatedResponse);
-            System.out.println(updatedResponse);
-
+            // Ajouter la réponse dans la base de données
+            reponseservice.ajouter(newResponse);
+            System.out.println(newResponse);
 
         } catch (SQLException e) {
+            showWarning("Erreur lors de la modification de la réponse.");
+
             throw new RuntimeException(e);
         }
     }
-    private void afficherAlerte(String titre, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur");
-        alert.setHeaderText(titre);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
+
 
     public void btnmodifier(ActionEvent actionEvent) {
-
         try {
-            response updatedResponse = new response();
-            updatedResponse.setContenu(idtep121.getText());
+            // Récupérer les valeurs des champs de modification
+            String newContenu = idtep121.getText().trim();
             boolean isSelected = oui1.isSelected();
             String statusString = isSelected ? "ONE" : "ZERO";
             System.out.println("isSelected: " + isSelected + ", statusString: " + statusString);
 
+            // Vérifier que les champs ne sont pas vides
+            if (newContenu.isEmpty()) {
+                showWarning("Veuillez remplir le champ Réponse.");
+                return;
+            }
+
+            // Vérifier que le champ Réponse respecte le type de données attendu (chaine de caractères)
+            if (!newContenu.matches("^[a-zA-Z0-9_ ]+$")) {
+                showWarning("Le champ Réponse doit contenir uniquement des caractères alphanumériques.");
+                return;
+            }
+
+            // Vérifier qu'au moins une option CheckBox est sélectionnée
+            if (!oui1.isSelected() && !non1.isSelected()) {
+                showWarning("Veuillez sélectionner le statut.");
+                return;
+            }
+
+            response updatedResponse = new response();
+            updatedResponse.setContenu(newContenu);
             updatedResponse.setIdReponse(selectedReponseId);
-            System.out.println("aa"+selectedReponseId);
+            updatedResponse.setStatus(response.status.valueOf(statusString));
 
-            // Modifier la response dans la base de données
+            // Modifier la réponse dans la base de données
             reponseservice.modifier(updatedResponse);
-
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            showWarning("Erreur lors de la modification de la réponse.");
+            e.printStackTrace();
         }
+    }
+    private void showWarning(String message) {
+        Notifications.create()
+                .title("Avertissement")
+                .text(message)
+                .showWarning();
     }
 
     public void afficherrepense(ActionEvent actionEvent) {
@@ -303,11 +336,44 @@ quesservice ques= new quesservice();
         }}
 
     public void recherche(ActionEvent actionEvent) {
+        try {
+            // Obtenez le texte de recherche
+            String caractereRecherche = recherchequestion.getText();
+
+            // Vérifiez si le champ de recherche n'est pas vide
+            if (!caractereRecherche.isEmpty()) {
+                // Effectuez la recherche en utilisant le service quesservice
+                List<question> questionsTrouvees = ques.rechercherParCaractere(caractereRecherche);
+
+                // Mettez à jour la liste observable pour le TableView
+                ObservableList<question> observableQuestions = FXCollections.observableArrayList(questionsTrouvees);
+
+                // Associez la liste observable au TableView
+                tabquestion.setItems(observableQuestions);
+            } else {
+                // Si le champ de recherche est vide, affichez toutes les questions
+                initTable(); // Vous pouvez également appeler votre méthode initTable() pour charger toutes les questions
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérez l'exception de manière appropriée dans votre application
+        }
     }
 
-    public void getquestion(ListView.EditEvent<?> editEvent) {
-    }
 
-    public void getreponse(ListView.EditEvent<?> editEvent) {
+    public void recherchereponse(ActionEvent actionEvent) {
+        try{
+            String caractereRecherche=recherchereponse.getText();
+            if (!caractereRecherche.isEmpty()) {
+            List<response> responsesTrouves = reponseservice.rechercherParCaractere(caractereRecherche);
+            ObservableList<response> observablereponse = FXCollections.observableArrayList(responsesTrouves);
+            tabreponse.setItems(observablereponse);
+        }else
+        {
+            initTable();
+            }
+        }
+        catch (SQLException e) {
+        e.printStackTrace(); // Gérez l'exception de manière appropriée dans votre application
+    }
     }
 }

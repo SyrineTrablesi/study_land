@@ -109,12 +109,7 @@
         }
 
 
-        private void displayEvaluations(List<evaluation> evaluations) {
-            for (evaluation eval : evaluations) {
-                String evaluationText = "ID de l'evaluation " + eval.getId_evaluation() + "                   Le Titre de evaluation : " + eval.getTitre_evaluation() ;
-                evaluationListView.getItems().add(evaluationText);
-            }
-        }
+
 
         public void ajouterevaluation(ActionEvent actionEvent) {
             try {

@@ -1,5 +1,7 @@
 package controllers;
+
 import entities.evaluation;
+import entities.question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,12 +12,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.converter.FloatStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import org.controlsfx.control.Notifications;
 import services.EvalService;
-import entities.question;
 import services.quesservice;
 import utils.MyDB;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -25,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-
 public class Ajoutevaluation {
     @FXML
     private TextField recherchequestion;
@@ -79,12 +83,84 @@ public class Ajoutevaluation {
         // Utilisez la connexion par défaut ou tout autre mécanisme que vous utilisez pour obtenir une connexion
         this.connection = MyDB.getInstance().getConnection();
     }
+    private void setupQuestionListViews() {
+        // Configurer la ListView pour permettre la sélection multiple
+        questionListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        // Configurer la factory pour afficher uniquement l'enoncé et l'ID
+        questionListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(question item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getEnonce() + " - " + item.getIdQuestion());
+                }
+            }
+        });
+
+        // Configurer la factory pour afficher uniquement l'enoncé et l'ID dans questionselectioner
+        questionselectioner.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(question item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getEnonce() + " - " + item.getIdQuestion());
+                }
+            }
+        });
+    }
     @FXML
     public void initialize() {
+        setupQuestionListViews();
         chargerQuestions();
         // Configurer la ListView pour permettre la sélection multiple
         questionListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setupInputValidation();
+        showWarning("aaaa");
+    }
+    private void setupInputValidation() {
+        setupIntegerInputValidation(nbquestion);
+        setupFloatInputValidation(prix);
+        setupFloatInputValidation(resultat);
+    }
+
+    private void setupIntegerInputValidation(TextField textField) {
+        textField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0,
+                change -> {
+                    String newText = change.getControlNewText();
+                    if (newText.matches("\\d*")) {
+                        return change;
+                    } else {
+                        showWarning("Veuillez saisir un nombre valide pour le champ 'Nombre de questions'.");
+                        return null;
+                    }
+                }));
+    }
+
+    private void setupFloatInputValidation(TextField textField) {
+        textField.setTextFormatter(new TextFormatter<>(new FloatStringConverter(), 0.0f,
+                change -> {
+                    String newText = change.getControlNewText();
+                    if (newText.matches("\\d*(\\.\\d*)?")) {
+                        return change;
+                    } else {
+                        showWarning("Veuillez saisir un nombre décimal valide pour le champ.");
+                        return null;
+                    }
+                }));
+    }
+
+    private void showWarning(String message) {
+        Notifications.create()
+                .title("Avertissement")
+                .text(message)
+                .showWarning();
     }
 
     private void chargerQuestions() {
@@ -108,79 +184,43 @@ public class Ajoutevaluation {
         for (question selectedQuestion : selectedQuestions) {
             System.out.println(selectedQuestion.getIdQuestion()); // Remplacez getId() par la méthode réelle pour obtenir l'ID de la question
 
-            // Ajouter l'ID à la questionselectioner
-            questionselectioner.getItems().add(new question(selectedQuestion.getIdQuestion()));
-    }}
+            // Ajouter l'objet question complet à questionselectioner
+            questionselectioner.getItems().add(selectedQuestion);
+        }
+    }
+
+
 
     public void ajouterevaluation(ActionEvent actionEvent) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
             // Validation des champs obligatoires
-            if (titre.getText().isEmpty()) {
-                System.out.println("Le champ 'Titre' ne peut pas être vide.");
+            if (isFieldEmpty(titre, "Titre") ||
+                    isFieldEmpty(description, "Description") ||
+                    isFieldEmpty(dificulter, "Difficulté") ||
+                    isFieldEmpty(nbquestion, "Nombre de questions") ||
+                    isFieldEmpty(duree, "Durée HH:mm:ss") ||
+                    isFieldEmpty(resultat, "Résultat") ||
+                    date.getValue() == null ||
+                    isFieldEmpty(createur, "Créateur") ||
+                    isFieldEmpty(prix, "Prix") ||
+                    isFieldEmpty(domaine, "Domaine")) {
                 return;
             }
-            if (description.getText().isEmpty()) {
-                System.out.println("Le champ 'Description' ne peut pas être vide.");
+            if (!isValidDuration(duree, "Durée")) {
                 return;
             }
-            if (dificulter.getText().isEmpty()) {
-                System.out.println("Le champ 'Difficulté' ne peut pas être vide.");
-                return;
-            }
-            if (nbquestion.getText().isEmpty()) {
-                System.out.println("Le champ 'Nombre de questions' ne peut pas être vide.");
-                return;
-            }
-            if (duree.getText().isEmpty()) {
-                System.out.println("Le champ 'Durée' ne peut pas être vide.");
-                return;
-            }
-            if (resultat.getText().isEmpty()) {
-                System.out.println("Le champ 'Résultat' ne peut pas être vide.");
-                return;
-            }
-            if (date.getValue() == null) {
-                System.out.println("Veuillez sélectionner une date.");
-                return;
-            }
-            if (createur.getText().isEmpty()) {
-                System.out.println("Le champ 'Créateur' ne peut pas être vide.");
-                return;
-            }
-            if (prix.getText().isEmpty()) {
-                System.out.println("Le champ 'Prix' ne peut pas être vide.");
-                return;
-            }
-            if (domaine.getText().isEmpty()) {
-                System.out.println("Le champ 'Domaine' ne peut pas être vide.");
-                return;
-            }
-
             // Validation des formats de saisie
-            try {
-                Integer.parseInt(nbquestion.getText());
-            } catch (NumberFormatException e) {
-                System.out.println("Veuillez saisir un nombre valide pour le champ 'Nombre de questions'.");
-                return;
-            }
-            try {
-                Float.parseFloat(resultat.getText());
-            } catch (NumberFormatException e) {
-                System.out.println("Veuillez saisir un nombre décimal valide pour le champ 'Résultat'.");
-                return;
-            }
-            try {
-                Float.parseFloat(prix.getText());
-            } catch (NumberFormatException e) {
-                System.out.println("Veuillez saisir un nombre décimal valide pour le champ 'Prix'.");
+            if (!isValidInteger(nbquestion, "Nombre de questions") ||
+                    !isValidFloat(resultat, "Résultat") ||
+                    !isValidFloat(prix, "Prix")) {
                 return;
             }
 
             // Validation de la date
             if (date.getValue().isBefore(LocalDate.now())) {
-                System.out.println("La date de l'évaluation ne peut pas être antérieure à la date actuelle.");
+                showWarning("La date de l'évaluation ne peut pas être antérieure à la date actuelle.");
                 return;
             }
 
@@ -213,7 +253,46 @@ public class Ajoutevaluation {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
     }
+    private boolean isFieldEmpty(TextField field, String fieldName) {
+        if (field.getText().isEmpty()) {
+            showWarning("Le champ '" + fieldName + "' ne peut pas être vide.");
+            return true;
+        }
+        return false;
+    }
+    private boolean isValidDuration(TextField field, String fieldName) {
+        String durationPattern = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
+        String input = field.getText().trim();
+
+        if (!input.matches(durationPattern)) {
+            showWarning("Veuillez saisir une durée valide au format HH:mm:ss pour le champ '" + fieldName + "'.");
+            return false;
+        }
+        return true;
+    }
+    private boolean isValidInteger(TextField field, String fieldName) {
+        try {
+            Integer.parseInt(field.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            showWarning("Veuillez saisir un nombre valide pour le champ '" + fieldName + "'.");
+            return false;
+        }
+    }
+
+    private boolean isValidFloat(TextField field, String fieldName) {
+        try {
+            Float.parseFloat(field.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            showWarning("Veuillez saisir un nombre décimal valide pour le champ '" + fieldName + "'.");
+            return false;
+        }
+    }
+
+
     private void ajoutIdEvaluationQuestion(int idEvaluation, int idQuestion) throws SQLException {
         String req = "INSERT INTO evaluationquestion (id_evaluation, id_question) VALUES (?, ?)";
         try (PreparedStatement st = connection.prepareStatement(req)) {
@@ -246,5 +325,25 @@ public class Ajoutevaluation {
     }
 
     public void recherche(ActionEvent actionEvent) {
+        try {
+            // Obtenir le texte de recherche
+            String caractereRecherche = recherchequestion.getText();
+
+            // Vérifier si le champ de recherche n'est pas vide
+            if (!caractereRecherche.isEmpty()) {
+                // Effectuer la recherche en utilisant le service quesservice
+                List<question> questionsTrouvees = questionService.rechercherParCaractere(caractereRecherche);
+
+                // Mettre à jour la liste questionListView
+                ObservableList<question> observableQuestions = FXCollections.observableArrayList(questionsTrouvees);
+                questionListView.setItems(observableQuestions);
+            } else {
+                // Si le champ de recherche est vide, afficher toutes les questions
+                chargerQuestions();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
     }
+
 }
