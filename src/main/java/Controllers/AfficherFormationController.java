@@ -7,12 +7,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
@@ -515,7 +518,18 @@ public class AfficherFormationController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    @FXML
+    void accederFormation(ActionEvent event) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/AjouterFormation.fxml"));
+        try {
+            Parent root = loader1.load();
+            AjouterFormationController controller = loader1.getController();
+            NomC.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
 
+        }
+    }
     }
 
 

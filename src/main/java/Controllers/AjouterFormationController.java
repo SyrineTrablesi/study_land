@@ -142,7 +142,16 @@ public class AjouterFormationController {
                 return;
             }
 
-            try {
+            try { // Check if a formation with the same name already exists
+                boolean formationExists = FS.checkFormationExists(NomF.getText());
+                if (formationExists) {
+                    // Display error message to user
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Duplicate Formation");
+                    alert.setHeaderText("A formation with the same name already exists");
+                    alert.showAndWait();
+                    return;
+                }
                 float price = Float.parseFloat(priceText);
 
                 FS.ajouter(new Formation(

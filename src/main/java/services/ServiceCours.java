@@ -38,7 +38,19 @@ public class ServiceCours implements IService<Cours>{
         statement.setInt(2, cours.getIdCour());
         statement.executeUpdate();
     }
-
+    public boolean checkCourseExists(String courseName, int formationId) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM cour_formation WHERE Nom_Cours = ? AND idFormation = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, courseName);
+            statement.setInt(2, formationId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0; // If count is greater than 0, course exists
+            }
+        }
+        return false; // If no course with the given name and formation ID is found
+    }
     @Override
     public void supprimer(Cours cours) throws SQLException {
         // Préparer la requête SQL

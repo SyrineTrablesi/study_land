@@ -8,15 +8,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="664.0" prefWidth="954.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AfficherFormationController">
+<AnchorPane prefHeight="664.0" prefWidth="1051.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AfficherFormationController">
    <children>
       <!-- Labels -->
       <Label fx:id="NomF" layoutX="189.0" layoutY="142.0" stylesheets="@styles.css" text="NomF" />
       <Label fx:id="Duree" layoutX="189.0" layoutY="163.0" stylesheets="@styles.css" text="Duree" />
       <Label fx:id="NomC" layoutX="188.0" layoutY="184.0" stylesheets="@styles.css" text="NomC" />
       <!-- Button -->
-      <Button layoutX="385.0" layoutY="31.0" mnemonicParsing="false" onAction="#AfficherDB" prefHeight="26.0" prefWidth="94.0" stylesheets="@styles.css" text="AfficherDB" />
+      <Button layoutX="455.0" layoutY="98.0" mnemonicParsing="false" onAction="#AfficherDB" prefHeight="26.0" prefWidth="94.0" stylesheets="@styles.css" text="AfficherDB" />
       <ImageView fitHeight="674.0" fitWidth="353.0" layoutY="-17.0" pickOnBounds="true">
          <image>
             <Image url="@src/3974104-removebg-preview.png" />
@@ -28,12 +29,12 @@
          </image>
       </ImageView>
       <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="452.0" layoutY="185.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="491.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="561.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/panneau-daffichage.png" />
          </image>
       </ImageView>
-      <VBox fx:id="affichageformationvbox" layoutX="364.0" layoutY="67.0" prefHeight="430.0" prefWidth="353.0" stylesheets="@styles.css">
+      <VBox fx:id="affichageformationvbox" layoutX="531.0" layoutY="159.0" prefHeight="430.0" prefWidth="353.0" stylesheets="@styles.css">
          <children>
             <ImageView fitHeight="133.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -55,17 +56,28 @@
          <ImageView fx:id="UpdateIcon" fitHeight="52.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
          </ImageView>
       </VBox>
-      <Button layoutX="534.0" layoutY="31.0" mnemonicParsing="false" onAction="#trierParTitre" prefHeight="26.0" prefWidth="83.0" stylesheets="@styles.css" text="Trier" />
-      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="630.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="604.0" layoutY="98.0" mnemonicParsing="false" onAction="#trierParTitre" prefHeight="26.0" prefWidth="83.0" stylesheets="@styles.css" text="Trier" />
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="700.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/trier.png" />
          </image>
       </ImageView>
-      <Button layoutX="789.0" layoutY="33.0" mnemonicParsing="false" onAction="#rechercherFormation" prefHeight="26.0" prefWidth="94.0" stylesheets="@styles.css" text="Recherche" />
-      <TextField fx:id="titreFormationTextField" layoutX="669.0" layoutY="32.0" prefHeight="26.0" prefWidth="108.0" promptText="ID Formation" stylesheets="@styles.css" />
-      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="891.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="859.0" layoutY="100.0" mnemonicParsing="false" onAction="#rechercherFormation" prefHeight="26.0" prefWidth="94.0" stylesheets="@styles.css" text="Recherche" />
+      <TextField fx:id="titreFormationTextField" layoutX="739.0" layoutY="99.0" prefHeight="29.0" prefWidth="114.0" promptText="Nom Formation" stylesheets="@styles.css" />
+      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="961.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/chercher.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="accederFormation" layoutX="61.0" layoutY="576.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
+      <Label layoutX="148.0" layoutY="132.0" prefHeight="27.0" prefWidth="209.0" text="Afficher les formations:" textFill="#1f8a99">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="37.0" fitWidth="40.0" layoutX="24.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/fleches.png" />
          </image>
       </ImageView>
 

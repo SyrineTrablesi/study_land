@@ -16,9 +16,22 @@ public class ServiceFormation implements IService<Formation> {
     public ServiceFormation(){
         connection = MyDB.getInstance().getConnection();
     }
-
+    public boolean checkFormationExists(String titre) throws SQLException {
+        String req = "SELECT COUNT(*) FROM formation WHERE titre=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
+            preparedStatement.setString(1, titre);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false; // Return false if no result or an error occurs
+    }
     @Override
     public void ajouter(Formation formation) throws SQLException {
+
         String req = "INSERT INTO formation(nomCategorie,titre, description, duree, dateDebut, dateFin, prix, niveau) VALUES (?, ?, ?, ?, ?, ?,?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(req);
         preparedStatement.setString(1, formation.getNomCategorie());

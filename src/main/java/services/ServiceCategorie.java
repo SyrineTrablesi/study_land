@@ -15,7 +15,18 @@ public class ServiceCategorie implements IService<Categorie> {
     public ServiceCategorie() {
         connection = MyDB.getInstance().getConnection();
     }
-
+    public boolean checkCategoryExists(String categoryName) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM categorie WHERE nomCategorie = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, categoryName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0; // If count is greater than 0, category exists
+            }
+        }
+        return false; // If no category with the given name is found
+    }
     @Override
     public void ajouter(Categorie categorie) throws SQLException {
         String req = "INSERT INTO categorie(nomCategorie) VALUES (?)";

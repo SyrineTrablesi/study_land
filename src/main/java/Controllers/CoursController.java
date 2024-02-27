@@ -6,10 +6,12 @@ import entities.Formation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -41,7 +43,8 @@ public class CoursController {
 
 
     @FXML
-    private WebView pdf;
+    private WebView courseWebView;
+
     @FXML
     private ListView<Cours> CoursListView;
     @FXML
@@ -51,6 +54,7 @@ public class CoursController {
 
     private ServiceCours serviceC = new ServiceCours();
     private ServiceFormation serviceFormation = new ServiceFormation();
+    private Cours selectedCours;
 
     @FXML
     private void initialize() {
@@ -74,7 +78,7 @@ public class CoursController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        pdf = new WebView(); // Initialize the WebView object
+        courseWebView = new WebView(); // Initialize the WebView object
 
     }
 
@@ -91,6 +95,7 @@ public class CoursController {
             // No file selected, return
             return;
         }
+
 
         // Retrieve the selected formation from the ComboBox
         Formation selectedFormation = idFormation.getValue();
@@ -112,6 +117,22 @@ public class CoursController {
             e.printStackTrace();
             return; // Exit the method if an error occurs
         }
+        // Check if a course with the same name already exists for the selected formation
+        try {
+            boolean courseExists = serviceC.checkCourseExists(nomCours, selectedFormation.getIdFormation());
+            if (courseExists) {
+                // Display error message to user
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Un cours avec le même nom existe déjà pour la formation sélectionnée !");
+                alert.showAndWait();
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception appropriately, e.g., show an error message
+            return;
+        }
 
         // Create a new course instance
         Cours cours = new Cours(nomCours, descriptionBytes, selectedFormation.getIdFormation());
@@ -129,7 +150,7 @@ public class CoursController {
 
             // Load the selected PDF file into the WebView
             URL url = selectedFile.toURI().toURL();
-            pdf.getEngine().load(url.toString());
+            courseWebView.getEngine().load(url.toString());
         } catch (SQLException | MalformedURLException e) {
             // Display an alert for error
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -156,12 +177,6 @@ public class CoursController {
                 return;
             }
 
-            // Create a HBox to hold courses in a row
-            HBox rowBox = new HBox();
-            rowBox.setSpacing(10); // Adjust spacing between courses
-
-            int count = 0; // Counter for courses in the current row
-
             // Loop through the list of courses
             for (Cours cours : coursList) {
                 // Create labels to display course details
@@ -172,9 +187,9 @@ public class CoursController {
                 Label descriptionLabel = new Label("Description: " + description);
 
                 // Create a WebView to display the PDF content
-                WebView webView = new WebView();
-                webView.setPrefSize(800, 600); // Set WebView size
-                loadPDFContent(cours.getDescription_Cours(), webView);
+                WebView courseWebView = new WebView();
+                courseWebView.setPrefSize(800, 600); // Set WebView size
+                loadPDFContent(cours.getDescription_Cours(), courseWebView);
 
                 // Optionally, you can add an image to represent the course
                 ImageView imageView = new ImageView(new Image("/src/cours.png"));
@@ -182,7 +197,7 @@ public class CoursController {
                 imageView.setPreserveRatio(true);
 
                 // Create a VBox to hold course details and WebView
-                VBox courseBox = new VBox(imageView, coursLabel, descriptionLabel, webView);
+                VBox courseBox = new VBox(imageView, coursLabel, descriptionLabel, courseWebView);
                 courseBox.setSpacing(5); // Adjust spacing between elements
 
                 // Create the "Supprimer" button
@@ -201,23 +216,8 @@ public class CoursController {
                 // Add buttons to the VBox
                 courseBox.getChildren().addAll(deleteButton, modifierButton);
 
-                // Add the courseBox to the current row
-                rowBox.getChildren().add(courseBox);
-                count++;
-
-                // Check if the maximum number of courses per line is reached
-                if (count == 4) {
-                    // Add the current row to the main VBox
-                    affichagecoursvbox.getChildren().add(rowBox);
-                    rowBox = new HBox(); // Create a new row
-                    rowBox.setSpacing(10); // Adjust spacing between courses
-                    count = 0; // Reset the counter for the next row
-                }
-            }
-
-            // Add the last row if it contains fewer than four courses
-            if (!rowBox.getChildren().isEmpty()) {
-                affichagecoursvbox.getChildren().add(rowBox);
+                // Add the courseBox to the main VBox
+                affichagecoursvbox.getChildren().add(courseBox);
             }
         } catch (SQLException e) {
             // Handle the exception appropriately
@@ -326,16 +326,65 @@ public class CoursController {
 
         }
     }
-    private void ModiferButton(Cours cours) {
-        try {
-            // Call the modifier method in your service class to update the course
-            serviceC.modifier(cours);
+    @FXML
+    private void handleLabelClick(MouseEvent event) {
+        Node source = (Node) event.getSource();
 
-            // Refresh the ListView
-            AfficherCours(new ActionEvent());
-        } catch (SQLException e) {
-            System.out.println("Error modifying course: " + e.getMessage());
+        if (source instanceof Label) {
+            Label clickedLabel = (Label) source;
+
+            // Retrieve the Formation object associated with the clicked label
+            Cours clickedCours = (Cours) clickedLabel.getUserData();
+
+            if (clickedCours != null) {
+                // Set the selectedFormation to the clickedFormation
+                selectedCours = clickedCours;
+
+                // Display both the title and the ID of the selected formation
+                String message = "nom label clicked for cours: " + clickedCours.getNom_Cours() + "\n";
+                message += "Cours ID: " + clickedCours.getIdCour();
+                nomCategorie.setText(message);
+            } else {
+                System.out.println("No cours associated with the clicked label.");
+            }
         }
+    }
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void ModiferButton(Cours cours) {
+        // Show a dialog to prompt the user for the new course name
+        TextInputDialog dialog = new TextInputDialog(cours.getNom_Cours());
+        dialog.setTitle("Modifier cours");
+        dialog.setHeaderText("Modifier le nom du cours");
+        dialog.setContentText("Nouveau nom:");
+
+        // Get user input
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(newName -> {
+            if (!newName.isEmpty()) {
+                try {
+                    // Update the course name with the new name
+                    cours.setNom_Cours(newName);
+
+                    // Call the modifier method in your ServiceCours class to update the course name in the database
+                    serviceC.modifier(cours);
+
+                    // Provide feedback to the user
+                    showAlert("Success", "Course name updated successfully.", Alert.AlertType.INFORMATION);
+                } catch (SQLException e) {
+                    System.out.println("Error updating course name: " + e.getMessage());
+                    showAlert("Error", "Failed to update course name: " + e.getMessage(), Alert.AlertType.ERROR);
+                }
+            } else {
+                showAlert("Error", "New name cannot be empty.", Alert.AlertType.ERROR);
+            }
+        });
     }
     private void supprimerCours(Cours cours) {
         try {

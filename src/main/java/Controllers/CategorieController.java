@@ -41,6 +41,22 @@ public class CategorieController {
             successAlert.showAndWait();
             return;
         }
+        // Check if a category with the same name already exists
+        try {
+            boolean categoryExists = CS.checkCategoryExists(NomC.getText());
+            if (categoryExists) {
+                // Display error message to user
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Duplicate Category");
+                alert.setHeaderText("A category with the same name already exists");
+                alert.showAndWait();
+                return;
+            }
+        } catch (SQLException e) {
+            // Handle the exception appropriately, e.g., show an error message
+            System.out.println(e.getMessage());
+            return;
+        }
         try {
             CS.ajouter(new Categorie(NomC.getText()));
             // Display success message to user

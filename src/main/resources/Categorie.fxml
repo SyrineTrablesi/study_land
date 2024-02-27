@@ -10,15 +10,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="575.0" prefWidth="867.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
+<AnchorPane prefHeight="683.0" prefWidth="953.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CategorieController">
    <children>
       <Label layoutX="418.0" layoutY="124.0" stylesheets="@styles.css" text="Nom categorie" />
       <TextField fx:id="NomC" layoutX="534.0" layoutY="120.0" stylesheets="@styles.css" />
       <Button layoutX="728.0" layoutY="118.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="29.0" prefWidth="71.0" stylesheets="@styles.css" text="Ajouter" />
       <Button layoutX="452.0" layoutY="380.0" mnemonicParsing="false" onAction="#AfficherCat" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Afficher" />
       <ListView fx:id="categorieListView" layoutX="397.0" layoutY="176.0" prefHeight="190.0" prefWidth="470.0" stylesheets="@styles.css" />
-      <ImageView fitHeight="388.0" fitWidth="300.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true">
+      <ImageView fitHeight="430.0" fitWidth="331.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true">
          <image>
             <Image url="@src/Categorie.jpg" />
          </image>
@@ -28,7 +29,7 @@
             <Image url="@src/categories.png" />
          </image>
       </ImageView>
-      <Button fx:id="accederFormation" layoutX="24.0" layoutY="498.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
+      <Button fx:id="accederFormation" layoutX="68.0" layoutY="547.0" mnemonicParsing="false" onAction="#accederFormation" stylesheets="@styles.css" text="Acceder a Formation" />
       <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="415.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/panneau-daffichage.png" />
@@ -44,7 +45,7 @@
             <Image url="@src/thumbnail_logo.png" />
          </image>
       </ImageView>
-      <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="450.0" layoutY="155.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
+      <Line endX="-95.0" endY="450.60003662109375" layoutX="450.0" layoutY="155.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
       <ImageView fitHeight="29.0" fitWidth="37.0" layoutX="815.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/ajouter-le-fichier.png" />
@@ -73,6 +74,16 @@
             </HBox>
          </children>
       </VBox>
+      <Label layoutX="138.0" layoutY="122.0" text="Ajouter une Categorie:" textFill="#1f8a99">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="37.0" fitWidth="40.0" layoutX="24.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/fleches.png" />
+         </image>
+      </ImageView>
 
    </children>
 </AnchorPane>
