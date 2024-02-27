@@ -66,24 +66,28 @@ public class SeConnecter {
             errorMdpLabel.setText("Email invalide !");
         } else if (userinfo == null) {
             errorMdpLabel.setText("Veuillez vérifier vos informations.");
-            return;
+
         }
-        if (userinfo.role.equals("Apprenant")|| userinfo.role.equals("Formateur")) {
+        else if (userinfo.role.equals("Apprenant")|| userinfo.role.equals("Formateur")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
             try {
                 Parent root = loader.load();
                 ProfileApprenant controller = loader.getController();
-                controller.getId_nom().setText(" Hello" +" ,  "+ userinfo.nom);
+                controller.getId_nom1().setText("Hello"+" , "+userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
+                System.out.println("exception from se connecter ya syrine");
             }
         } else if (userinfo.role.equals("Admin")) {
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/DashboardAdmin.fxml"));
             try {
                 Parent root = loader1.load();
                 DashboardAdmin controller = loader1.getController();
+                controller.getId_nom1().setText(" Hello" +" ,  "+ userinfo.nom);
+
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
+                System.out.println("exeption from se connecter  ya syrine");
             }
         }
     }

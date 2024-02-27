@@ -2,14 +2,29 @@ package entities;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 public class User {
-    private static final String validationEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+   private static final String validationEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
     private int id;
+    @NotBlank(message = "Le nom ne peut pas être vide")
+    @Size(min = 3, message = "le nom doit contenir au moins 6 caractères")
     private String nom;
+
+    @NotBlank(message = "Le prénom ne peut pas être vide")
+    @Size(min = 3, message = "Le prenom  doit contenir au moins 6 caractères")
+    @Size(max = 10, message = "Le prenom  doit contenir au max 6 caractères")
     private String prenom;
+
+    @NotBlank(message = "L'email ne peut pas être vide")
+    @Email(message = "Adresse email invalide")
     private String email;
+
+    @NotBlank(message = "Le mot de passe ne peut pas être vide")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
+
     private String password;
     private  String  confirmerPassword;
     private String role;
@@ -63,19 +78,14 @@ public class User {
         this.prenom = prenom;
     }
 
-    public boolean isEmailValid(String email) {
+   public boolean isEmailValid(String email) {
         Pattern pattern = Pattern.compile(validationEmail);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
-
     public void setEmail(String email) {
-        if (isEmailValid(email)) {
             this.email = email;
-        } else {
-            System.out.println("L'e-mail n'est pas valide.");
-        }
     }
 
     public void setPassword(String password) {
@@ -109,7 +119,7 @@ public class User {
     public User(String nom, String prenom, String email, String password, String role, String confirmerPassword) {
         this.nom = nom;
         this.prenom = prenom;
-        setEmail(email);
+        this.email=email;
         this.password = password;
         setConfirmerPassword(confirmerPassword);
         this.role = role;
@@ -119,7 +129,7 @@ public class User {
         this.id=id;
         this.nom = nom;
         this.prenom = prenom;
-        setEmail(email);
+        this.email=email;
         this.password = password;
         setConfirmerPassword(confirmerPassword);
         this.role = role;
@@ -138,8 +148,7 @@ public class User {
     public User(String nom, String prenom, String email, String password,String role) {
         this.nom = nom;
         this.prenom = prenom;
-        setEmail(email);
-        this.email = email;
+        this.email=email;
         this.role=role;
         this.password = password;
     }
@@ -147,7 +156,7 @@ public class User {
     public User( String nom, String prenom, String email,String role,int id) {
         this.nom = nom;
         this.prenom = prenom;
-        setEmail(email);
+        this.email=email;
         this.email = email;
         this.role=role;
         this.id=id;

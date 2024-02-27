@@ -215,4 +215,22 @@ public class EmailSender {
         int code = 1000 + random.nextInt(9000);
         return String.valueOf(code);
     }
+    //
+    public static String generateRandomPassword() {
+        Random random = new Random();
+        StringBuilder password = new StringBuilder();
+        password.append("STUDY");
+        for (int i = 0; i < 4; i++) {
+            int digit = random.nextInt(10);
+            password.append(digit);
+        }
+        return password.toString();
+    }
+      static  String passwordGenerate="";
+    public  static  String getPasswordGenerte(){
+        return  passwordGenerate=generateRandomPassword();
+    }
+
+
+
 }

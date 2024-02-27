@@ -43,6 +43,8 @@ public class ProfileApprenant {
 
     @FXML
     private Label id_nom;
+    @FXML
+    private Label id_nom1;
 
     @FXML
     private Button id_panier;
@@ -59,8 +61,13 @@ public class ProfileApprenant {
     @FXML
     private BorderPane rootPane;
 
-    public Label getId_nom() {
-        return id_nom;
+    public Label getId_nom1() {
+        return id_nom1;
+    }
+
+
+    public void setId_nom1(Label id_nom1) {
+        this.id_nom1 = id_nom1;
     }
 
     @FXML
@@ -85,7 +92,7 @@ public class ProfileApprenant {
         try {
             Parent root = loader1.load();
             SeConnecter controller = loader1.getController();
-            id_nom.getScene().setRoot(root);
+            id_nom1.getScene().setRoot(root);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

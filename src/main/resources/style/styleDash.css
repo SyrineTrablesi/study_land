@@ -1,6 +1,16 @@
-@font-face {
-    font-family: 'Poppins';
+/*.text {
+    -fx-font-family: 'Poppins';
     src: url('Poppins_Regular.ttf');
+}*/
+.error-textfield {
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+}
+.combo-box
+{
+    -fx-background-color :linear-gradient(to top right, #1c5f95, #D4CEE3);
+    -fx-border-radius: 8px;
+
 }
 
 .table-view .column-header,

@@ -20,63 +20,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class GererProfile {
-    @FXML
-    private Button btn_Modifier;
 
     @FXML
     private Label erroMessage;
-
     @FXML
     private TextField id_email;
-
     @FXML
     private TextField id_nom;
-
-    @FXML
-    private Label id_nom_gerer;
-
-    @FXML
-    private TextField id_password;
-
     @FXML
     private TextField id_prenom;
-
-    @FXML
-    private Label id_prenom_gerer;
-
-    //get et set
-
-    public void setErroMessage(Label erroMessage) {
-        this.erroMessage = erroMessage;
-    }
-
     public void setId_email(TextField id_email) {
         this.id_email = id_email;
     }
-
     public void setId_nom(TextField id_nom) {
         this.id_nom = id_nom;
-    }
-
-    public void setId_nom_gerer(Label id_nom_gerer) {
-        this.id_nom_gerer = id_nom_gerer;
-    }
-
-    public void setId_password(TextField id_password) {
-        this.id_password = id_password;
-    }
-
-    public void setId_prenom(TextField id_prenom) {
-        this.id_prenom = id_prenom;
-    }
-
-    public void setId_prenom_gerer(Label id_prenom_gerer) {
-        this.id_prenom_gerer = id_prenom_gerer;
-    }
-//get
-
-    public Label getErroMessage() {
-        return erroMessage;
     }
 
     public TextField getId_email() {
@@ -87,74 +44,93 @@ public class GererProfile {
         return id_nom;
     }
 
-    public Label getId_nom_gerer() {
-        return id_nom_gerer;
-    }
-
-    public TextField getId_password() {
-        return id_password;
-    }
-
     public TextField getId_prenom() {
         return id_prenom;
     }
 
-    public Label getId_prenom_gerer() {
-        return id_prenom_gerer;
-    }
 
 
     @FXML
     void ModifierUser(ActionEvent event) {
         UserInfo userInfo = Session.getInstance().userInfo;
-        String nouveauNom = id_nom.getText().trim();
-        String nouveauPrenom = id_prenom.getText().trim();
-        String nouvelEmail = id_email.getText().trim();
+        String nouveauNom = id_nom.getText();
+        String nouveauPrenom = id_prenom.getText();
+        String nouvelEmail = id_email.getText();
 
         if (nouveauNom.isEmpty() || nouveauPrenom.isEmpty() || nouvelEmail.isEmpty()) {
             showAlert("Erreur", "Veuillez remplir tous les champs.");
-            return; // Sortir de la méthode si un champ est vide
+            return;
         }
 
-        if (ValidationFormuaire.isEmail(nouvelEmail)) {
-            showAlert("Erreur", "Veuillez saisir une adresse email valide.");
-            return; // Sortir de la méthode si l'email est invalide
+        if (!ValidationFormuaire.isEmail(nouvelEmail)) {
+            erroMessage.setText("Veuillez saisir une adresse email valide.");
+            return;
         }
 
-        User user1 = new User(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
-        user1.setNom(nouveauNom);
-        user1.setPrenom(nouveauPrenom);
-        user1.setEmail(nouvelEmail);
+        if (nouveauNom.equals(userInfo.nom) && nouveauPrenom.equals(userInfo.prenom) && nouvelEmail.equals(userInfo.email)) {
+            showAlert2("Information", "Aucune modification n'a été apportée.");
+            return;
+        }
 
         try {
+            User user1 = new User(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
+            if (!nouveauNom.equals(userInfo.nom)) {
+                user1.setNom(nouveauNom);
+            }
+            if (!nouveauPrenom.equals(userInfo.prenom)) {
+                user1.setPrenom(nouveauPrenom);
+            }
+            if (!nouvelEmail.equals(userInfo.email)) {
+                user1.setEmail(nouvelEmail);
+            }
+
             if (user1.getRole().equals("Apprenant")) {
                 Apprenant apprenant = new Apprenant(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
-                apprenant.setNom(user1.getNom());
-                apprenant.setPrenom(user1.getPrenom());
-                apprenant.setEmail(user1.getEmail());
+                if (!nouveauNom.equals(userInfo.nom)) {
+                    apprenant.setNom(user1.getNom());
+                }
+                if (!nouveauPrenom.equals(userInfo.prenom)) {
+                    apprenant.setPrenom(user1.getPrenom());
+                }
+                if (!nouvelEmail.equals(userInfo.email)) {
+                    apprenant.setEmail(user1.getEmail());
+                }
                 ServiceApprenant serviceApprenant = new ServiceApprenant();
                 serviceApprenant.modifier(apprenant);
             } else if (user1.getRole().equals("Formateur")) {
                 Formateur formateur = new Formateur(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
-                formateur.setNom(user1.getNom());
-                formateur.setPrenom(user1.getPrenom());
-                formateur.setEmail(user1.getEmail());
+                if (!nouveauNom.equals(userInfo.nom)) {
+                    formateur.setNom(user1.getNom());
+                }
+                if (!nouveauPrenom.equals(userInfo.prenom)) {
+                    formateur.setPrenom(user1.getPrenom());
+                }
+                if (!nouvelEmail.equals(userInfo.email)) {
+                    formateur.setEmail(user1.getEmail());
+                }
                 ServiceFormateur serviceFormateur = new ServiceFormateur();
                 serviceFormateur.modifier(formateur);
+
             } else {
-                Admin admin = new Admin(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.id);
-                admin.setNom(user1.getNom());
-                admin.setPrenom(user1.getPrenom());
-                admin.setEmail(user1.getEmail());
-                admin.setPassword(user1.getPassword());
+                Admin admin = new Admin(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role,userInfo.id);
+                if (!nouveauNom.equals(userInfo.nom)) {
+                    admin.setNom(user1.getNom());
+                }
+                if (!nouveauPrenom.equals(userInfo.prenom)) {
+                    admin.setPrenom(user1.getPrenom());
+                }
+                if (!nouvelEmail.equals(userInfo.email)) {
+                    admin.setEmail(user1.getEmail());
+                }
                 ServiceAdmin serviceAdmin = new ServiceAdmin();
                 serviceAdmin.modifier(admin);
+
             }
             showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
         } catch (SQLException e) {
-            throw new RuntimeException("Erreur lors de la modification de l'utilisateur : " + e.getMessage());
         }
     }
+
     // Méthode pour afficher une alerte
     private void showAlert(String titre, String contenu) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -163,7 +139,6 @@ public class GererProfile {
         alert.setContentText(contenu);
         alert.showAndWait();
     }
-
     private void showAlert2(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

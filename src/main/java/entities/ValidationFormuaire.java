@@ -14,3 +14,4 @@ public class ValidationFormuaire {
         return str != null && str.length() > 5;
     }
 }
+

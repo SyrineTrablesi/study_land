@@ -14,7 +14,7 @@ public class Admin  extends User{
         super(nom, prenom, email, password, "Admin");
     }
     // modfier
-    public Admin(String nom, String prenom, String email,int id){
+    public Admin(String nom, String prenom, String email,String role,int id){
         super(nom, prenom, email,"Admin",id);
     }
 

@@ -50,6 +50,7 @@ public class AdminAffichage {
     @FXML
     private Button btn_ajouter;
 
+
     @FXML
     public void initialize() {
         id_user.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -57,11 +58,10 @@ public class AdminAffichage {
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
         addActionColumn();
-        initTable();
-    }
-    @FXML
-    private void initialize2() {
+        id_mdp.setDisable(true);
+        id_mdp.setOpacity(0.5);
 
+        initTable();
     }
 
     private void addActionColumn() {
@@ -125,11 +125,11 @@ public class AdminAffichage {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-
     }
 
     @FXML
     void Ajouter(ActionEvent event) {
+        id_mdp.setText(EmailSender.getPasswordGenerte());
         try {
             Admin admin = new Admin(id_nom.getText(), id_prenom.getText(), id_email.getText(), id_mdp.getText());
 
@@ -144,7 +144,7 @@ public class AdminAffichage {
                 id_nom.clear();
                 id_prenom.clear();
                 id_email.clear();
-                id_mdp.clear();
+
 
                 showAlert("Succès", "L'admin a été ajouté avec succès.");
             }

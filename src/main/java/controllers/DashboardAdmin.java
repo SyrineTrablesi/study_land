@@ -51,6 +51,16 @@ public class DashboardAdmin {
 
     @FXML
     private Label id_nom1;
+    //get et set
+
+
+    public void setId_nom1(Label id_nom1) {
+        this.id_nom1 = id_nom1;
+    }
+
+    public Label getId_nom1() {
+        return id_nom1;
+    }
 
     @FXML
     private Button id_projet;

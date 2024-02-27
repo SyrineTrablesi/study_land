@@ -12,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="443.0" prefWidth="596.0" style="-fx-background-color: #ffffff;" stylesheets="@styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MdpOublie">
+<AnchorPane prefHeight="443.0" prefWidth="596.0" style="-fx-background-color: #ffffff;" stylesheets="@style/styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MdpOublie">
    <children>
-      <TextField fx:id="id_code" alignment="CENTER" layoutX="38.0" layoutY="253.0" prefHeight="38.0" prefWidth="222.0" promptText="        *   *   *   *" stylesheets="@styleDash.css">
+      <TextField fx:id="id_code" alignment="CENTER" layoutX="38.0" layoutY="253.0" prefHeight="38.0" prefWidth="222.0" promptText="        *   *   *   *" stylesheets="@style/styleDash.css">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -24,17 +24,17 @@
             <Image url="@src/mot-de-passe.png" />
          </image>
       </ImageView>
-      <TextField fx:id="id_email" alignment="CENTER_RIGHT" layoutX="38.0" layoutY="180.0" onAction="#mdpOblieur" prefHeight="38.0" prefWidth="222.0" promptText="exp@gmail.com" stylesheets="@styleDash.css">
+      <TextField fx:id="id_email" alignment="CENTER_RIGHT" layoutX="38.0" layoutY="180.0" onAction="#mdpOblieur" prefHeight="38.0" prefWidth="222.0" promptText="exp@gmail.com" stylesheets="@style/styleDash.css">
          <font>
             <Font size="11.0" />
          </font>
       </TextField>
-      <Button fx:id="btn_verifier_mdp" layoutX="112.0" layoutY="300.0" mnemonicParsing="false" onAction="#verificationMdp" prefHeight="40.0" prefWidth="93.0" styleClass="button_inscrit" stylesheets="@styleDash.css" text="Envoyer" textFill="WHITE">
+      <Button fx:id="btn_verifier_mdp" layoutX="112.0" layoutY="300.0" mnemonicParsing="false" onAction="#verificationMdp" prefHeight="40.0" prefWidth="93.0" styleClass="button_inscrit" stylesheets="@style/styleDash.css" text="Envoyer" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="id_envoyerEmail" layoutX="267.0" layoutY="186.0" mnemonicParsing="false" onAction="#mdpOblieur" styleClass="button_inscrit" stylesheets="@styleDash.css" text="&gt;">
+      <Button fx:id="id_envoyerEmail" layoutX="267.0" layoutY="186.0" mnemonicParsing="false" onAction="#mdpOblieur" styleClass="button_inscrit" stylesheets="@style/styleDash.css" text="&gt;">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>

@@ -11,14 +11,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="472.0" prefWidth="811.0" style="-fx-background-color: #ffffff;" stylesheets="@styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GererProfile">
+<AnchorPane prefHeight="560.0" prefWidth="811.0" style="-fx-background-color: #ffffff;" stylesheets="@styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GererProfile">
    <children>
       <Label fx:id="id_prenom_gerer" layoutX="369.0" layoutY="355.0">
          <font>
             <Font name="Britannic Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="id_nom" layoutX="513.0" layoutY="153.0" prefHeight="44.0" prefWidth="216.0" stylesheets="@styleDash.css" />
+      <TextField fx:id="id_nom" layoutX="520.0" layoutY="153.0" prefHeight="44.0" prefWidth="216.0" stylesheets="@styleDash.css" />
       <TextField fx:id="id_email" layoutX="522.0" layoutY="278.0" prefHeight="44.0" prefWidth="216.0" stylesheets="@styleDash.css" />
       <TextField fx:id="id_prenom" layoutX="520.0" layoutY="215.0" prefHeight="44.0" prefWidth="216.0" stylesheets="@styleDash.css" />
       <Label layoutX="442.0" layoutY="156.0" textFill="#262424e0">
@@ -42,11 +42,11 @@
          </font>
       </Label>
       <Line endX="-23.5999755859375" endY="246.79998779296875" layoutX="422.0" layoutY="97.0" startX="-23.599945068359375" startY="41.19999694824219" stroke="#2e19cf" strokeLineCap="BUTT" strokeWidth="0.5" />
-      <Button fx:id="btn_Modifier" layoutX="555.0" layoutY="348.0" mnemonicParsing="false" onAction="#ModifierUser" prefHeight="30.0" prefWidth="118.0" styleClass="button_inscrit" stylesheets="@styleDash.css" text="Modifier" textFill="#fffefe">
+      <Button fx:id="btn_Modifier" layoutX="563.0" layoutY="348.0" mnemonicParsing="false" onAction="#ModifierUser" prefHeight="30.0" prefWidth="110.0" styleClass="button_inscrit" stylesheets="@style/styleDash.css" text="Modifier" textFill="#fffefe">
          <font>
             <Font name="Poppins Regular" size="20.0" />
          </font></Button>
-      <Label fx:id="erroMessage" contentDisplay="CENTER" layoutX="24.0" layoutY="327.0" prefHeight="58.0" prefWidth="410.0" textAlignment="CENTER" textFill="#e40b0b">
+      <Label fx:id="erroMessage" contentDisplay="CENTER" layoutX="25.0" layoutY="348.0" prefHeight="58.0" prefWidth="410.0" textAlignment="CENTER" textFill="#e40b0b">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>

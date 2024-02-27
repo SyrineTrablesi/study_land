@@ -36,11 +36,12 @@ public class ChangerPassword {
             ServiceUser serviceUser = new ServiceUser();
             try {
                 user = serviceUser.UpdateMdp(user, newPassword);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
                 try {
                     Parent root = loader.load();
-                    ProfileApprenant controller = loader.getController();
-                    controller.getId_nom().setText(user.getNom());
+                    SeConnecter controller = loader.getController();
+                    controller.getId_email().setText(user.getEmail());
+                    controller.getId_mdp().setText(user.getPassword());
                     new_password.getScene().setRoot(root);
                 } catch (IOException e) {
                 }

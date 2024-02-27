@@ -22,7 +22,7 @@
                   <Font name="Berlin Sans FB" size="24.0" />
                </font>
             </Label>
-            <TableView fx:id="tab_Admin" layoutX="104.0" layoutY="78.0" prefHeight="190.0" prefWidth="498.0" stylesheets="@styleDash.css">
+            <TableView fx:id="tab_Admin" layoutX="104.0" layoutY="78.0" prefHeight="190.0" prefWidth="498.0" stylesheets="@style/styleDash.css">
                <columns>
                   <TableColumn fx:id="id_user" prefWidth="105.5999755859375" text="           id" />
                   <TableColumn fx:id="nom_user" prefWidth="77.60003662109375" text="     nom" />
@@ -38,10 +38,10 @@
                   <Font name="Berlin Sans FB" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="id_prenom" alignment="CENTER" layoutX="575.0" layoutY="422.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Prenom" stylesheets="@styleDash.css" />
-            <TextField fx:id="id_email" layoutX="353.0" layoutY="489.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="exmple@gmail.com" stylesheets="@styleDash.css" />
+            <TextField fx:id="id_prenom" alignment="CENTER" layoutX="575.0" layoutY="422.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Prenom" stylesheets="@style/styleDash.css" />
+            <TextField fx:id="id_email" layoutX="353.0" layoutY="489.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="exmple@gmail.com" stylesheets="@style/styleDash.css" />
             <Label fx:id="errorEmailLabel" contentDisplay="TEXT_ONLY" layoutX="367.0" layoutY="536.0" prefHeight="26.0" prefWidth="166.0" textAlignment="CENTER" textFill="#f41414" />
-            <Button fx:id="btn_ajouter" layoutX="672.0" layoutY="590.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="35.0" prefWidth="126.0" styleClass="button_inscrit" stylesheets="@styleDash.css" text="Ajouter" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Button fx:id="btn_ajouter" layoutX="672.0" layoutY="590.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="35.0" prefWidth="126.0" styleClass="button_inscrit" stylesheets="@style/styleDash.css" text="Ajouter" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -61,7 +61,7 @@
                   <Image url="@src/gens.png" />
                </image>
             </ImageView>
-            <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="353.0" layoutY="422.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Nom" scaleShape="false" stylesheets="@styleDash.css" />
+            <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="353.0" layoutY="422.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="194.0" promptText="Nom" scaleShape="false" stylesheets="@style/styleDash.css" />
             <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="370.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@src/gens.png" />
@@ -74,7 +74,7 @@
             </ImageView>
             <Line endX="126.20001220703125" endY="220.60003662109375" layoutX="201.0" layoutY="390.0" startX="126.20001220703125" startY="19.399993896484375" />
             <Label fx:id="errorEmailLabel1" contentDisplay="TEXT_ONLY" layoutX="353.0" layoutY="578.0" prefHeight="59.0" prefWidth="312.0" textAlignment="CENTER" textFill="#f41414" />
-            <PasswordField fx:id="id_mdp" alignment="CENTER_RIGHT" layoutX="584.0" layoutY="490.0" prefHeight="42.0" prefWidth="186.0" promptText="mot de passe" stylesheets="@styleDash.css" />
+            <PasswordField fx:id="id_mdp" alignment="CENTER_RIGHT" layoutX="584.0" layoutY="490.0" prefHeight="42.0" prefWidth="186.0" promptText="mot de passe" stylesheets="@style/styleDash.css" />
          </children>
       </AnchorPane>
    </children>
