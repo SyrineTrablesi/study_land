@@ -3,6 +3,7 @@ package services;
 import entities.Admin;
 import entities.Apprenant;
 import entities.Formateur;
+import entities.User;
 import utils.MyBD;
 
 import java.sql.*;

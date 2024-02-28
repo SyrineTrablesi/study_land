@@ -76,7 +76,7 @@ public class SeConnecter {
                 controller.getId_nom1().setText("Hello"+" , "+userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
-                System.out.println("exception from se connecter ya syrine");
+                System.out.println("exception from se connecter ");
             }
         } else if (userinfo.role.equals("Admin")) {
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/DashboardAdmin.fxml"));

@@ -123,7 +123,7 @@ public class InscriptionApprenant {
             } catch (SQLException e) {
             }
             if (userRech != null) {
-                showToastMessage("Ce email est deja utiliser ");
+                showToastMessage("Ce email est deja utiliser  comme etant un"+userRech.getRole());
                 rederctionsansMdp(userRech);
 
             } else {

@@ -2,6 +2,7 @@ package services;
 
 import entities.Admin;
 import entities.Apprenant;
+import entities.Formateur;
 import utils.MyBD;
 
 import java.sql.*;
@@ -33,7 +34,6 @@ public class ServiceApprenant implements IUserService<Apprenant> {
             System.out.println("L'e-mail n'est pas valide ou le mot de passe ne correspond pas au mot de passe de confirmation.");
         }
     }
-
 
 
     //Modifier sans MPdp:
@@ -105,6 +105,15 @@ public class ServiceApprenant implements IUserService<Apprenant> {
 
         int count = 1;
         return count;
+    }
+    //Upgrate
+    public void Upgrate(int id, String email) throws Exception {
+        String req = "UPDATE user SET role=? WHERE email=?  And  id_user=?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, "Formateur");
+        pre.setString(2, email);
+        pre.setInt(3,id);
+        pre.executeUpdate();
     }
 
 }

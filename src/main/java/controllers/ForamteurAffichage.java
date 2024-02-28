@@ -1,12 +1,9 @@
 package controllers;
-
 import entities.Apprenant;
 import entities.EmailSender;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import entities.Formateur;
@@ -14,14 +11,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.TextFieldTableCell;
+import services.ServiceApprenant;
 import services.ServiceFormateur;
+import services.ServiceUser;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
@@ -29,46 +26,34 @@ import java.util.Set;
 public class ForamteurAffichage {
     @FXML
     private Button btn_ajouter;
-
     @FXML
     private Label errorEmailLabel;
-
     @FXML
     private TextField id_email;
-
     @FXML
     private TextField id_mdp;
-
     @FXML
     private TextField id_nom;
-
     @FXML
     private TextField id_prenom;
-
     @FXML
     private TableColumn<Formateur, String> email_user;
-
     @FXML
     private TableColumn<Formateur, String> id_user;
+
     @FXML
     private Label errorMessage1;
     @FXML
     private TableColumn<Formateur, String> mdp_user;
-
     @FXML
     private TableColumn<Formateur, String> nom_user;
-
     @FXML
     private TableColumn<Formateur, String> pre_user;
-
     @FXML
     private TableColumn<Formateur, Void> supprimer_user;
-
     @FXML
     private TableView<Formateur> tab_formateur;
-
     private final ServiceFormateur serviceFormateur = new ServiceFormateur();
-
     @FXML
     public void initialize() {
         id_user.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -80,7 +65,6 @@ public class ForamteurAffichage {
         id_mdp.setOpacity(0.5);
         initTable();
     }
-
     private void addActionColumn() {
 
         supprimer_user.setCellFactory(param -> new TableCell<>() {
@@ -119,8 +103,6 @@ public class ForamteurAffichage {
             }
         });
     }
-
-    // Méthode pour afficher une alerte
     private void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);
@@ -128,7 +110,6 @@ public class ForamteurAffichage {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
     private void initTable() {
         try {
             List<Formateur> formateurs = serviceFormateur.afficher();
@@ -138,12 +119,12 @@ public class ForamteurAffichage {
             System.out.println(e.getMessage());
         }
     }
-
     @FXML
     void Ajouter(ActionEvent event) {
+        ServiceUser serviceUser =new ServiceUser();
+        ServiceApprenant serviceApprenant =new ServiceApprenant();
         id_mdp.setText(EmailSender.getPasswordGenerte());
         try {
-            // Récupération des valeurs des champs
             String nom = id_nom.getText();
             String prenom = id_prenom.getText();
             String email = id_email.getText();
@@ -154,30 +135,65 @@ public class ForamteurAffichage {
                 return;
             }
 
-            Formateur formateur = new Formateur(nom, prenom, email,id_mdp.getText());
+            // Création d'un objet Formateur
+            Formateur formateur = new Formateur(nom, prenom, email, id_mdp.getText());
+
             // Validation de l'objet Formateur
             ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
             Validator validator = factory.getValidator();
             Set<ConstraintViolation<Formateur>> violations = validator.validate(formateur);
-
-            // Vérification s'il y a des violations de contraintes
             if (!violations.isEmpty()) {
-                // Si des violations sont trouvées, construire le message d'erreur
                 String errorMessageText = "";
                 for (ConstraintViolation<Formateur> violation : violations) {
                     errorMessageText += violation.getMessage() + "\n";
                 }
-                // Afficher le message d'erreur
                 showAlert("Erreur de Validation", errorMessageText);
             } else {
-                // Si aucune violation, ajouter le formateur
-                serviceFormateur.ajouter(formateur);
-                EmailSender.sendInfoFormateur(formateur.getEmail(), formateur);
-                id_nom.clear();
-                id_prenom.clear();
-                id_email.clear();
-                id_mdp.clear();
-                showAlert("Succès", "Le formateur a été ajouté avec succès.");
+                // Recherche de l'utilisateur par email
+                User user = serviceUser.rechercheUserParEmail(email);
+                if (user != null) {
+                    // Vérification du rôle de l'utilisateur
+                    if (user.getRole().equals("Apprenant")) {
+                        // Afficher une alerte pour permettre à l'utilisateur de confirmer l'upgrade
+                        Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
+                        confirmationAlert.setTitle("Confirmation de Upgrate profile");
+                        confirmationAlert.setHeaderText("Ce email est déjà utilisé pour notre Apprenant " + user.getNom() + "," + user.getPrenom());
+                        confirmationAlert.setContentText("Êtes-vous sûr de Upgrate ce compte à un formateur ?");
+                        confirmationAlert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.OK) {
+                                try {
+                                    Apprenant app =new Apprenant(user.getNom(), user.getPrenom(), user.getEmail(),user.getPassword(),user.getPassword());
+                                    serviceApprenant.Upgrate(user.getId(), user.getEmail());
+                                    Formateur FormateurNew =new Formateur(user.getId(), user.getNom(), user.getPrenom(), user.getEmail(), user.getPassword());
+                                    EmailSender.sendInfoFormateur(user.getEmail(),FormateurNew);
+                                    id_nom.clear();
+                                    id_prenom.clear();
+                                    id_email.clear();
+                                    id_mdp.clear();
+                                    showAlert("Succès", "Le compte a été mis à niveau avec succès.");
+                                } catch (SQLException e) {
+                                    System.out.println(e.getMessage());
+                                    showAlert("Erreur", "Une erreur s'est produite lors de la mise à niveau du compte. Veuillez réessayer.");
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                    showAlert("Erreur", "Une erreur s'est produite lors de la mise à niveau du compte. Veuillez réessayer.");
+                                }
+                            }
+                        });
+                    } else {
+                        // Si l'utilisateur existe mais n'est pas un apprenant
+                        showAlert("Erreur", "Un utilisateur avec cet email existe déjà mais n'est pas un apprenant.");
+                    }
+                } else {
+                    // Si l'utilisateur n'existe pas, ajouter le formateur directement
+                    serviceFormateur.ajouter(formateur);
+                    EmailSender.sendInfoFormateur(formateur.getEmail(), formateur);
+                    id_nom.clear();
+                    id_prenom.clear();
+                    id_email.clear();
+                    id_mdp.clear();
+                    showAlert("Succès", "Le formateur a été ajouté avec succès.");
+                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -189,8 +205,6 @@ public class ForamteurAffichage {
         }
     }
 
-
-    // Méthode pour afficher une alerte
     private void showAlert2(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -198,4 +212,5 @@ public class ForamteurAffichage {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

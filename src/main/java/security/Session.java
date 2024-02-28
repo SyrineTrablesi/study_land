@@ -35,5 +35,8 @@ public class Session {
     public void logout() {
         userInfo = null;
     }
-
+//Rester en ligne
+public boolean isLoggedIn() {
+    return userInfo != null;
+}
 }
