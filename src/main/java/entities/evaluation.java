@@ -246,7 +246,13 @@ q.loadResponses(connection);
 
     }
 
+    public List<entities.question> getQuestion() {
+        return question;
+    }
 
+    public void setQuestion(List<entities.question> question) {
+        this.question = question;
+    }
 }
 
 

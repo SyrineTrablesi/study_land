@@ -186,5 +186,37 @@ public class Reponseservice implements EvaluationService<response> {
         return responsesTrouvees;
     }
 
+    public List<response> getResponsesByQuestionId(int idQuestion) throws SQLException {
+        List<response> responses = new ArrayList<>();
+        String req = "SELECT * FROM reponse WHERE idQuestion = ?";
 
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setInt(1, idQuestion);
+
+            try (ResultSet res = pre.executeQuery()) {
+                while (res.next()) {
+                    response resp = new response();
+                    resp.setIdReponse(res.getInt("idReponse"));
+                    resp.setContenu(res.getString("contenu"));
+                    resp.setIdQuestion(res.getInt("idQuestion"));
+
+                    String statusValue = res.getString("status");
+                    status status;
+
+                    if ("ONE".equalsIgnoreCase(statusValue)) {
+                        status = response.status.ONE;
+                    } else if ("ZERO".equalsIgnoreCase(statusValue)) {
+                        status = response.status.ZERO;
+                    } else {
+                        throw new IllegalArgumentException("Invalid status value in the database");
+                    }
+
+                    resp.setStatus(status);
+                    responses.add(resp);
+                }
+            }
+        }
+
+        return responses;
+    }
 }

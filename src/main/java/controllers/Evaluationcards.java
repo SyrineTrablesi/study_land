@@ -37,6 +37,8 @@ public class Evaluationcards {
 
                 // Access the controller of the Evaluationcard
                 Evaluationcard cardController = loader.getController();
+                cardController.setId(eval.getId_evaluation()); // Set the ID
+
                 cardController.setIdtitle(eval.getTitre_evaluation());
                 cardController.setIdtext(eval.getDescription());
 
@@ -65,6 +67,7 @@ public class Evaluationcards {
 
                         // Access the controller of the Evaluationcard
                         Evaluationcard cardController = loader.getController();
+
                         cardController.setIdtitle(eval.getTitre_evaluation());
                         cardController.setIdtext(eval.getDescription());
 

@@ -13,12 +13,16 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lesevaluation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/evaluationcards.fxml"));
         Parent root = loader.load();
         Scene sc = new Scene(root);
+
+        // Utilisez sc au lieu de scene
+        sc.getStylesheets().add(getClass().getResource("/vbxquesrep.css").toExternalForm());
+
         primaryStage.setScene(sc);
         primaryStage.show();
-
     }
+
 
 }

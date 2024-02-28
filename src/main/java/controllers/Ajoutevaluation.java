@@ -122,7 +122,6 @@ public class Ajoutevaluation {
         // Configurer la ListView pour permettre la sélection multiple
         questionListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setupInputValidation();
-        showWarning("aaaa");
     }
     private void setupInputValidation() {
         setupIntegerInputValidation(nbquestion);

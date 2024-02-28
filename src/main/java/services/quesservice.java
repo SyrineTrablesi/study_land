@@ -92,6 +92,27 @@ public class quesservice implements EvaluationService<question> {
         // Return null if no question is found with the specified ID
         return null;
     }
+    public static question getQuestionByIdevaluationquestion(int idQuestion) throws SQLException {
+        String query = "SELECT id_question FROM evaluationquestion WHERE id_evaluation  = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, idQuestion);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    question q = new question();
+                    q.setIdQuestion(resultSet.getInt("id_question"));
+
+                    return q;
+                }
+            }
+        }
+
+        // Return null if no question is found with the specified ID
+        return null;
+    }
+
+
     public List<question> rechercherParCaractere(String caractereRecherche) throws SQLException {
         List<question> questionsTrouvees = new ArrayList<>();
         String req = "SELECT * FROM question WHERE enonce LIKE ?";
@@ -114,5 +135,32 @@ public class quesservice implements EvaluationService<question> {
         return questionsTrouvees;
     }
 
+
+
+
+
+
+    public static List<question> getQuestionsByEvaluationId(int evaluationId) throws SQLException {
+        String query = "SELECT id_question FROM evaluationquestion WHERE id_evaluation = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, evaluationId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<question> questions = new ArrayList<>();
+
+                while (resultSet.next()) {
+                    int idQuestion = resultSet.getInt("id_question");
+                    question q = getQuestionById(idQuestion);
+
+                    if (q != null) {
+                        questions.add(q);
+                    }
+                }
+
+                return questions;
+            }
+        }
+    }
 }
 
