@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -55,6 +56,22 @@ public class CoursController {
     private ServiceCours serviceC = new ServiceCours();
     private ServiceFormation serviceFormation = new ServiceFormation();
     private Cours selectedCours;
+    @FXML
+    private AnchorPane anchorPane;
+
+    private boolean darkMode = false;
+
+    @FXML
+    private void toggleBackgroundColor(ActionEvent event) {
+        if (darkMode) {
+            anchorPane.setStyle("-fx-background-color: #ffffff;");
+        } else {
+            anchorPane.setStyle("-fx-background-color: #2b2b2b;");
+        }
+        darkMode = !darkMode;
+    }
+
+
 
     @FXML
     private void initialize() {
@@ -201,16 +218,14 @@ public class CoursController {
                 courseBox.setSpacing(5); // Adjust spacing between elements
 
                 // Create the "Supprimer" button
-                Button deleteButton = new Button("supprimer");
-                ImageView deleteIcon = new ImageView(new Image("/src/supprimer.png"));
-                deleteIcon.setFitWidth(20);
-                deleteIcon.setPreserveRatio(true);
-
-                deleteButton.setGraphic(deleteIcon);
+                Button deleteButton = new Button("Supprimer");
+                deleteButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: #fff; -fx-padding: 5px 10px; -fx-background-radius: 5px; -fx-font-size: 14px; -fx-font-family: 'Arial';");
                 deleteButton.setOnAction(e -> supprimerCours(cours)); // Attach the event handler
+
 
                 // Optionally, you can add a button for editing
                 Button modifierButton = new Button("Modifier");
+                deleteButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: #fff; -fx-padding: 5px 10px; -fx-background-radius: 5px; -fx-font-size: 14px; -fx-font-family: 'Arial';");
                 modifierButton.setOnAction(e -> ModiferButton(cours));
 
                 // Add buttons to the VBox
@@ -301,6 +316,15 @@ public class CoursController {
 
                     // Refresh the view
                     AfficherCours(new ActionEvent());
+                    // Create the "Modifier" button
+                    Button modifierButton = new Button("Modifier");
+                    modifierButton.getStyleClass().add("custom-button"); // Add CSS class
+                    modifierButton.setOnAction(e -> ModiferButton(new ActionEvent())); // Attach the event handler
+
+                    // Add the "Modifier" button to your layout
+                    // For example, if you're using a VBox, you can add it like this:
+                    VBox layout = new VBox();
+                    layout.getChildren().add(modifierButton);
 
                     // Show a success message
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Course Modified", "Course details have been updated successfully.");

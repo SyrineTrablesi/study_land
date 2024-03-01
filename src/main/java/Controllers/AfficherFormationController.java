@@ -41,128 +41,128 @@ import javafx.scene.web.WebView;
 import services.ServiceFormation;
 
 
-public class AfficherFormationController implements Initializable {
+    public class AfficherFormationController implements Initializable {
 
-    @FXML
-    private Label DD;
+        @FXML
+        private Label DD;
 
-    @FXML
-    private Label DF;
+        @FXML
+        private Label DF;
 
-    @FXML
-    private Label Description;
+        @FXML
+        private Label Description;
 
-    @FXML
-    private Label Duree;
+        @FXML
+        private Label Duree;
 
-    @FXML
-    private Label Niveau;
+        @FXML
+        private Label Niveau;
 
-    @FXML
-    private Label NomC;
+        @FXML
+        private Label NomC;
 
-    @FXML
-    private Label NomF;
+        @FXML
+        private Label NomF;
 
-    @FXML
-    private Label Prix;
+        @FXML
+        private Label Prix;
 
-    @FXML
-    private Label FromDB;
-    @FXML
-    private WebView affichageWeb;
+        @FXML
+        private Label FromDB;
+        @FXML
+        private WebView affichageWeb;
 
-    public String getDescription() {
-        return Description.getText();
-    }
+        public String getDescription() {
+            return Description.getText();
+        }
 
-    public void setDescription(String description) {
-        Description.setText(description);
-    }
+        public void setDescription(String description) {
+            Description.setText(description);
+        }
 
-    public String getDuree() {
-        return Duree.getText();
-    }
+        public String getDuree() {
+            return Duree.getText();
+        }
 
-    public void setDuree(String duree) {
-        Duree.setText(duree);
-    }
+        public void setDuree(String duree) {
+            Duree.setText(duree);
+        }
 
-    public String getNiveau() {
-        return Niveau.getText();
-    }
+        public String getNiveau() {
+            return Niveau.getText();
+        }
 
-    public void setNiveau(String niveau) {
-        Niveau.setText(niveau);
-    }
+        public void setNiveau(String niveau) {
+            Niveau.setText(niveau);
+        }
 
-    public String getNomF() {
-        return NomF.getText();
-    }
+        public String getNomF() {
+            return NomF.getText();
+        }
 
-    public void setNomF(String nomF) {
-        NomF.setText(nomF);
-    }
+        public void setNomF(String nomF) {
+            NomF.setText(nomF);
+        }
 
-    public String getPrix() {
-        return Prix.getText();
-    }
+        public String getPrix() {
+            return Prix.getText();
+        }
 
-    public void setPrix(String prix) {
-        Prix.setText(prix);
-    }
+        public void setPrix(String prix) {
+            Prix.setText(prix);
+        }
 
-    public String getNomC() {
-        return NomC.getText();
-    }
+        public String getNomC() {
+            return NomC.getText();
+        }
 
-    public void setNomC(String nomC) {
-        NomC.setText(nomC);
-    }
+        public void setNomC(String nomC) {
+            NomC.setText(nomC);
+        }
 
-    public LocalDate getDD() {
-        return LocalDate.parse(DD.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
+        public LocalDate getDD() {
+            return LocalDate.parse(DD.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
 
-    public void setDD(LocalDate dd) {
-        DD.setText(dd.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-    }
+        public void setDD(LocalDate dd) {
+            DD.setText(dd.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        }
 
-    public LocalDate getDF() {
-        return LocalDate.parse(DF.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
+        public LocalDate getDF() {
+            return LocalDate.parse(DF.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
 
-    public void setDF(LocalDate df) {
-        DF.setText(df.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-    }
-
-
-    private ServiceFormation FS = new ServiceFormation();
+        public void setDF(LocalDate df) {
+            DF.setText(df.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        }
 
 
-    @FXML
-    private ListView<String> formationListView;
-    private List<Formation> formations;
-    @FXML
-    private VBox affichageformationvbox;
-    @FXML
-    private TextField titreFormationTextField; // Assuming you have a TextField to input the ID
-    private ServiceFormation formationService; // Instance of your service
-    private String selectedItem;
-    private Formation selectedFormation;
+        private ServiceFormation FS = new ServiceFormation();
 
 
-    public AfficherFormationController() {
-        this.formationService = new ServiceFormation();
-    }
+        @FXML
+        private ListView<String> formationListView;
+        private List<Formation> formations;
+        @FXML
+        private VBox affichageformationvbox;
+        @FXML
+        private TextField titreFormationTextField; // Assuming you have a TextField to input the ID
+        private ServiceFormation formationService; // Instance of your service
+        private String selectedItem;
+        private Formation selectedFormation;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize the "FromDB" Label here
-        FromDB = new Label();
-    }
 
-    @FXML
+        public AfficherFormationController() {
+            this.formationService = new ServiceFormation();
+        }
+
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+            // Initialize the "FromDB" Label here
+            FromDB = new Label();
+        }
+
+        @FXML
     private void handleLabelClick(MouseEvent event) {
         Node source = (Node) event.getSource();
 

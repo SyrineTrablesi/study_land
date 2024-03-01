@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -45,6 +46,22 @@ public class AjouterFormationController {
     @FXML
     private TextField Prix;
 
+    @FXML
+    private Button toggleDarkModeButton;
+
+    @FXML
+    private void toggleDarkMode(ActionEvent event) {
+        Scene scene = toggleDarkModeButton.getScene();
+        if (scene != null) {
+            if (scene.getStylesheets().contains("/dark-mode.css")) {
+                scene.getStylesheets().remove("/dark-mode.css");
+                scene.getStylesheets().add("/light-mode.css");
+            } else {
+                scene.getStylesheets().remove("/light-mode.css");
+                scene.getStylesheets().add("/dark-mode.css");
+            }
+        }
+    }
 
 
 
