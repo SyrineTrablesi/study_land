@@ -1,2 +1,4 @@
-package controllers;public class PanierController {
+package controllers;
+
+public class PanierController {
 }

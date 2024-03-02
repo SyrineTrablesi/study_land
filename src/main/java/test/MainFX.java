@@ -17,14 +17,16 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterPanier.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Card.fxml"));
+//affPanier.fxml
         try {
             Parent root = loader.load();
-            Scene sc = new Scene(root);
-            primaryStage.setScene(sc);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Formation Card View");
+            primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
 
 

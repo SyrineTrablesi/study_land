@@ -1,36 +1,41 @@
 package entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 
-public class Favoris {
-    private int id_favoris;
+public class Favoris extends Formation {
+    private int idFavoris;
     private int id_user;
-    private int idFormation;
-    private LocalDate date_ajout;
+    private String type;
+    private Date dateAjout;
 
-
-    // hérité
-    private String titre;
-    private String description;
-    private int duree;
-    private LocalDate dateDebut;
-    private LocalDate dateFin;
-    private double prix;
-    private String niveau;
-    private String nomCategorie;
-
-
-
-
-
-    public int getId_favoris() {
-        return id_favoris;
+    // Getter et setter pour l'attribut idFavoris
+    public int getIdFavoris() {
+        return idFavoris;
     }
 
-    public void setId_favoris(int id_favoris) {
-        this.id_favoris = id_favoris;
+    public void setIdFavoris(int idFavoris) {
+        this.idFavoris = idFavoris;
     }
 
+    // Getter et setter pour l'attribut type
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    // Getter et setter pour l'attribut dateAjout
+    public Date getDateAjout() {
+        return dateAjout;
+    }
+
+    public void setDateAjout(Date dateAjout) {
+        this.dateAjout = dateAjout;
+    }
+
+    // Getter et setter pour l'attribut id_user
     public int getId_user() {
         return id_user;
     }
@@ -39,110 +44,57 @@ public class Favoris {
         this.id_user = id_user;
     }
 
-    public int getId_formation() {
-        return idFormation;
-    }
-
-    public void setId_formation(int idFormation) {
-        this.idFormation = idFormation;
-    }
-
-    public LocalDate getDate_ajout() {
-        return date_ajout;
-    }
-
-    public void setDate_ajout(LocalDate date_ajout) {
-        this.date_ajout = date_ajout;
-    }
-
-    public int getIdFormation() {
-        return idFormation;
-    }
-
-    public void setIdFormation(int idFormation) {
-        this.idFormation = idFormation;
-    }
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getDuree() {
-        return duree;
-    }
-
-    public void setDuree(int duree) {
-        this.duree = duree;
-    }
-
-    public LocalDate getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(LocalDate dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public LocalDate getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(LocalDate dateFin) {
-        this.dateFin = dateFin;
-    }
-
-    public double getPrix() {
-        return prix;
-    }
-
-    public void setPrix(double prix) {
-        this.prix = prix;
-    }
-
-    public String getNiveau() {
-        return niveau;
-    }
-
-    public void setNiveau(String niveau) {
-        this.niveau = niveau;
-    }
-
-    public String getNomCategorie() {
-        return nomCategorie;
-    }
-
-    public void setNomCategorie(String nomCategorie) {
-        this.nomCategorie = nomCategorie;
-    }
-
+    // Méthode toString pour afficher les informations
     @Override
     public String toString() {
         return "Favoris{" +
-                "id_favoris=" + id_favoris +
+                "idFavoris=" + idFavoris +
                 ", id_user=" + id_user +
-                ", id_formation=" + idFormation +
-                ", date_ajout=" + date_ajout +
+                ", idFormation=" + getIdFormation() +
+                ", nomCategorie='" + getNomCategorie() + '\'' +
+                ", titre='" + getTitre() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", duree=" + getDuree() +
+                ", dateDebut=" + getDateDebut() +
+                ", dateFin=" + getDateFin() +
+                ", prix=" + getPrix() +
+                ", niveau='" + getNiveau() + '\'' +
+                ", type='" + type + '\'' +
+                ", dateAjout=" + dateAjout +
                 '}';
     }
 
+    // Constructeurs
+    // Constructeur par défaut
+    public Favoris() {
+        super(); // Appel du constructeur de la classe mère Formation
+    }
 
-    public Favoris() {}
-
-    public Favoris(int id_user, int idFormation, LocalDate date_ajout) {
+    // Constructeur sans ID
+    public Favoris(int id_user, int idFormation, String nomCategorie, String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau, String type, Date dateAjout) {
+        super(idFormation, nomCategorie, titre, description, duree, dateDebut, dateFin, prix, niveau);
         this.id_user = id_user;
-        this.idFormation = idFormation;
-        this.date_ajout = date_ajout;
+        this.type = "Favoris";
+        this.dateAjout = dateAjout;
+    }
+
+    // Constructeur avec ID
+    public Favoris(int idFavoris, int id_user, int idFormation, String nomCategorie, String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau, String type, Date dateAjout) {
+        super(idFormation, nomCategorie, titre, description, duree, dateDebut, dateFin, prix, niveau);
+        this.idFavoris = idFavoris;
+        this.id_user = id_user;
+        this.type = "Favoris";
+        this.dateAjout = dateAjout;
+    }
+
+    public Favoris(int id_user,int idFormation,  Date  dateAjout) {
+        super(idFormation);
+        this.id_user = id_user;
+        this.type = "Favoris";
+        this.dateAjout = dateAjout;
+    }
+    public Favoris(int idFavoris) {
+        super();
+        this.idFavoris = idFavoris;
     }
 }

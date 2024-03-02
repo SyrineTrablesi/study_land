@@ -4,11 +4,11 @@ import entities.Favoris;
 import utils.MyDB;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceFavoris implements IFavoris {
+public class ServiceFavoris implements IService<Favoris> {
+
     private final Connection connection;
 
     public ServiceFavoris() {
@@ -16,65 +16,67 @@ public class ServiceFavoris implements IFavoris {
     }
 
     @Override
-    public void ajouterFavoris(Favoris favoris) throws SQLException {
-        String req = "INSERT INTO favoris (id_user, id_formation, date_ajout) VALUES (?,?,?)";
+    public void ajouter(Favoris favoris) throws SQLException {
+        String req = "INSERT INTO favoris (id_user, idFormation, type, dateAjout) VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(req);
 
         pstmt.setInt(1, favoris.getId_user());
-        pstmt.setInt(2, favoris.getId_formation());
-        pstmt.setDate(3, Date.valueOf(favoris.getDate_ajout()));
+        pstmt.setInt(2, favoris.getIdFormation());
+        pstmt.setString(3, favoris.getType());
+        pstmt.setDate(4, new java.sql.Date(favoris.getDateAjout().getTime()));
 
         pstmt.executeUpdate();
     }
 
     @Override
-    public void modifierFavoris(Favoris favoris) throws SQLException {
-        String req = "UPDATE favoris SET id_user=?, id_formation=?, date_ajout=? WHERE id_favoris=?";
+    public void modifier(Favoris favoris) throws SQLException {
+        String req = "UPDATE favoris SET id_user=?, idFormation=?, type=?, dateAjout=? WHERE idFavoris=?";
         PreparedStatement pstmt = connection.prepareStatement(req);
 
         pstmt.setInt(1, favoris.getId_user());
-        pstmt.setInt(2, favoris.getId_formation());
-        pstmt.setDate(3, Date.valueOf(favoris.getDate_ajout()));
-        pstmt.setInt(4, favoris.getId_favoris());
+        pstmt.setInt(2, favoris.getIdFormation());
+        pstmt.setString(3, favoris.getType());
+        pstmt.setDate(4, new java.sql.Date(favoris.getDateAjout().getTime()));
+        pstmt.setInt(5, favoris.getIdFavoris());
 
         pstmt.executeUpdate();
     }
 
     @Override
-    public void supprimerFavoris(Favoris favoris) throws SQLException {
-        String req = "DELETE FROM favoris WHERE id_favoris=?";
+    public void supprimer(Favoris favoris) throws SQLException {
+        String req = "DELETE FROM favoris WHERE idFavoris=?";
         PreparedStatement pstmt = connection.prepareStatement(req);
-        pstmt.setInt(1, favoris.getId_favoris());
+        pstmt.setInt(1, favoris.getIdFavoris());
         pstmt.executeUpdate();
     }
 
     @Override
-    public List<Favoris> afficherFavorisAdmin() throws SQLException {
-        String req = "SELECT * FROM favoris INNER JOIN user ON favoris.id_user = user.id_user INNER JOIN formation ON favoris.id_formation = formation.id_formation";
-        return fetchFavoris(req);
-    }
+    public List<Favoris> afficher() throws SQLException {
+        String req = "SELECT f.idFavoris, f.id_user, f.idFormation, f.type, f.dateAjout, formation.* " +
+                "FROM favoris f INNER JOIN formation ON f.idFormation = formation.idFormation";
+        PreparedStatement pre = connection.prepareStatement(req);
+        ResultSet resultSet = pre.executeQuery();
+        List<Favoris> favorisList = new ArrayList<>();
+        while (resultSet.next()) {
+            Favoris favoris = new Favoris();
+            favoris.setIdFavoris(resultSet.getInt("idFavoris"));
+            favoris.setId_user(resultSet.getInt("id_user"));
+            favoris.setIdFormation(resultSet.getInt("idFormation"));
+            favoris.setType(resultSet.getString("type"));
+            favoris.setDateAjout(resultSet.getDate("dateAjout"));
 
-    @Override
-    public List<Favoris> afficherFavorisUser(int idUser) throws SQLException {
-        String req = "SELECT * FROM favoris INNER JOIN formation ON favoris.id_formation = formation.id_formation WHERE favoris.id_user=?";
-        PreparedStatement pstmt = connection.prepareStatement(req);
-        pstmt.setInt(1, idUser);
-        return fetchFavoris(pstmt.toString());
-    }
+            // Récupération des données de la formation
+            favoris.setTitre(resultSet.getString("titre"));
+            favoris.setDescription(resultSet.getString("description"));
+            favoris.setDuree(resultSet.getInt("duree"));
+            favoris.setDateDebut(resultSet.getDate("dateDebut"));
+            favoris.setDateFin(resultSet.getDate("dateFin"));
+            favoris.setPrix(resultSet.getFloat("prix"));
+            favoris.setNiveau(resultSet.getString("niveau"));
+            favoris.setNomCategorie(resultSet.getString("nomCategorie"));
 
-    private List<Favoris> fetchFavoris(String req) throws SQLException {
-        List<Favoris> list = new ArrayList<>();
-        try (Statement ste = connection.createStatement();
-             ResultSet res = ste.executeQuery(req)) {
-            while (res.next()) {
-                Favoris f = new Favoris();
-                f.setId_favoris(res.getInt("id_favoris"));
-                f.setId_user(res.getInt("id_user"));
-                f.setId_formation(res.getInt("id_formation"));
-                f.setDate_ajout(res.getDate("date_ajout").toLocalDate());
-                list.add(f);
-            }
+            favorisList.add(favoris);
         }
-        return list;
+        return favorisList;
     }
 }
