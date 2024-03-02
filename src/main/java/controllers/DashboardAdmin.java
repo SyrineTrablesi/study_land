@@ -5,9 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 import javafx.event.ActionEvent;
@@ -24,8 +22,10 @@ import services.ServiceUser;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
-public class DashboardAdmin {
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
+public class DashboardAdmin implements Initializable {
 
 
     @FXML
@@ -36,12 +36,11 @@ public class DashboardAdmin {
 
     @FXML
     private Button btn_formateur;
-
+    @FXML
+    private Button btn_profile;
     @FXML
     private Button btn_parameter;
 
-    @FXML
-    private Button btn_profile;
 
     @FXML
     private StackPane centerPane;
@@ -63,6 +62,9 @@ public class DashboardAdmin {
     }
 
     @FXML
+    private ComboBox<String> combo_login;
+
+    @FXML
     private Button id_projet;
 
     @FXML
@@ -73,6 +75,53 @@ public class DashboardAdmin {
 
     @FXML
     private BorderPane rootPane;
+
+    @FXML
+    public void initialize(URL location, ResourceBundle resources) {
+        combo_login.getItems().addAll("Modifier mot de passe", "Logout", "Aide");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashbordAdminParDefaut.fxml"));
+        try {
+            Parent defaultRoot = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(defaultRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onComboLoginSelected(ActionEvent event) {
+        String selectedOption = combo_login.getValue();
+        switch (selectedOption) {
+            case "Modifier mot de passe":
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ChangerPassword.fxml"));
+                try {
+                    Parent defaultRoot = loader.load();
+                    centerPane.getChildren().clear();
+                    centerPane.getChildren().add(defaultRoot);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "Logout":
+                Session.getInstance().logout();
+                FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
+                try {
+                    Parent root = loader1.load();
+                    SeConnecter controller = loader1.getController();
+                    btn_App.getScene().setRoot(root);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case "Aide":
+                break;
+        }
+    }
+
+    // Vos autres méthodes et champs
+
     @FXML
     void afficherApprenants(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AffichageApprenant.fxml"));
@@ -172,7 +221,19 @@ public class DashboardAdmin {
             System.out.println("Erreur lors du chargement de l'interface utilisateur.");
         }
     }
+    @FXML
+    void pageParDefaut(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashbordAdminParDefaut.fxml"));
+        try {
+            Parent defaultRoot = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(defaultRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+
+    }
 
 }
 

@@ -1,0 +1,161 @@
+package controllers;
+
+import controllers.CardUser;
+import entities.User;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import services.ServiceUser;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+public class DashbordAdminParDefaut {
+
+    @FXML
+    private AnchorPane userDetailsContainer;
+    @FXML
+    private ComboBox<String> com_try;
+    @FXML
+    private TableColumn<User, String> Role_user;
+    @FXML
+    private TableView<User> id_tab_user;
+    @FXML
+    private AnchorPane chartContainer;
+    @FXML
+    private AnchorPane chartContainer1;
+    @FXML
+    private TableColumn<User, String> email_user;
+    @FXML
+    private Label nbAdmin;
+    @FXML
+    private Label nbApp;
+    @FXML
+    private Label nbFormateur;
+    @FXML
+    private TableColumn<User, String> nom_user;
+    @FXML
+    private TableColumn<User, String> pre_user;
+
+
+    @FXML
+    public void initialize() {
+        com_try.getItems().addAll("Tous", "Apprenant", "Admin", "Formateur");
+        com_try.setValue("Tous");
+
+        com_try.setOnAction(event -> {
+            String selectedRole = com_try.getValue();
+            if (selectedRole != null) {
+                try {
+                    List<User> filteredUsers = null;
+                    ServiceUser serviceUser = new ServiceUser();
+
+                    if (selectedRole.equals("Tous")) {
+                        filteredUsers = serviceUser.afficher();
+                    } else {
+                        filteredUsers = serviceUser.afficherByRole(selectedRole);
+                    }
+                    id_tab_user.setItems(FXCollections.observableArrayList(filteredUsers));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        initTable();
+        updatePieChart();
+        id_tab_user.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                User selectedUser = id_tab_user.getSelectionModel().getSelectedItem();
+                if (selectedUser != null) {
+                    ServiceUser serviceUser = new ServiceUser();
+                    try {
+                        User selectUs = serviceUser.rechercheUserParEmail(selectedUser.getEmail());
+                        int userId = selectUs.getId();
+
+                        System.out.println(selectUs);
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardUser.fxml"));
+                        AnchorPane card = loader.load();
+                        CardUser controller = loader.getController();
+                        controller.initData(selectUs);
+                        userDetailsContainer.getChildren().add(card);
+                    } catch (IOException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private void initTable() {
+        try {
+            ServiceUser serviceUser = new ServiceUser();
+            List<User> users = serviceUser.afficher();
+            id_tab_user.setItems(FXCollections.observableArrayList(users));
+            nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
+            pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+            email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
+            Role_user.setCellValueFactory(new PropertyValueFactory<>("role"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updatePieChart() {
+        ServiceUser serviceUser = new ServiceUser();
+        int nbApprenants = 0;
+        try {
+            nbApprenants = serviceUser.countApp();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        int nbFormateurs = 0;
+        try {
+            nbFormateurs = serviceUser.countFomateur();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        int nbAdmins = 0;
+        try {
+            nbAdmins = serviceUser.countAdmin();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        nbAdmin.setText(String.valueOf(nbAdmins));
+        nbFormateur.setText(String.valueOf(nbFormateurs));
+        nbApp.setText(String.valueOf(nbApprenants));
+
+        PieChart.Data apprenantsData = new PieChart.Data("Apprenants", nbApprenants);
+        PieChart.Data formateursData = new PieChart.Data("Formateurs", nbFormateurs);
+        PieChart.Data adminsData = new PieChart.Data("Admins", nbAdmins);
+        PieChart pieChart = new PieChart();
+        pieChart.getData().addAll(apprenantsData, formateursData, adminsData);
+        pieChart.setTitle("Répartition des utilisateurs en StudyLand");
+        chartContainer.getChildren().add(pieChart);
+        AnchorPane.setTopAnchor(pieChart, 0.0);
+        AnchorPane.setRightAnchor(pieChart, 0.0);
+        AnchorPane.setBottomAnchor(pieChart, 0.0);
+        AnchorPane.setLeftAnchor(pieChart, 0.0);
+        // formation
+        PieChart.Data apprenantsData1 = new PieChart.Data("Apprenants", nbApprenants);
+        PieChart.Data formateursData1 = new PieChart.Data("Formateurs", nbFormateurs);
+        PieChart.Data adminsData1 = new PieChart.Data("Admins", nbAdmins);
+        PieChart pieChart1 = new PieChart();
+        pieChart1.getData().addAll(apprenantsData1, formateursData1, adminsData1);
+        pieChart1.setTitle("Répartition des formztion");
+        chartContainer1.getChildren().add(pieChart1);
+        AnchorPane.setTopAnchor(pieChart1, 0.0);
+        AnchorPane.setRightAnchor(pieChart1, 0.0);
+        AnchorPane.setBottomAnchor(pieChart1, 0.0);
+        AnchorPane.setLeftAnchor(pieChart1, 0.0);
+
+    }
+}

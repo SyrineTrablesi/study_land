@@ -149,7 +149,20 @@
     -fx-background-color: rgba(228, 228, 228, 0.49776);
 
 }
+.home_recherche_button{
+    -fx-border-width: 18px;
+    -fx-background-color: #F8982A;
+    -fx-border-radius: 18px;
 
+}
+.home_button_navbar{
+    -fx-border-width: 18px;
+    -fx-background-color: transparent ;
+    -fx-border-radius: 18px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #11142d;
+
+}
 
 
 

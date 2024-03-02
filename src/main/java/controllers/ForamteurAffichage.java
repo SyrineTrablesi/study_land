@@ -56,7 +56,6 @@ public class ForamteurAffichage {
     private final ServiceFormateur serviceFormateur = new ServiceFormateur();
     @FXML
     public void initialize() {
-        id_user.setCellValueFactory(new PropertyValueFactory<>("id"));
         nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -134,11 +133,7 @@ public class ForamteurAffichage {
                 showAlert("Erreur", "Veuillez remplir tous les champs.");
                 return;
             }
-
-            // Création d'un objet Formateur
             Formateur formateur = new Formateur(nom, prenom, email, id_mdp.getText());
-
-            // Validation de l'objet Formateur
             ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
             Validator validator = factory.getValidator();
             Set<ConstraintViolation<Formateur>> violations = validator.validate(formateur);
@@ -149,12 +144,10 @@ public class ForamteurAffichage {
                 }
                 showAlert("Erreur de Validation", errorMessageText);
             } else {
-                // Recherche de l'utilisateur par email
                 User user = serviceUser.rechercheUserParEmail(email);
                 if (user != null) {
                     // Vérification du rôle de l'utilisateur
                     if (user.getRole().equals("Apprenant")) {
-                        // Afficher une alerte pour permettre à l'utilisateur de confirmer l'upgrade
                         Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
                         confirmationAlert.setTitle("Confirmation de Upgrate profile");
                         confirmationAlert.setHeaderText("Ce email est déjà utilisé pour notre Apprenant " + user.getNom() + "," + user.getPrenom());
@@ -199,7 +192,6 @@ public class ForamteurAffichage {
             System.out.println(e.getMessage());
             showAlert("Erreur", "Une erreur s'est produite lors de l'ajout du formateur. Veuillez réessayer.");
         } catch (Exception e) {
-            // Gérer toute autre exception de manière appropriée
             System.out.println(e.getMessage());
             showAlert("Erreur", "Une erreur s'est produite lors de l'ajout du formateur. Veuillez réessayer.");
         }

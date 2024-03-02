@@ -24,11 +24,10 @@
             </Label>
             <TableView fx:id="tab_Admin" layoutX="104.0" layoutY="78.0" prefHeight="190.0" prefWidth="498.0" stylesheets="@style/styleDash.css">
                <columns>
-                  <TableColumn fx:id="id_user" prefWidth="105.5999755859375" text="           id" />
                   <TableColumn fx:id="nom_user" prefWidth="77.60003662109375" text="     nom" />
                   <TableColumn fx:id="pre_user" prefWidth="93.59996032714844" text="      prénom" />
-                  <TableColumn fx:id="email_user" prefWidth="119.20001220703125" text="         Email" />
-                  <TableColumn fx:id="supprimer_user" prefWidth="104.7999267578125" text="      Supprimer" />
+                  <TableColumn fx:id="email_user" prefWidth="191.20001220703125" text="         Email" />
+                  <TableColumn fx:id="supprimer_user" prefWidth="133.5999816894531" text="      Supprimer" />
                </columns>
             </TableView>
             <Label layoutX="288.0" layoutY="442.0" />

@@ -22,13 +22,12 @@
                   <Font name="Berlin Sans FB" size="24.0" />
                </font>
             </Label>
-            <TableView fx:id="tab_formateur" layoutX="104.0" layoutY="75.0" prefHeight="187.0" prefWidth="504.0" stylesheets="@style/styleDash.css">
+            <TableView fx:id="tab_formateur" layoutX="95.0" layoutY="75.0" prefHeight="187.0" prefWidth="513.0" stylesheets="@style/styleDash.css">
                <columns>
-                  <TableColumn fx:id="id_user" prefWidth="105.5999755859375" text="           id" />
                   <TableColumn fx:id="nom_user" prefWidth="77.60003662109375" text="     nom" />
                   <TableColumn fx:id="pre_user" prefWidth="93.59996032714844" text="      prénom" />
-                  <TableColumn fx:id="email_user" prefWidth="119.20001220703125" text="         Email" />
-                  <TableColumn fx:id="supprimer_user" prefWidth="104.7999267578125" text="      Supprimer" />
+                  <TableColumn fx:id="email_user" prefWidth="218.4000244140625" text="         Email" />
+                  <TableColumn fx:id="supprimer_user" minWidth="6.39996337890625" prefWidth="121.5999694824219" text="      Supprimer" />
                </columns>
             </TableView>
             <Line endX="317.79998779296875" layoutX="206.0" layoutY="285.0" startX="79.4000244140625" />

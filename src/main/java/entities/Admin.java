@@ -1,6 +1,10 @@
 package entities;
 
 public class Admin  extends User{
+
+
+
+
     //par defaut
     public Admin(){
         super();

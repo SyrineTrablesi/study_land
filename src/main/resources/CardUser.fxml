@@ -12,23 +12,28 @@
    <children>
       <HBox layoutX="38.0" layoutY="61.0" prefHeight="114.0" prefWidth="406.0" styleClass="combo-box" stylesheets="@style/styleDash.css">
          <children>
-            <VBox alignment="CENTER" prefHeight="139.0" prefWidth="109.0">
+            <VBox alignment="CENTER" prefHeight="114.0" prefWidth="81.0">
                <children>
-                  <ImageView fitHeight="64.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="63.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@src/confusion.png" />
                      </image>
                   </ImageView>
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="134.0" prefWidth="110.0">
+            <VBox alignment="CENTER" prefHeight="114.0" prefWidth="278.0">
                <children>
-                  <Label fx:id="prenom_user" prefHeight="30.0" prefWidth="94.0" styleClass="text" stylesheets="@style/styleDash.css" textFill="#f2f2f2">
+                  <Label fx:id="nom_user" prefHeight="30.0" prefWidth="136.0" textFill="#f2eeea">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="email" prefHeight="35.0" prefWidth="105.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textFill="#f2ece6">
+                  <Label fx:id="prenom_user" prefHeight="30.0" prefWidth="138.0" styleClass="text" stylesheets="@style/styleDash.css" textFill="#f2f2f2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="email" prefHeight="35.0" prefWidth="186.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textFill="#f2ece6">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -37,12 +42,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="114.0" prefWidth="182.0">
                <children>
-                  <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="53.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textAlignment="CENTER" textFill="#eae8e5">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="nom_user" prefHeight="30.0" prefWidth="134.0" textFill="#f2eeea">
+                  <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="98.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textAlignment="CENTER" textFill="#eae8e5">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

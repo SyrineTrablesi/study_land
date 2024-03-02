@@ -46,7 +46,6 @@ public class AffichageApprenant {
 
     @FXML
     public void initialize() {
-        id_user.setCellValueFactory(new PropertyValueFactory<>("id"));
         nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));

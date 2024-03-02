@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import services.ServiceAdmin;
 import services.ServiceApprenant;
+import services.ServiceUser;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -53,7 +54,6 @@ public class AdminAffichage {
 
     @FXML
     public void initialize() {
-        id_user.setCellValueFactory(new PropertyValueFactory<>("id"));
         nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -132,26 +132,34 @@ public class AdminAffichage {
         id_mdp.setText(EmailSender.getPasswordGenerte());
         try {
             Admin admin = new Admin(id_nom.getText(), id_prenom.getText(), id_email.getText(), id_mdp.getText());
-
-            if (admin == null) {
-                errorEmailLabel.setText("Une erreur s'est produite lors de l'ajout du Admin. Veuillez réessayer.");
-            } else if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty() || !ValidationFormuaire.isEmail(id_email.getText())) {
-                showAlert2("Erreur", "Veuillez remplir tous les champs correctement.");
-            } else {
-                // Ajouter l'admin
-                serviceAdmin.ajouter(admin);
-                EmailSender.sendInfoAdmin(id_email.getText(), admin);
-                id_nom.clear();
-                id_prenom.clear();
-                id_email.clear();
-
-
-                showAlert("Succès", "L'admin a été ajouté avec succès.");
+            User user = new User();
+            ServiceUser serviceUser = new ServiceUser();
+            try {
+                user = serviceUser.rechercheUserParEmail(id_email.getText());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
+
+            if (user != null) {
+                showAlert("Erreur", "Un utilisateur avec cet email existe déjà. Impossible d'ajouter l'admin.");
+            } else {
+                if (admin == null) {
+                    errorEmailLabel.setText("Veuillez remplir tous les champs correctement..");
+                } else if (id_nom.getText().isEmpty() || id_prenom.getText().isEmpty() || id_email.getText().isEmpty() || id_mdp.getText().isEmpty() || !ValidationFormuaire.isEmail(id_email.getText())) {
+                    showAlert2("Erreur", "Veuillez remplir tous les champs correctement.");
+                } else {
+                    serviceAdmin.ajouter(admin);
+                    EmailSender.sendInfoAdmin(id_email.getText(), admin);
+                    id_nom.clear();
+                    id_prenom.clear();
+                    id_email.clear();
+                    showAlert("Succès", "L'admin a été ajouté avec succès.");
+                }
+            }
+        } catch(SQLException e){
             System.out.println(e.getMessage());
             showAlert("Erreur", "Une erreur s'est produite lors de l'ajout d'un Admin. Veuillez réessayer.");
-        } catch (Exception e) {
+        } catch(Exception e){
             System.out.println(e.getMessage());
             showAlert("Erreur", "Une erreur s'est produite lors de l'ajout d'un Admin. Veuillez réessayer.");
         }

@@ -2,6 +2,7 @@ package services;
 
 import entities.Admin;
 import entities.Apprenant;
+import entities.Formateur;
 import entities.User;
 import utils.MyBD;
 
@@ -9,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ServiceUser {
@@ -64,5 +67,74 @@ public  User UpdateMdp(User user,String password) throws  Exception{
         }
         return  null;
     }
+    // fct pour dashboard
+    public int countApp() throws Exception {
+        String req = "SELECT COUNT(*) FROM user WHERE role=?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, "Apprenant");
+        ResultSet resultSet = pre.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt(1); // Retourne le nombre d'utilisateurs
+        } else {
+            throw new Exception("La requête n'a pas retourné de résultat");
+        }
+    }
+    public int countFomateur() throws Exception {
+        String req = "SELECT COUNT(*) FROM user WHERE role=?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, "Formateur");
+        ResultSet resultSet = pre.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt(1); // Retourne le nombre d'utilisateurs
+        } else {
+            throw new Exception("La requête n'a pas retourné de résultat");
+        }
+    }
+    public int countAdmin() throws Exception {
+        String req = "SELECT COUNT(*) FROM user WHERE role=?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, "Admin");
+        ResultSet resultSet = pre.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt(1); // Retourne le nombre d'utilisateurs
+        } else {
+            throw new Exception("La requête n'a pas retourné de résultat");
+        }
+    }
+    //get all user
+    public List<User> afficher() throws SQLException {
+        String req = "SELECT * FROM user  ";
+        PreparedStatement pre = connection.prepareStatement(req);
+        ResultSet resultSet = pre.executeQuery();
+        List<User> UserList = new ArrayList<>();
+        while (resultSet.next()) {
+            User user = new User();
+            user.setNom(resultSet.getString("nom"));
+            user.setPrenom(resultSet.getString("prenom"));
+            user.setEmail(resultSet.getString("email"));
+            user.setRole(resultSet.getString("role"));
+            user.setPassword(resultSet.getString("password"));
+            UserList.add(user);
+        }        return UserList;
+    }
+
+    public List<User> afficherByRole(String role) throws SQLException {
+        String req = "SELECT * FROM user   WHERE role=?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, role);
+        ResultSet resultSet = pre.executeQuery();
+        List<User> UserList = new ArrayList<>();
+        while (resultSet.next()) {
+            User user = new User();
+            user.setNom(resultSet.getString("nom"));
+            user.setPrenom(resultSet.getString("prenom"));
+            user.setEmail(resultSet.getString("email"));
+            user.setRole(resultSet.getString("role"));
+            user.setPassword(resultSet.getString("password"));
+            UserList.add(user);
+        }        return UserList;
+    }
+
+
 
 }

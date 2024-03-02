@@ -12,7 +12,8 @@ import javafx.scene.input.MouseEvent;
 import services.ServiceUser;
 
 import java.io.IOException;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 public class ChangerPassword {
     @FXML
     private Label erroMessage;
@@ -36,6 +37,14 @@ public class ChangerPassword {
             ServiceUser serviceUser = new ServiceUser();
             try {
                 user = serviceUser.UpdateMdp(user, newPassword);
+                // Affichage de l'alerte de validation
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Modification de mot de passe réussie");
+                alert.setHeaderText(null);
+                alert.setContentText("Votre mot de passe a été modifié avec succès.");
+                alert.showAndWait();
+
+                // Migration vers la page de connexion
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
                 try {
                     Parent root = loader.load();
@@ -44,8 +53,12 @@ public class ChangerPassword {
                     controller.getId_mdp().setText(user.getPassword());
                     new_password.getScene().setRoot(root);
                 } catch (IOException e) {
+                    // Gérer l'exception d'E/S si nécessaire
+                    e.printStackTrace();
                 }
             } catch (Exception e) {
+                // Gérer les exceptions si nécessaire
+                e.printStackTrace();
             }
         } else {
             erroMessage.setText("Les champs de mot de passe ne correspondent pas ou sont vides.");

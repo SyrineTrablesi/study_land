@@ -23,7 +23,12 @@ public class CardUser{
     private Label prenom_user;
 
 
-
+    public void initData(User user) {
+        nom_user.setText(user.getNom());
+        prenom_user.setText(user.getPrenom());
+        email.setText(user.getEmail());
+        role.setText(user.getRole());
+    }
     public Label getEmail() {
         return email;
     }
