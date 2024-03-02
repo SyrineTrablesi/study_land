@@ -133,6 +133,15 @@ public class Formation {
         this.niveau = niveau;
         this.nomCategorie = nomCategorie;
     }
+    public Formation(int idFormation,String titre, String description, int duree,  float prix, String niveau, String nomCategorie) {
+        this.titre = titre;
+        this.description = description;
+        this.duree = duree;
+        this.prix = prix;
+        this.niveau = niveau;
+        this.idFormation=idFormation;
+        this.nomCategorie = nomCategorie;
+    }
 
     public Formation(int idFormation, String titre) {
         this.idFormation = idFormation;

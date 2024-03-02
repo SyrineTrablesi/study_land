@@ -96,5 +96,18 @@ public class Inscrit extends Formation {
         super();
         this.idInscrit = idInscrit;
     }
+    public Inscrit(int id_user,int idFormation, String nomCategorie, String titre, String description, int duree, float prix, String niveau) {
+        super(idFormation, description, titre,  duree, prix, niveau,nomCategorie);
+        this.idInscrit = idInscrit;
+        this.id_user = id_user;
+        this.type = "Inscrit";
+        this.dateAjout = dateAjout;
+    }
+ // deux id
+ public Inscrit(int id_user,int idFormation) {
+     super(idFormation);
+     this.id_user = id_user;
+     this.type="Inscrit";
 
+ }
 }
