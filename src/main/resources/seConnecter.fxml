@@ -71,7 +71,7 @@
          </font>
       </Label>
       <Line endX="100.0" layoutX="427.0" layoutY="363.0" startX="-100.0" stroke="#000000a9" strokeWidth="0.7" />
-      <Button fx:id="btn_connecter1" layoutX="445.0" layoutY="279.0" mnemonicParsing="false" onAction="#seConnecter" prefHeight="35.0" prefWidth="122.0" styleClass="button_inscrit" text="google" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Button fx:id="btn_connecter1" layoutX="445.0" layoutY="279.0" mnemonicParsing="false" onAction="#seConnecterAvecGoogle" prefHeight="35.0" prefWidth="122.0" styleClass="button_inscrit" text="google" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

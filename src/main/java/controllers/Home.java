@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Home {
     @FXML
     private Button id_popUp_seconnecter;
@@ -17,50 +19,36 @@ public class Home {
     @FXML
     private Button id_popUp_sinscrire;
 
-    @FXML
-    private TextField id_recherche;
 
     @FXML
-    void onREcherche(ActionEvent event) {
-
+    void onRecherche(ActionEvent event) {
+        // Logique de recherche
     }
 
     @FXML
     void popUpSinscrire(ActionEvent event) {
-        try {
-            // Chargement du fichier FXML de la page "InscriptionApprenat"
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InscriptionApprenant.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setTitle("Inscription Apprenat");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-            // Fermeture de la scène de la page "Home"
-            ((Stage) id_popUp_sinscrire.getScene().getWindow()).close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        openDialog("/InscriptionApprenant.fxml", "Inscription Apprenant");
     }
 
     @FXML
-    void popUpseConnecter(ActionEvent event) {
+    void popUpSeConnecter(ActionEvent event) {
+        openDialog("/SeConnecter.fxml", "Se Connecter");
+    }
+
+    private void openDialog(String fxmlFile, String title) {
         try {
-            // Chargement du fichier FXML de la page "SeConnecter"
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SeConnecter.fxml"));
+            // Chargement du fichier FXML de la page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.setTitle("SeConnecter");
+            stage.setTitle(title);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            stage.showAndWait(); // Attend que la boîte de dialogue soit fermée
 
-            // Fermeture de la scène de la page "Home"
-            ((Stage) id_popUp_seconnecter.getScene().getWindow()).close();
-        } catch (Exception e) {
+            // Aucune action nécessaire après la fermeture de la pop-up, car showAndWait bloque l'exécution ici
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

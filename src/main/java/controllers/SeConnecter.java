@@ -1,6 +1,10 @@
 package controllers;
 
+import com.github.scribejava.apis.GoogleApi20;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.oauth.OAuth20Service;
 import entities.ValidationFormuaire;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,12 +19,17 @@ public class SeConnecter {
     @FXML
     private Label errorMdpLabel;
 
+    @FXML
+    private Button btn_connecter;
 
+    @FXML
+    private Button btn_connecter1;
     @FXML
     private TextField id_email;
 
     @FXML
     private TextField id_mdp;
+
     @FXML
     public TextField getId_email() {
         return id_email;
@@ -29,6 +38,7 @@ public class SeConnecter {
     public TextField getId_mdp() {
         return id_mdp;
     }
+
     public void setId_email(TextField id_email) {
         this.id_email = id_email;
     }
@@ -36,6 +46,7 @@ public class SeConnecter {
     public void setId_mdp(TextField id_mdp) {
         this.id_mdp = id_mdp;
     }
+
     @FXML
     private Hyperlink id_mdp_oublier;
 
@@ -52,6 +63,7 @@ public class SeConnecter {
 
 
     }
+
     @FXML
     void seConnecter(ActionEvent event) {
         String email = id_email.getText();
@@ -67,27 +79,37 @@ public class SeConnecter {
         } else if (userinfo == null) {
             errorMdpLabel.setText("Veuillez vérifier vos informations.");
 
-        }
-        else if (userinfo.role.equals("Apprenant")|| userinfo.role.equals("Formateur")) {
+        } else if (userinfo.role.equals("Apprenant")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
             try {
                 Parent root = loader.load();
                 ProfileApprenant controller = loader.getController();
-                controller.getId_nom1().setText("Hello"+" , "+userinfo.nom);
+                controller.getId_nom1().setText("Hello" + " , " + userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
                 System.out.println("exception from se connecter ");
             }
+
         } else if (userinfo.role.equals("Admin")) {
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/DashboardAdmin.fxml"));
             try {
                 Parent root = loader1.load();
                 DashboardAdmin controller = loader1.getController();
-                controller.getId_nom1().setText(" Hello" +" ,  "+ userinfo.nom);
+                controller.getId_nom1().setText(" Hello" + " ,  " + userinfo.nom);
 
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
                 System.out.println("exeption from se connecter  ya syrine");
+            }
+        } else if (userinfo.role.equals("Formateur")) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardFormateur.fxml"));
+            try {
+                Parent root = loader.load();
+                DashboardFormateur controller = loader.getController();
+                controller.getId_nom1().setText("Hello" + " , " + userinfo.nom);
+                id_email.getScene().setRoot(root);
+            } catch (IOException e) {
+                System.out.println("exception from se connecter ");
             }
         }
     }
@@ -103,7 +125,9 @@ public class SeConnecter {
             System.out.println(e.getMessage());
         }
     }
+
+    @FXML
+    void seConnecterAvecGoogle(ActionEvent event) {
     }
-
-
+}
 

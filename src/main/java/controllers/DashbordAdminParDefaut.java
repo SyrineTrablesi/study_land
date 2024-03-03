@@ -5,7 +5,7 @@ import entities.User;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -145,17 +145,24 @@ public class DashbordAdminParDefaut {
         AnchorPane.setBottomAnchor(pieChart, 0.0);
         AnchorPane.setLeftAnchor(pieChart, 0.0);
         // formation
-        PieChart.Data apprenantsData1 = new PieChart.Data("Apprenants", nbApprenants);
-        PieChart.Data formateursData1 = new PieChart.Data("Formateurs", nbFormateurs);
-        PieChart.Data adminsData1 = new PieChart.Data("Admins", nbAdmins);
-        PieChart pieChart1 = new PieChart();
-        pieChart1.getData().addAll(apprenantsData1, formateursData1, adminsData1);
-        pieChart1.setTitle("Répartition des formztion");
-        chartContainer1.getChildren().add(pieChart1);
-        AnchorPane.setTopAnchor(pieChart1, 0.0);
-        AnchorPane.setRightAnchor(pieChart1, 0.0);
-        AnchorPane.setBottomAnchor(pieChart1, 0.0);
-        AnchorPane.setLeftAnchor(pieChart1, 0.0);
+        BarChart.Data apprenantsData1 = new BarChart.Data("Apprenants", nbApprenants);
+        BarChart.Data formateursData1 = new BarChart.Data("Formateurs", nbFormateurs);
+        BarChart.Data adminsData1 = new BarChart.Data("Admins", nbAdmins);
+        // Créer des séries de données pour chaque catégorie
+        XYChart.Series<String, Number> seriesApprenants = new XYChart.Series<>();
+        XYChart.Series<String, Number> seriesFormateurs = new XYChart.Series<>();
+        XYChart.Series<String, Number> seriesAdmins = new XYChart.Series<>();
+        seriesApprenants.getData().add(apprenantsData1);
+        seriesFormateurs.getData().add(formateursData1);
+        seriesAdmins.getData().add(adminsData1);
+        BarChart<String, Number> barChart1 = new BarChart<>(new CategoryAxis(), new NumberAxis());
+        barChart1.getData().addAll(seriesApprenants, seriesFormateurs, seriesAdmins);
+        barChart1.setTitle("Répartition des formations");
+        chartContainer1.getChildren().add(barChart1);
+        AnchorPane.setTopAnchor(barChart1, 0.0);
+        AnchorPane.setRightAnchor(barChart1, 0.0);
+        AnchorPane.setBottomAnchor(barChart1, 0.0);
+        AnchorPane.setLeftAnchor(barChart1, 0.0);
 
     }
 }

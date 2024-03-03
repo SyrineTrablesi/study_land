@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
+import security.Session;
+import security.UserInfo;
 import services.ServiceUser;
 
 import java.io.IOException;

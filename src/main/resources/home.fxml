@@ -35,7 +35,7 @@
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <TextField id="search" fx:id="id_recherche" layoutX="578.0" layoutY="249.0" onAction="#onREcherche" prefHeight="34.0" prefWidth="451.0" promptText="  Recherche..." styleClass="home_recherche" stylesheets="@style/styleDash.css">
+      <TextField id="search" fx:id="id_recherche" layoutX="578.0" layoutY="249.0"  prefHeight="34.0" prefWidth="451.0" promptText="  Recherche..." styleClass="home_recherche" stylesheets="@style/styleDash.css">
          <font>
             <Font name="Poppins Regular" size="14.0" />
          </font>
@@ -51,7 +51,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="82.0" prefWidth="133.0">
                <children>
-                  <Button fx:id="id_popUp_seconnecter" mnemonicParsing="false" onAction="#popUpseConnecter" prefHeight="30.0" prefWidth="118.0" styleClass="home_button_navbar" stylesheets="@style/styleDash.css" text="Se connecter" />
+                  <Button fx:id="id_popUp_seconnecter" mnemonicParsing="false" onAction="#popUpSeConnecter" prefHeight="30.0" prefWidth="118.0" styleClass="home_button_navbar" stylesheets="@style/styleDash.css" text="Se connecter" />
                </children>
             </VBox>
          </children>

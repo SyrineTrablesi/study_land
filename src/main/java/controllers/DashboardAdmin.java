@@ -78,7 +78,7 @@ public class DashboardAdmin implements Initializable {
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        combo_login.getItems().addAll("Modifier mot de passe", "Logout", "Aide");
+        combo_login.getItems().addAll( "Logout", "Aide");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashbordAdminParDefaut.fxml"));
         try {
             Parent defaultRoot = loader.load();
@@ -93,17 +93,6 @@ public class DashboardAdmin implements Initializable {
     void onComboLoginSelected(ActionEvent event) {
         String selectedOption = combo_login.getValue();
         switch (selectedOption) {
-            case "Modifier mot de passe":
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ChangerPassword.fxml"));
-                try {
-                    Parent defaultRoot = loader.load();
-                    centerPane.getChildren().clear();
-                    centerPane.getChildren().add(defaultRoot);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
             case "Logout":
                 Session.getInstance().logout();
                 FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
@@ -176,7 +165,7 @@ public class DashboardAdmin implements Initializable {
     }
     @FXML
     void home(ActionEvent event) {
-        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/home.fxml"));
         try {
             Parent root = loader1.load();
             SeConnecter controller = loader1.getController();
@@ -189,12 +178,10 @@ public class DashboardAdmin implements Initializable {
 
     @FXML
     void onREcherche(ActionEvent event) {
-        String email = id_recherche.getText(); // Supprimez les espaces inutiles
+        String email = id_recherche.getText();
         System.out.println(email);
-
         try {
             ServiceUser  serviceUser = new ServiceUser();
-
             try {
                 User user = serviceUser.rechercheUserParEmail(email);
                 if (user != null) {
@@ -216,7 +203,6 @@ public class DashboardAdmin implements Initializable {
                 System.out.println("Erreur lors de la recherche de l'utilisateur.");
             }
         } catch (IOException e) {
-            // Gérer l'exception d'entrée/sortie
             e.printStackTrace();
             System.out.println("Erreur lors du chargement de l'interface utilisateur.");
         }
