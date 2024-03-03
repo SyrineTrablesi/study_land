@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.ChatController">
+
+    <TextArea fx:id="chatTextArea" VBox.vgrow="ALWAYS"/>
+    <Button text="Record" onAction="#startRecording"/>
+    <Button text="Stop" onAction="#stopRecording"/>
+    <Button text="Play" onAction="#playAudio"/>
+    <Button fx:id="recordButton" onAction="#startRecording" text="Record" />
+</VBox>

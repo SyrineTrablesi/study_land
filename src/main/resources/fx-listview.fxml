@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.ListViewController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <ListView fx:id="listView" layoutX="36.0" layoutY="74.0" prefHeight="238.0" prefWidth="289.0" />
+        <Label layoutX="36.0" layoutY="43.0" text="Select your programming language">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label fx:id="selection" layoutX="36.0" layoutY="325.0" text="Your selection">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <VBox layoutX="338.0" layoutY="74.0" prefHeight="256.0" prefWidth="289.0" spacing="10.0">
+            <children>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectFirst" prefHeight="25.0" prefWidth="323.0" text="Select First">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectNext" prefHeight="25.0" prefWidth="379.0" text="Select Next">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectPrev" prefHeight="25.0" prefWidth="379.0" text="Select Previous">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectLast" prefHeight="25.0" prefWidth="309.0" text="Select Last">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectAll" prefHeight="25.0" prefWidth="366.0" text="Select All">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="354.0" text="Clear selection">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+
+</AnchorPane>

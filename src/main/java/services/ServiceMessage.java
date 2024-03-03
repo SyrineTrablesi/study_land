@@ -54,7 +54,7 @@ public class ServiceMessage implements IService<Message>{
 
     }
 
-    @Override
+    /*@Override
     public List<Message> afficher() throws SQLException{
         String req ="select * from message";
         Statement ste = connection.createStatement();
@@ -72,7 +72,25 @@ public class ServiceMessage implements IService<Message>{
         }
 
         return list;
+    }*/
+    @Override
+    public List<Message> afficher() throws SQLException {
+        String req = "SELECT * FROM message";
+        Statement ste = connection.createStatement();
+        ResultSet res = ste.executeQuery(req);
+        List<Message> list = new ArrayList<>();
+        while (res.next()) {
+            Message message = new Message();
+            message.setId_message(res.getInt("id_message"));
+            message.setMessage(res.getString("message"));
+            message.setDate(res.getDate("date"));
+            message.setId_sender(res.getInt("id_sender"));
+            message.setId_diss(res.getInt("id_diss"));
+            list.add(message);
+        }
+        return list;
     }
+
 
 
 

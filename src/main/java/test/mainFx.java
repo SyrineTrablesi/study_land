@@ -1,5 +1,6 @@
 package test;
 
+import controllers.ChatGPTAPIExample;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,9 +9,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
 public class mainFx extends Application {
     public static void main(String[] args) {
+
+
         launch(args);
     }
 
@@ -22,7 +24,7 @@ public class mainFx extends Application {
 
             Scene sc = new Scene(root);
             primaryStage.setScene(sc);
-            primaryStage.setTitle("server");
+            primaryStage.setTitle("apprenat");
             primaryStage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
