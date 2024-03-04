@@ -80,6 +80,8 @@
             <Image url="@src/fleches.png" />
          </image>
       </ImageView>
-
+      <!-- Pagination Controls -->
+      <Button layoutX="800.0" layoutY="570.0" mnemonicParsing="false" onAction="#loadPreviousPage" text="Previous" />
+      <Button layoutX="850.0" layoutY="570.0" mnemonicParsing="false" onAction="#loadNextPage" text="Next" />
    </children>
 </AnchorPane>
