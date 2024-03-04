@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import services.EvalService;
 import services.quesservice;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 import utils.MyDB;
 
 import java.io.IOException;
@@ -25,9 +27,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Modifierevaluation {
     @FXML
@@ -94,44 +94,56 @@ public class Modifierevaluation {
     }
 
     private quesservice questionService = new quesservice();
+    private Map<String, Integer> evaluationIdMap = new HashMap<>();
+    private Map<String, Integer> questionIdMap = new HashMap<>();
 
     @FXML
     public void ajouter(ActionEvent actionEvent) {
         // Obtenir les éléments sélectionnés
         ObservableList<String> selectedQuestionStrings = questionListView.getSelectionModel().getSelectedItems();
 
+
         // Afficher les IDs des questions sélectionnées
         System.out.println("IDs des questions sélectionnées :");
         ObservableList<question> selectedQuestions = FXCollections.observableArrayList(); // Create a new ObservableList
 
         for (String selectedQuestion : selectedQuestionStrings) {
-            int id = extractIdFromQuestionString(selectedQuestion);
+            int id = extractSelectedQuestionId();
             System.out.println(id);
 
             // Vérifier si la question est déjà dans la liste selectedQuestions
             if (selectedQuestions.stream().noneMatch(q -> q.getIdQuestion() == id)) {
+                // Récupérer la question complète de la liste des questions chargées initialement
+                question fullQuestion = getQuestionById(id);
+
                 // Ajouter l'objet question à la liste des questions sélectionnées
-                selectedQuestions.add(new question(id));
+                selectedQuestions.add(fullQuestion);
             }
         }
 
         // Ajouter toutes les questions sélectionnées à la liste questionselectioner
         questionselectioner.getItems().addAll(selectedQuestions);
-    }
 
-    private int extractIdFromQuestionString(String questionString) {
-        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(questionString);
-
-        if (matcher.find()) {
-            try {
-                return Integer.parseInt(matcher.group());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
+        // Afficher les IDs des questions sélectionnées à partir de la liste selectedQuestions
+        System.out.println("IDs des questions sélectionnées :");
+        for (question selectedQuestion : selectedQuestions) {
+            System.out.println(selectedQuestion.getIdQuestion());
         }
-
-        return 0;
     }
+
+
+
+    private question getQuestionById(int questionId) {
+        // Appelez le service ou la méthode appropriée pour obtenir la question par son ID
+        try {
+            return questionService.getQuestionById(questionId);
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
+        return null;
+    }
+
+
 
     @FXML
     public void initialize() {
@@ -155,42 +167,68 @@ public class Modifierevaluation {
 
     private void displayEvaluations(List<evaluation> evaluations) {
         for (evaluation eval : evaluations) {
-            String evaluationText = "Le Titre de l'évaluation : " + eval.getId_evaluation() + " - " + eval.getTitre_evaluation();
+            String evaluationText = eval.getTitre_evaluation(); // Affiche uniquement le titre de l'évaluation
             evaluationListView.getItems().add(evaluationText);
+
+            // Ajoutez l'ID de l'évaluation comme un objet invisible dans la liste
+            evaluationIdMap.put(evaluationText, eval.getId_evaluation());
         }
     }
+
 
 
     private void displayQuestions(List<question> questions) {
         for (question q : questions) {
-            String questionText = q.getEnonce() + " - " + q.getIdQuestion(); // Assurez-vous d'adapter cela à votre classe Question
+            String questionText = q.getEnonce(); // Assurez-vous d'adapter cela à votre classe Question
             questionListView.getItems().add(questionText);
+
+            // Ajoutez l'ID de la question comme un objet invisible dans la liste
+            questionIdMap.put(questionText, q.getIdQuestion());
         }
     }
 
-    private int getIdEvaluationFromSelectedItem() {
-        // Obtenez le modèle de sélection de la ListView
+//pour avoire le id selectionner de evaluation
+    private int extractSelectedEvaluationId() {
+        int selectedEvaluationId = -1; // Valeur par défaut si aucune évaluation n'est sélectionnée
+
+        // Obtenez le modèle de sélection de la liste
         MultipleSelectionModel<String> selectionModel = evaluationListView.getSelectionModel();
 
-        // Obtenez l'élément sélectionné (ici, une chaîne représentant une évaluation)
-        String selectedEvaluation = selectionModel.getSelectedItem();
+        // Vérifiez si la sélection n'est pas vide
+        if (!selectionModel.isEmpty()) {
+            // Obtenez l'élément sélectionné (le texte de l'évaluation)
+            String selectedEvaluationText = selectionModel.getSelectedItem();
 
-        if (selectedEvaluation != null) {
-            // Utilisez une expression régulière pour extraire l'ID de l'élément sélectionné
-            java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(selectedEvaluation);
-
-            if (matcher.find()) {
-                // Convertissez l'ID en entier
-                try {
-                    return Integer.parseInt(matcher.group());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+            // Vérifiez si l'ID correspondant existe dans la map
+            if (evaluationIdMap.containsKey(selectedEvaluationText)) {
+                // Si l'ID correspondant existe, extrayez l'ID
+                selectedEvaluationId = evaluationIdMap.get(selectedEvaluationText);
             }
         }
 
-        return 0;
+        return selectedEvaluationId;
     }
+    private int extractSelectedQuestionId() {
+        int selectedQuestionId = -1; // Valeur par défaut si aucune question n'est sélectionnée
+
+        // Obtenez le modèle de sélection de la liste
+        MultipleSelectionModel<String> selectionModel = questionListView.getSelectionModel();
+
+        // Vérifiez si la sélection n'est pas vide
+        if (!selectionModel.isEmpty()) {
+            // Obtenez l'élément sélectionné (le texte de la question)
+            String selectedQuestionText = selectionModel.getSelectedItem();
+
+            // Vérifiez si l'ID correspondant existe dans la map
+            if (questionIdMap.containsKey(selectedQuestionText)) {
+                // Si l'ID correspondant existe, extrayez l'ID
+                selectedQuestionId = questionIdMap.get(selectedQuestionText);
+            }
+        }
+
+        return selectedQuestionId;
+    }
+
 
     public void ajouterevaluation(ActionEvent actionEvent) throws ParseException {
         // Créer un objet evaluation à partir des valeurs dans l'interface utilisateur
@@ -242,7 +280,7 @@ public class Modifierevaluation {
         evaluation.setPrix(Float.parseFloat(prix.getText()));
         evaluation.setDomaine(domaine.getText());
 
-        int idEvaluation = getIdEvaluationFromSelectedItem();
+        int idEvaluation = extractSelectedEvaluationId();
         evaluation.setId_evaluation(idEvaluation);
 
         try {
@@ -265,6 +303,7 @@ public class Modifierevaluation {
                     ajoutIdEvaluationQuestion(evaluation.getId_evaluation(), questionId);
                 }
             }
+            afficherNotification("Modification réussie", "La modification a été effectuée avec succès.", NotificationType.SUCCESS);
 
             System.out.println("Modification réussie avec succès");
         } catch (SQLException e) {
@@ -272,18 +311,7 @@ public class Modifierevaluation {
         }
     }
 
-    private void displaySelectedEvaluations(List<evaluation> selectedEvaluations) {
-        // Effacez la liste actuelle avant d'afficher les résultats
-        evaluationListView.getItems().clear();
 
-        // Afficher les évaluations sélectionnées
-        System.out.println("Évaluations sélectionnées :");
-        for (evaluation selectedEvaluation : selectedEvaluations) {
-            String evaluationText = "Le Titre de l'évaluation : " + selectedEvaluation.getId_evaluation() + " - " + selectedEvaluation.getTitre_evaluation();
-            System.out.println("ID de l'évaluation : " + selectedEvaluation.getId_evaluation());
-            evaluationListView.getItems().add(evaluationText);
-        }
-    }
 
     private void displaySelectedqeustion(List<question> selectedQuestions) {
 
@@ -308,26 +336,7 @@ public class Modifierevaluation {
         }
     }
 
-    public void lesevaluation(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lesevaluation.fxml"));
-            Parent root = loader.load();
 
-            // Obtenez le contrôleur après avoir chargé le fichier FXML
-            Lesevaluation affichepre = loader.getController();
-
-            // Créez une nouvelle scène avec le Parent chargé
-            Scene scene = new Scene(root);
-
-            // Récupérez la scène actuelle à partir du bouton
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            // Remplacez la scène actuelle par la nouvelle scène
-            currentStage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void recuperer(ActionEvent actionEvent) throws SQLException {
         EvalService eval = new EvalService();
@@ -365,7 +374,7 @@ public class Modifierevaluation {
             e.printStackTrace(); // Handle the exception appropriately in your application
         }
         evaluation evaluation = new evaluation();
-        int idEvaluation = afficherIdEvaluationSelectionnee();
+        int idEvaluation = extractSelectedEvaluationId();
         List<Integer> questionIds = eval.getQuestionsByEvaluationId(idEvaluation);
 
         // Fetch corresponding questions using the getQuestionById method
@@ -383,97 +392,27 @@ public class Modifierevaluation {
 
     }
 
-    private boolean isFieldEmpty(TextField field, String fieldName) {
-        if (field.getText().isEmpty()) {
-            showWarning("Le champ '" + fieldName + "' ne peut pas être vide.");
-            return true;
-        }
-        return false;
-    }
 
-    private boolean isValidDuration(TextField field, String fieldName) {
-        String durationPattern = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
-        String input = field.getText().trim();
-
-        if (!input.matches(durationPattern)) {
-            showWarning("Veuillez saisir une durée valide au format HH:mm:ss pour le champ '" + fieldName + "'.");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isValidInteger(TextField field, String fieldName) {
-        try {
-            Integer.parseInt(field.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            showWarning("Veuillez saisir un nombre valide pour le champ '" + fieldName + "'.");
-            return false;
-        }
-    }
-
-    private boolean isValidFloat(TextField field, String fieldName) {
-        try {
-            Float.parseFloat(field.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            showWarning("Veuillez saisir un nombre décimal valide pour le champ '" + fieldName + "'.");
-            return false;
-        }
-    }
 
     public int afficherIdEvaluationSelectionnee() {
         // Obtenez le modèle de sélection de la ListView
         MultipleSelectionModel<String> selectionModel = evaluationListView.getSelectionModel();
 
         // Obtenez l'élément sélectionné (ici, une chaîne représentant une évaluation)
-        String selectedEvaluation = selectionModel.getSelectedItem();
+        String selectedEvaluationText = selectionModel.getSelectedItem();
 
-        if (selectedEvaluation != null) {
-            // Utilisez une expression régulière pour extraire l'ID de l'élément sélectionné
-            java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+").matcher(selectedEvaluation);
-
-            if (matcher.find()) {
-                // Convertissez l'ID en entier
-                try {
-                    int idEvaluation = Integer.parseInt(matcher.group());
-                    return idEvaluation;
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
+        if (selectedEvaluationText != null && evaluationIdMap.containsKey(selectedEvaluationText)) {
+            // Retournez directement l'ID à partir de la map
+            return evaluationIdMap.get(selectedEvaluationText);
         }
 
         return 0;
     }
 
 
-    public void recherche(ActionEvent actionEvent) {
-        try {
-            // Obtenez le texte de recherche
-            String rechercheText = textrecherche.getText();
-
-            // Appeler la méthode de recherche dans le service
-            List<evaluation> evaluationsTrouvees = evalService.rechercherParCaractere(rechercheText);
-
-            // Effacer la liste actuelle avant d'afficher les résultats de la recherche
-            evaluationListView.getItems().clear();
-
-            // Afficher les évaluations trouvées
-            displayEvaluations(evaluationsTrouvees);
-        } catch (SQLException e) {
-            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
-        }
 
 
-    }
 
-    private void showWarning(String message) {
-        Notifications.create()
-                .title("Avertissement")
-                .text(message)
-                .showWarning();
-    }
 
     public void recherchequestion(ActionEvent actionEvent) {
         try {
@@ -494,6 +433,112 @@ public class Modifierevaluation {
         } catch (SQLException e) {
             e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
         }
+    }
+
+
+
+
+
+    private boolean isFieldEmpty(TextField field, String fieldName) {
+        if (field.getText().isEmpty()) {
+            Notification( "Le champ '" + fieldName + "' ne peut pas être vide.", NotificationType.WARNING);
+            return true;
+        }
+        return false;
+    }
+
+
+    private boolean isValidDuration(TextField field, String fieldName) {
+        String durationPattern = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
+        String input = field.getText().trim();
+
+        if (!input.matches(durationPattern)) {
+            Notification( "Veuillez saisir une durée valide au format HH:mm:ss pour le champ '" + fieldName + "'.", NotificationType.WARNING);
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean isValidInteger(TextField field, String fieldName) {
+        try {
+            Integer.parseInt(field.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            Notification("Veuillez saisir un nombre valide pour le champ '" + fieldName + "'.",  NotificationType.WARNING);
+            return false;
+        }
+    }
+
+
+    private boolean isValidFloat(TextField field, String fieldName) {
+        try {
+            Float.parseFloat(field.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            showWarning("Veuillez saisir un nombre décimal valide pour le champ '" + fieldName + "'.");
+            return false;
+        }
+    }
+    private void showWarning(String message) {
+        Notifications.create()
+                .title("Avertissement")
+                .text(message)
+                .showWarning();
+    }
+    public void lesevaluation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lesevaluation.fxml"));
+            Parent root = loader.load();
+
+            // Obtenez le contrôleur après avoir chargé le fichier FXML
+            Lesevaluation affichepre = loader.getController();
+
+            // Créez une nouvelle scène avec le Parent chargé
+            Scene scene = new Scene(root);
+
+            // Récupérez la scène actuelle à partir du bouton
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Remplacez la scène actuelle par la nouvelle scène
+            currentStage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void recherche(ActionEvent actionEvent) {
+        try {
+            // Obtenez le texte de recherche
+            String rechercheText = textrecherche.getText();
+
+            // Appeler la méthode de recherche dans le service
+            List<evaluation> evaluationsTrouvees = evalService.rechercherParCaractere(rechercheText);
+
+            // Effacer la liste actuelle avant d'afficher les résultats de la recherche
+            evaluationListView.getItems().clear();
+
+            // Afficher les évaluations trouvées
+            displayEvaluations(evaluationsTrouvees);
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
+        }
+
+
+    }
+
+    public static void afficherNotification(String titre, String message, NotificationType type) {
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle(titre);
+        tray.setMessage(message);
+        tray.setNotificationType(type);
+        tray.showAndWait();
+    }
+    private void Notification(String message, NotificationType type) {
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle("Avertissement");
+        tray.setMessage(message);
+        tray.setNotificationType(type);
+        tray.showAndWait();
     }
 
 }

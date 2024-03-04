@@ -51,12 +51,7 @@ public class question {
 
     @Override
     public String toString() {
-        return "question{" +
-                "idQuestion=" + idQuestion +
-                ", enonce='" + enonce + '\'' +
-                ", domaine='" + domaine + '\'' +
-                ", reponses=" + reponses +
-                '}';
+        return enonce;
     }
     public void loadResponses(Connection connection) {
         List<response> matchingResponses = new ArrayList<>();

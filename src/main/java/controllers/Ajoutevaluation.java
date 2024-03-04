@@ -17,6 +17,8 @@ import javafx.util.converter.IntegerStringConverter;
 import org.controlsfx.control.Notifications;
 import services.EvalService;
 import services.quesservice;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 import utils.MyDB;
 
 import java.io.IOException;
@@ -83,11 +85,13 @@ public class Ajoutevaluation {
         // Utilisez la connexion par défaut ou tout autre mécanisme que vous utilisez pour obtenir une connexion
         this.connection = MyDB.getInstance().getConnection();
     }
+
+    @FXML
     private void setupQuestionListViews() {
         // Configurer la ListView pour permettre la sélection multiple
         questionListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        // Configurer la factory pour afficher uniquement l'enoncé et l'ID
+        // Configurer la factory pour afficher uniquement l'enoncé dans questionListView
         questionListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(question item, boolean empty) {
@@ -96,12 +100,12 @@ public class Ajoutevaluation {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.getEnonce() + " - " + item.getIdQuestion());
+                    setText(item.getEnonce()); // Only display the question text
                 }
             }
         });
 
-        // Configurer la factory pour afficher uniquement l'enoncé et l'ID dans questionselectioner
+        // Configurer la factory pour afficher uniquement l'enoncé dans questionselectioner
         questionselectioner.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(question item, boolean empty) {
@@ -110,11 +114,12 @@ public class Ajoutevaluation {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.getEnonce() + " - " + item.getIdQuestion());
+                    setText(item.getEnonce()); // Only display the question text
                 }
             }
         });
     }
+
     @FXML
     public void initialize() {
         setupQuestionListViews();
@@ -156,10 +161,18 @@ public class Ajoutevaluation {
     }
 
     private void showWarning(String message) {
-        Notifications.create()
-                .title("Avertissement")
-                .text(message)
-                .showWarning();
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle("Title");
+        tray.setMessage(message);
+        tray.setNotificationType(NotificationType.WARNING);
+        tray.showAndWait();
+    }
+    private void succes(String message) {
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle("Title");
+        tray.setMessage(message);
+        tray.setNotificationType(NotificationType.SUCCESS);
+        tray.showAndWait();
     }
 
     private void chargerQuestions() {
@@ -247,6 +260,7 @@ public class Ajoutevaluation {
                 System.out.println(idQuestion);
                 ajoutIdEvaluationQuestion(idEvaluation, idQuestion);
             }
+            succes("l'évaluation a été ajoutée avec succès");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ParseException e) {
