@@ -203,10 +203,36 @@ public class CoursController {
                 String description = new String(cours.getDescription_Cours());
                 Label descriptionLabel = new Label("Description: " + description);
 
-                // Create a WebView to display the PDF content
-                WebView courseWebView = new WebView();
-                courseWebView.setPrefSize(800, 600); // Set WebView size
-                loadPDFContent(cours.getDescription_Cours(), courseWebView);
+//                // Create a WebView to display the PDF content
+//                WebView courseWebView = new WebView();
+//                courseWebView.setPrefSize(800, 600); // Set WebView size
+//                loadPDFContent(cours.getDescription_Cours(), courseWebView);
+                // Create a Hyperlink to download/open the PDF
+                Hyperlink pdfLink = new Hyperlink("Download PDF");
+                pdfLink.setOnAction(e -> {
+                    // Handle the action to download/open the PDF
+                    try {
+                        // Logic to download the PDF file associated with the selected course
+                        String fileName = cours.getNom_Cours() + ".pdf"; // Construct the file name
+                        byte[] pdfData = cours.getDescription_Cours(); // Get the PDF data from the course
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.setTitle("Save PDF File");
+                        fileChooser.setInitialFileName(fileName);
+                        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                        fileChooser.getExtensionFilters().add(extFilter);
+                        File file = fileChooser.showSaveDialog(new Stage());
+                        if (file != null) {
+                            try (FileOutputStream fos = new FileOutputStream(file)) {
+                                fos.write(pdfData); // Write the PDF data to the file
+                                showAlert(Alert.AlertType.INFORMATION, "Download Successful", "PDF downloaded successfully", "File saved as: " + file.getAbsolutePath());
+                            } catch (IOException ex) {
+                                showAlert(Alert.AlertType.ERROR, "Error", "File Save Error", "An error occurred while saving the PDF file: " + ex.getMessage());
+                            }
+                        }
+                    } catch (Exception ex) {
+                        showAlert(Alert.AlertType.ERROR, "Error", "PDF Download Error", "An error occurred while downloading the PDF: " + ex.getMessage());
+                    }
+                });
 
                 // Optionally, you can add an image to represent the course
                 ImageView imageView = new ImageView(new Image("/src/cours.png"));
@@ -214,7 +240,7 @@ public class CoursController {
                 imageView.setPreserveRatio(true);
 
                 // Create a VBox to hold course details and WebView
-                VBox courseBox = new VBox(imageView, coursLabel, descriptionLabel, courseWebView);
+                VBox courseBox = new VBox(imageView, coursLabel, pdfLink);
                 courseBox.setSpacing(5); // Adjust spacing between elements
 
                 // Create the "Supprimer" button
@@ -225,7 +251,7 @@ public class CoursController {
 
                 // Optionally, you can add a button for editing
                 Button modifierButton = new Button("Modifier");
-                deleteButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: #fff; -fx-padding: 5px 10px; -fx-background-radius: 5px; -fx-font-size: 14px; -fx-font-family: 'Arial';");
+                modifierButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: #fff; -fx-padding: 5px 10px; -fx-background-radius: 5px; -fx-font-size: 14px; -fx-font-family: 'Arial';");
                 modifierButton.setOnAction(e -> ModiferButton(cours));
 
                 // Add buttons to the VBox

@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -135,7 +136,20 @@ public class AfficherFormationAdmin implements Initializable {
     private ServiceFormation formationService; // Instance of your service
     private String selectedItem;
     private Formation selectedFormation;
+    @FXML
+    private AnchorPane anchorPane;
 
+    private boolean darkMode = false;
+
+    @FXML
+    private void toggleBackgroundColor(ActionEvent event) {
+        if (darkMode) {
+            anchorPane.setStyle("-fx-background-color: #ffffff;");
+        } else {
+            anchorPane.setStyle("-fx-background-color: #2b2b2b;");
+        }
+        darkMode = !darkMode;
+    }
 
 
 
