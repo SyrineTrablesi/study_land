@@ -135,6 +135,12 @@ public  User UpdateMdp(User user,String password) throws  Exception{
         }        return UserList;
     }
 
-
+    public void modifierEmail(User user , String Email ) throws SQLException {
+        String req = "UPDATE user SET email=? WHERE id_user=? ";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, Email);
+        pre.setInt(2, user.getId());
+        pre.executeUpdate();
+    }
 
 }

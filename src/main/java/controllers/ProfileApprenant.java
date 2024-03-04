@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
 
 public class ProfileApprenant {
     Apprenant apprenant=new Apprenant();
-
     @FXML
     private ImageView img;
 
@@ -69,6 +68,7 @@ public class ProfileApprenant {
         return id_nom1;
     }
 
+    UserInfo userInfo = Session.getInstance().userInfo;
 
     public void setId_nom1(Label id_nom1) {
         this.id_nom1 = id_nom1;
@@ -76,7 +76,6 @@ public class ProfileApprenant {
 
     @FXML
     void modification(ActionEvent event) {
-        UserInfo userInfo = Session.getInstance().userInfo;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GererProfile.fxml"));
         try {
             Parent root = loader.load();
@@ -106,8 +105,23 @@ public class ProfileApprenant {
     void onComboLoginSelected(ActionEvent event) {
         String selectedOption = combo_login.getValue();
         switch (selectedOption) {
+            case "Modifier Email":
+                // Pas besoin de se déconnecter de la session ici
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/modifierEmail.fxml"));
+                try {
+                    Parent defaultRoot = loader2.load();
+                    ModifierEmail controller = loader2.getController();
+                    controller.setId_email(userInfo.email);
+                    centerPane.getChildren().clear();
+                    centerPane.getChildren().add(defaultRoot);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
             case "Logout":
-                Session.getInstance().logout();
+                // Pas besoin de se déconnecter de la session ici
                 FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
                 try {
                     Parent root = loader1.load();
@@ -121,9 +135,10 @@ public class ProfileApprenant {
                 break;
         }
     }
+
     @FXML
     public void initialize() {
-        combo_login.getItems().addAll( "Logout", "Aide");
+        combo_login.getItems().addAll( "Modifier Email","Logout", "Aide");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardApprenantParDefaut.fxml"));
         try {
             Parent defaultRoot = loader.load();

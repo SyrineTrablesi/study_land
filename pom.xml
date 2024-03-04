@@ -77,16 +77,16 @@
             <artifactId>guava</artifactId>
             <version>33.0.0-jre</version>
         </dependency>
+                <dependency>
+                    <groupId>com.twilio.sdk</groupId>
+                    <artifactId>twilio</artifactId>
+                    <version>8.24.0</version>
+                </dependency>
         <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
             <version>1.35.0</version> <!-- Spécifiez la dernière version disponible -->
         </dependency>
-
-
-
-
-
     </dependencies>
     <build>
         <plugins>

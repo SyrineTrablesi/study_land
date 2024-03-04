@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 
 public class DashboardFormateur {
 
+    UserInfo userInfo = Session.getInstance().userInfo;
 
 
     @FXML
@@ -79,6 +80,20 @@ public class DashboardFormateur {
     void onComboLoginSelected(ActionEvent event) {
         String selectedOption = combo_login.getValue();
         switch (selectedOption) {
+            case "Modifier Email":
+                // Pas besoin de se déconnecter de la session ici
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/modifierEmail.fxml"));
+                try {
+                    Parent defaultRoot = loader2.load();
+                    ModifierEmail controller = loader2.getController();
+                    controller.setId_email(userInfo.email);
+                    centerPane.getChildren().clear();
+                    centerPane.getChildren().add(defaultRoot);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
             case "Logout":
                 Session.getInstance().logout();
                 FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Seconnecter.fxml"));
@@ -97,7 +112,7 @@ public class DashboardFormateur {
 
     @FXML
     public void initialize() {
-        combo_login.getItems().addAll( "Logout", "Aide");
+        combo_login.getItems().addAll( "Modifier Email","Logout", "Aide");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashbordFormateurParDefaut.fxml"));
         try {
             Parent defaultRoot = loader.load();
