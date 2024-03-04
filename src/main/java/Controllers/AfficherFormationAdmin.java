@@ -28,7 +28,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AfficherFormationAdmin implements Initializable {
-
+    @FXML
+    private Label FromDB;
     @FXML
     private Label DD;
 
@@ -53,8 +54,7 @@ public class AfficherFormationAdmin implements Initializable {
     @FXML
     private Label Prix;
 
-    @FXML
-    private Label FromDB;
+
     @FXML
     private WebView affichageWeb;
 
@@ -139,11 +139,10 @@ public class AfficherFormationAdmin implements Initializable {
     @FXML
     private AnchorPane anchorPane;
 
+    private boolean darkMode = false;
     private List<Formation> allData;
     private int currentPageIndex = 0;
     private int itemsPerPage = 4;
-
-    private boolean darkMode = false;
 
     @FXML
     private void toggleBackgroundColor(ActionEvent event) {
@@ -163,7 +162,9 @@ public class AfficherFormationAdmin implements Initializable {
         // FromDB will be automatically injected by JavaFX
         AfficherFormationAdmin(null);
         loadPage(0);
+
     }
+
 
     @FXML
     private void handleLabelClick(MouseEvent event) {
@@ -183,6 +184,13 @@ public class AfficherFormationAdmin implements Initializable {
                 String message = "Titre label clicked for formation: " + clickedFormation.getTitre() + "\n";
                 message += "Formation ID: " + clickedFormation.getIdFormation();
                 FromDB.setText(message);
+
+                // After modifying a formation, update the FromDB label
+                String updatedInfo = "Updated formation with ID: " + clickedFormation.getIdFormation() + ", New title: " + clickedFormation.getTitre();
+                FromDB.setText(updatedInfo);
+
+                // Reload the page to reflect the updated data
+                loadPage(currentPageIndex);
             } else {
                 System.out.println("No formation associated with the clicked label.");
             }
@@ -300,8 +308,11 @@ public class AfficherFormationAdmin implements Initializable {
             // Delete the Formation from the database
             FS.supprimer(formation);
 
-            // Refresh the ListView
-            AfficherFormationAdmin(new ActionEvent());
+            // Reload the data
+            allData = FS.afficher();
+
+            // Reload the UI by calling loadPage with the current page index
+            loadPage(currentPageIndex);
         } catch (SQLException e) {
             System.out.println("Error deleting formation: " + e.getMessage());
         }
@@ -362,6 +373,10 @@ public class AfficherFormationAdmin implements Initializable {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+    public AfficherFormationAdmin() {
+        // Initialize formationService here
+        this.formationService = new ServiceFormation();
+    }
     public void modifier(ActionEvent actionEvent) {
         if (selectedFormation != null) {
             // Show a dialog to prompt the user for the new title
@@ -377,10 +392,34 @@ public class AfficherFormationAdmin implements Initializable {
                     try {
                         // Create a new Formation object with the updated title and existing attributes
                         Formation updatedFormation = new Formation(selectedFormation.getIdFormation(), newTitre);
-                        System.out.println(selectedFormation.getIdFormation()+"form syrineee");
+                        System.out.println(selectedFormation.getIdFormation() + "form ");
 
                         // Call the modifier method in your ServiceFormation class to update the formation title in the database
                         formationService.modifier(updatedFormation);
+
+                        // Update the selectedFormation object with the new title
+                        selectedFormation.setTitre(newTitre);
+
+                        // Update the title label in the UI
+                        for (Node node : affichageformationvbox.getChildren()) {
+                            if (node instanceof HBox) {
+                                HBox rowBox = (HBox) node;
+                                for (Node vboxNode : rowBox.getChildren()) {
+                                    if (vboxNode instanceof VBox) {
+                                        VBox formationBox = (VBox) vboxNode;
+                                        for (Node labelNode : formationBox.getChildren()) {
+                                            if (labelNode instanceof Label) {
+                                                Label label = (Label) labelNode;
+                                                if (label.getId() != null && label.getId().equals(String.valueOf(selectedFormation.getIdFormation()))) {
+                                                    label.setText("Titre: " + newTitre);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                         // Provide feedback to the user
                         showAlert("Success", "Formation title updated successfully.", Alert.AlertType.INFORMATION);
@@ -396,7 +435,7 @@ public class AfficherFormationAdmin implements Initializable {
             showAlert("Error", "No formation selected.", Alert.AlertType.ERROR);
         }
     }
-    // Helper method to show an alert dialog
+    // Helper method t to show an alert dialog
     private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -462,43 +501,39 @@ public class AfficherFormationAdmin implements Initializable {
         for (int i = fromIndex; i < toIndex; i++) {
             Formation formation = allData.get(i);
             // Create labels for each property of the Formation object
-            Label titreLabel = new Label("Titre: " + formation.getTitre());
+            Label titreLabel = new Label(); // Create an empty label
+            titreLabel.setId(String.valueOf(formation.getIdFormation()));
+            titreLabel.setUserData(formation);
+            titreLabel.setOnMouseClicked(this::handleLabelClick);
+            // Set the text of the titreLabel dynamically with the formation's title
+            titreLabel.setText("Titre: " + formation.getTitre());
             Label descriptionLabel = new Label("Description: " + formation.getDescription());
             Label dureeLabel = new Label("Durée: " + formation.getDuree() + " heures");
             Label dateDebutLabel = new Label("Date Début: " + formation.getDateDebut());
             Label dateFinLabel = new Label("Date Fin: " + formation.getDateFin());
             Label prixLabel = new Label("Prix: " + formation.getPrix() + " DT");
             Label niveauLabel = new Label("Niveau: " + formation.getNiveau());
-
-            // Optionally, you can add an image to the formation
             ImageView imageView = new ImageView(new Image("/src/cours.png"));
             imageView.setFitWidth(100);
             imageView.setPreserveRatio(true);
-            // Create the "Supprimer" button
             Button supprimerButton = new Button("Supprimer");
             supprimerButton.setOnAction(event -> supprimerFormation(formation));
-
-            // Create the "Modifier" button
             Button modifierButton = new Button("Modifier");
             modifierButton.setOnAction(e -> modifier(new ActionEvent()));
-
-            // Add labels and image to the current HBox
             VBox formationBox = new VBox(imageView, titreLabel, descriptionLabel, dureeLabel, dateDebutLabel, dateFinLabel, prixLabel, niveauLabel, supprimerButton, modifierButton);
-            formationBox.setSpacing(5); // Adjust spacing between labels in a formation
-
-            // Add the current VBox to the HBox
+            formationBox.setSpacing(5);
             rowBox.getChildren().add(formationBox);
         }
-        // Add the current HBox to the main VBox
         affichageformationvbox.getChildren().add(rowBox);
-
-        // Add spacing between rows
         Region spacer = new Region();
-        spacer.setPrefWidth(20); // Adjust the width to increase or decrease the spacing between rows
+        spacer.setPrefWidth(20);
         affichageformationvbox.getChildren().add(spacer);
     }
-
     private int getTotalPages() {
         return (int) Math.ceil((double) allData.size() / itemsPerPage);
     }
+
 }
+
+
+
