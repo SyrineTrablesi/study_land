@@ -17,13 +17,17 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("/AfficherFormationAdmin.fxml"));
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("/AjouterFormation.fxml"));
         try {
             Parent root =loader.load();
             Scene scene=new Scene(root);
             primaryStage.setTitle("gerer Formation");
             primaryStage.setScene(scene);
             primaryStage.show();
+//            Parent root = FXMLLoader.load(getClass().getResource("/youtube_viewer.fxml"));
+//            primaryStage.setScene(new Scene(root, 800, 600));
+//            primaryStage.setTitle("YouTube Viewer");
+//            primaryStage.show();
 
 
         } catch (IOException e) {

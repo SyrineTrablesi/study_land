@@ -8,7 +8,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -75,6 +77,15 @@
          </image>
       </ImageView>
       <Button layoutX="112.0" layoutY="585.0" mnemonicParsing="false" onAction="#toggleBackgroundColor" stylesheets="@styles.css" text="Toggle Background Color" />
-
+      <AnchorPane layoutX="593.0" layoutY="411.0" prefHeight="231.0" prefWidth="399.0">
+         <children>
+            <BorderPane layoutX="-2.0" prefHeight="243.0" prefWidth="435.0">
+               <top>
+                  <StackPane fx:id="centerPane" prefHeight="239.0" prefWidth="229.0" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+      <Button fx:id="consulter" layoutX="422.0" layoutY="498.0" mnemonicParsing="false" onAction="#consultervideo" stylesheets="@styles.css" text="Button" />
    </children>
 </AnchorPane>

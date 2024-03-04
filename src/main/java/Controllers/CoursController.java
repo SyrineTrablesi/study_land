@@ -3,6 +3,7 @@ package Controllers;
 import entities.Categorie;
 import entities.Cours;
 import entities.Formation;
+import entities.YouTubeAPIExample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -58,6 +56,8 @@ public class CoursController {
     private Cours selectedCours;
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private StackPane centerPane;
 
     private boolean darkMode = false;
 
@@ -469,4 +469,22 @@ public class CoursController {
             } else {
                 System.out.println("No item selected.");
             }}
+
+
+    @FXML
+    void consultervideo(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/youtube_viewer.fxml"));
+
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            YouTubeAPIExample controller = loader.getController();
+
+    }
+
+
+
+
+
+
 }
