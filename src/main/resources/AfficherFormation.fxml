@@ -81,7 +81,9 @@
          </image>
       </ImageView>
       <!-- Pagination Controls -->
-      <Button layoutX="800.0" layoutY="570.0" mnemonicParsing="false" onAction="#loadPreviousPage" text="Previous" />
-      <Button layoutX="850.0" layoutY="570.0" mnemonicParsing="false" onAction="#loadNextPage" text="Next" />
+      <Label fx:id="FromDB" layoutX="50" layoutY="50" />
+
+      <Button layoutX="766.0" layoutY="595.0" mnemonicParsing="false" onAction="#loadPreviousPage" prefHeight="26.0" prefWidth="83.0" stylesheets="@styles.css" text="Previous" />
+      <Button layoutX="877.0" layoutY="594.0" mnemonicParsing="false" onAction="#loadNextPage" prefHeight="26.0" prefWidth="83.0" stylesheets="@styles.css" text="Next" />
    </children>
 </AnchorPane>

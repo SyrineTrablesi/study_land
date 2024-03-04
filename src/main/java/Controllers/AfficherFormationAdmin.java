@@ -139,6 +139,10 @@ public class AfficherFormationAdmin implements Initializable {
     @FXML
     private AnchorPane anchorPane;
 
+    private List<Formation> allData;
+    private int currentPageIndex = 0;
+    private int itemsPerPage = 4;
+
     private boolean darkMode = false;
 
     @FXML
@@ -155,8 +159,10 @@ public class AfficherFormationAdmin implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize the "FromDB" Label here
-        FromDB = new Label();
+        // Leave this method empty if you're using JavaFX to inject the Label
+        // FromDB will be automatically injected by JavaFX
+        AfficherFormationAdmin(null);
+        loadPage(0);
     }
 
     @FXML
@@ -261,6 +267,10 @@ public class AfficherFormationAdmin implements Initializable {
                     VBox.setMargin(supprimerButton, new Insets(5, 0, 0, 0)); // Add margin to the button
                     VBox.setMargin(modifierButton, new Insets(5, 0, 0, 0)); // Add margin to the button
                     formationBox.getChildren().addAll(supprimerButton, modifierButton, deleteIcon, modifyIcon);
+                    // Fetch all formations from the database
+                    allData = FS.afficher();
+                    // Load the first page
+                    loadPage(currentPageIndex);
 
 
                     // Add the VBox for the current formation to the row
@@ -425,4 +435,70 @@ public class AfficherFormationAdmin implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }}
+    }
+    @FXML
+    void loadPreviousPage(javafx.event.ActionEvent actionEvent) {
+        if (currentPageIndex > 0) {
+            currentPageIndex--;
+            loadPage(currentPageIndex);
+        }
+    }
+
+    @FXML
+    void loadNextPage(javafx.event.ActionEvent actionEvent) {
+        int totalPages = getTotalPages();
+        if (currentPageIndex < totalPages - 1) {
+            currentPageIndex++;
+            loadPage(currentPageIndex);
+        }
+    }
+
+    private void loadPage(int pageIndex) {
+        int fromIndex = pageIndex * itemsPerPage;
+        int toIndex = Math.min(fromIndex + itemsPerPage, allData.size());
+        affichageformationvbox.getChildren().clear();
+        HBox rowBox = new HBox(); // Create a new HBox for each row
+        rowBox.setSpacing(20); // Adjust spacing between formations in a row
+        for (int i = fromIndex; i < toIndex; i++) {
+            Formation formation = allData.get(i);
+            // Create labels for each property of the Formation object
+            Label titreLabel = new Label("Titre: " + formation.getTitre());
+            Label descriptionLabel = new Label("Description: " + formation.getDescription());
+            Label dureeLabel = new Label("Durée: " + formation.getDuree() + " heures");
+            Label dateDebutLabel = new Label("Date Début: " + formation.getDateDebut());
+            Label dateFinLabel = new Label("Date Fin: " + formation.getDateFin());
+            Label prixLabel = new Label("Prix: " + formation.getPrix() + " DT");
+            Label niveauLabel = new Label("Niveau: " + formation.getNiveau());
+
+            // Optionally, you can add an image to the formation
+            ImageView imageView = new ImageView(new Image("/src/cours.png"));
+            imageView.setFitWidth(100);
+            imageView.setPreserveRatio(true);
+            // Create the "Supprimer" button
+            Button supprimerButton = new Button("Supprimer");
+            supprimerButton.setOnAction(event -> supprimerFormation(formation));
+
+            // Create the "Modifier" button
+            Button modifierButton = new Button("Modifier");
+            modifierButton.setOnAction(e -> modifier(new ActionEvent()));
+
+            // Add labels and image to the current HBox
+            VBox formationBox = new VBox(imageView, titreLabel, descriptionLabel, dureeLabel, dateDebutLabel, dateFinLabel, prixLabel, niveauLabel, supprimerButton, modifierButton);
+            formationBox.setSpacing(5); // Adjust spacing between labels in a formation
+
+            // Add the current VBox to the HBox
+            rowBox.getChildren().add(formationBox);
+        }
+        // Add the current HBox to the main VBox
+        affichageformationvbox.getChildren().add(rowBox);
+
+        // Add spacing between rows
+        Region spacer = new Region();
+        spacer.setPrefWidth(20); // Adjust the width to increase or decrease the spacing between rows
+        affichageformationvbox.getChildren().add(spacer);
+    }
+
+    private int getTotalPages() {
+        return (int) Math.ceil((double) allData.size() / itemsPerPage);
+    }
+}

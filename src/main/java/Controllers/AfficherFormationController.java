@@ -15,6 +15,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -38,6 +40,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+
 import services.ServiceFormation;
 
 
@@ -140,6 +143,7 @@ import services.ServiceFormation;
         private ServiceFormation FS = new ServiceFormation();
 
 
+
         @FXML
         private ListView<String> formationListView;
         private List<Formation> formations;
@@ -166,31 +170,40 @@ import services.ServiceFormation;
             // Leave this method empty if you're using JavaFX to inject the Label
             // FromDB will be automatically injected by JavaFX
             AfficherDB(null);
+            loadPage(0);
+
         }
 
         @FXML
     private void handleLabelClick(MouseEvent event) {
-        Node source = (Node) event.getSource();
+            Node source = (Node) event.getSource();
 
-        if (source instanceof Label) {
-            Label clickedLabel = (Label) source;
+            if (source instanceof Label) {
+                Label clickedLabel = (Label) source;
 
-            // Retrieve the Formation object associated with the clicked label
-            Formation clickedFormation = (Formation) clickedLabel.getUserData();
+                // Retrieve the Formation object associated with the clicked label
+                Formation clickedFormation = (Formation) clickedLabel.getUserData();
 
-            if (clickedFormation != null) {
-                // Set the selectedFormation to the clickedFormation
-                selectedFormation = clickedFormation;
+                if (clickedFormation != null) {
+                    // Set the selectedFormation to the clickedFormation
+                    selectedFormation = clickedFormation;
 
-                // Display both the title and the ID of the selected formation
-                String message = "Titre label clicked for formation: " + clickedFormation.getTitre() + "\n";
-                message += "Formation ID: " + clickedFormation.getIdFormation();
-                FromDB.setText(message);
-            } else {
-                System.out.println("No formation associated with the clicked label.");
+                    // Display both the title and the ID of the selected formation
+                    String message = "Titre label clicked for formation: " + clickedFormation.getTitre() + "\n";
+                    message += "Formation ID: " + clickedFormation.getIdFormation();
+                    FromDB.setText(message);
+
+                    // After modifying a formation, update the FromDB label
+                    String updatedInfo = "Updated formation with ID: " + clickedFormation.getIdFormation() + ", New title: " + clickedFormation.getTitre();
+                    FromDB.setText(updatedInfo);
+
+                    // Reload the page to reflect the updated data
+                    loadPage(currentPageIndex);
+                } else {
+                    System.out.println("No formation associated with the clicked label.");
+                }
             }
         }
-    }
     @FXML
     void AfficherDB(ActionEvent event) {
         try {
@@ -380,13 +393,16 @@ import services.ServiceFormation;
                     try {
                         // Create a new Formation object with the updated title and existing attributes
                         Formation updatedFormation = new Formation(selectedFormation.getIdFormation(), newTitre);
-                        System.out.println(selectedFormation.getIdFormation()+"form syrineee");
+                        System.out.println(selectedFormation.getIdFormation() + "form syrineee");
 
                         // Call the modifier method in your ServiceFormation class to update the formation title in the database
                         formationService.modifier(updatedFormation);
 
                         // Provide feedback to the user
                         showAlert("Success", "Formation title updated successfully.", Alert.AlertType.INFORMATION);
+
+                        // Reload the data and update the UI
+                        AfficherDB(actionEvent);
                     } catch (SQLException e) {
                         System.out.println("Error updating formation title: " + e.getMessage());
                         showAlert("Error", "Failed to update formation title: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -567,45 +583,38 @@ import services.ServiceFormation;
             for (int i = fromIndex; i < toIndex; i++) {
                 Formation formation = allData.get(i);
                 // Create labels for each property of the Formation object
-                Label titreLabel = new Label("Titre: " + formation.getTitre());
+                Label titreLabel = new Label(); // Create an empty label
+                titreLabel.setId(String.valueOf(formation.getIdFormation()));
+                titreLabel.setUserData(formation);
+                titreLabel.setOnMouseClicked(this::handleLabelClick);
+                // Set the text of the titreLabel dynamically with the formation's title
+                titreLabel.setText("Titre: " + formation.getTitre());
                 Label descriptionLabel = new Label("Description: " + formation.getDescription());
                 Label dureeLabel = new Label("Durée: " + formation.getDuree() + " heures");
                 Label dateDebutLabel = new Label("Date Début: " + formation.getDateDebut());
                 Label dateFinLabel = new Label("Date Fin: " + formation.getDateFin());
                 Label prixLabel = new Label("Prix: " + formation.getPrix() + " DT");
                 Label niveauLabel = new Label("Niveau: " + formation.getNiveau());
-
-                // Optionally, you can add an image to the formation
                 ImageView imageView = new ImageView(new Image("/src/cours.png"));
                 imageView.setFitWidth(100);
                 imageView.setPreserveRatio(true);
-                // Create the "Supprimer" button
                 Button supprimerButton = new Button("Supprimer");
                 supprimerButton.setOnAction(event -> supprimerFormation(formation));
-
-                // Create the "Modifier" button
                 Button modifierButton = new Button("Modifier");
                 modifierButton.setOnAction(e -> modifier(new ActionEvent()));
-
-                // Add labels and image to the current HBox
                 VBox formationBox = new VBox(imageView, titreLabel, descriptionLabel, dureeLabel, dateDebutLabel, dateFinLabel, prixLabel, niveauLabel, supprimerButton, modifierButton);
-                formationBox.setSpacing(5); // Adjust spacing between labels in a formation
-
-                // Add the current VBox to the HBox
+                formationBox.setSpacing(5);
                 rowBox.getChildren().add(formationBox);
             }
-            // Add the current HBox to the main VBox
             affichageformationvbox.getChildren().add(rowBox);
-
-            // Add spacing between rows
             Region spacer = new Region();
-            spacer.setPrefWidth(20); // Adjust the width to increase or decrease the spacing between rows
+            spacer.setPrefWidth(20);
             affichageformationvbox.getChildren().add(spacer);
         }
-
         private int getTotalPages() {
             return (int) Math.ceil((double) allData.size() / itemsPerPage);
         }
+
     }
 
 
