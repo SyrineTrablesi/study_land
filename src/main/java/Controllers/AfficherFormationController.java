@@ -316,8 +316,11 @@ import services.ServiceFormation;
             // Delete the Formation from the database
             FS.supprimer(formation);
 
-            // Refresh the ListView
-            AfficherDB(new ActionEvent());
+            // Reload the data
+            allData = FS.afficher();
+
+            // Reload the UI by calling loadPage with the current page index
+            loadPage(currentPageIndex);
         } catch (SQLException e) {
             System.out.println("Error deleting formation: " + e.getMessage());
         }
@@ -398,11 +401,32 @@ import services.ServiceFormation;
                         // Call the modifier method in your ServiceFormation class to update the formation title in the database
                         formationService.modifier(updatedFormation);
 
+                        // Update the selectedFormation object with the new title
+                        selectedFormation.setTitre(newTitre);
+
+                        // Update the title label in the UI
+                        for (Node node : affichageformationvbox.getChildren()) {
+                            if (node instanceof HBox) {
+                                HBox rowBox = (HBox) node;
+                                for (Node vboxNode : rowBox.getChildren()) {
+                                    if (vboxNode instanceof VBox) {
+                                        VBox formationBox = (VBox) vboxNode;
+                                        for (Node labelNode : formationBox.getChildren()) {
+                                            if (labelNode instanceof Label) {
+                                                Label label = (Label) labelNode;
+                                                if (label.getId() != null && label.getId().equals(String.valueOf(selectedFormation.getIdFormation()))) {
+                                                    label.setText("Titre: " + newTitre);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         // Provide feedback to the user
                         showAlert("Success", "Formation title updated successfully.", Alert.AlertType.INFORMATION);
-
-                        // Reload the data and update the UI
-                        AfficherDB(actionEvent);
                     } catch (SQLException e) {
                         System.out.println("Error updating formation title: " + e.getMessage());
                         showAlert("Error", "Failed to update formation title: " + e.getMessage(), Alert.AlertType.ERROR);
