@@ -1,5 +1,10 @@
 package Controllers;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import entities.Cours;
 import entities.Formation;
 import entities.YouTubeAPIExample;
@@ -22,11 +27,11 @@ import javafx.stage.Stage;
 import services.ServiceCours;
 import services.ServiceFormation;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CoursApprenant {
     @FXML
@@ -48,12 +53,14 @@ public class CoursApprenant {
     private List<Cours> allData;
 
     private ServiceFormation serviceFormation = new ServiceFormation();
+
     @FXML
     private void initialize() {
         // Call the method to display courses when the controller is initialized
         AfficherCours(null);
         loadPage(0);
     }
+
     public void AfficherCours(ActionEvent actionEvent) {
         try {
             // Clear the existing content in the VBox
@@ -120,6 +127,7 @@ public class CoursApprenant {
             showAlert(Alert.AlertType.ERROR, "Error", "Database Error", "An error occurred while retrieving courses from the database.");
         }
     }
+
     private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -154,6 +162,7 @@ public class CoursApprenant {
             loadPage(currentPageIndex);
         }
     }
+
     private void loadPage(int pageIndex) {
         int fromIndex = pageIndex * itemsPerPage;
         int toIndex = Math.min(fromIndex + itemsPerPage, allData.size());
@@ -171,6 +180,7 @@ public class CoursApprenant {
                 // Create labels to display course details
                 Label nomCategorie = new Label("Nom: " + cours.getNom_Cours());
                 Hyperlink pdfLink = new Hyperlink("Download PDF");
+
 
                 // Handle the action to download/open the PDF
                 pdfLink.setOnAction(e -> {
@@ -197,13 +207,18 @@ public class CoursApprenant {
                     }
                 });
 
+
                 // Optionally, you can add an image to represent the course
                 ImageView imageView = new ImageView(new Image("/src/cours.png"));
                 imageView.setFitWidth(100);
                 imageView.setPreserveRatio(true);
 
                 // Create a VBox to hold course details
-                VBox courseBox = new VBox(imageView, nomCategorie, pdfLink);
+                // Generate the QR code image
+                ImageView qrCodeImageView = generateQRCode(cours.getNom_Cours());
+
+// Create a VBox to hold course details
+                VBox courseBox = new VBox(imageView, nomCategorie, pdfLink, qrCodeImageView);
                 courseBox.setSpacing(5); // Adjust spacing between elements
                 rowBox.getChildren().add(courseBox);
             }
@@ -216,8 +231,28 @@ public class CoursApprenant {
             showAlert(Alert.AlertType.ERROR, "Error", "Error Loading Page", "An error occurred while loading the page: " + e.getMessage());
         }
     }
+
     private int getTotalPages() {
         return (int) Math.ceil((double) allData.size() / itemsPerPage);
     }
 
+    private ImageView generateQRCode(String text) {
+        ImageView qrCodeImageView = null;
+        try {
+            // Set up the QR code generation parameters
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, 100, 100, hints);
+
+            // Convert the BitMatrix to an image
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", out);
+
+            // Create an ImageView with the QR code image
+            qrCodeImageView = new ImageView(new Image(new ByteArrayInputStream(out.toByteArray())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return qrCodeImageView;
+    }
 }
