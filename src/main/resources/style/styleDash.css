@@ -164,12 +164,22 @@
     -fx-text-fill: #11142d;
 
 }
-.card_vBox{
-    -fx-background-color :linear-gradient(to top left, rgba(229, 151, 10, 0.42), rgba(20, 81, 215, 0.87));
-    -fx-border-color:#1451D7FF ;
+.VBox{
+    -fx-width: 464px;
+    -fx-height: 767px;
+   // -fx-background-color: transparent;
+    -fx-border-radius: 40px;
+    -fx-border-width: 3px;
+    -fx-border-color: #2D75E8;
+   //-fx-background-color :linear-gradient(to top left, rgba(229, 151, 10, 0.42), rgba(20, 81, 215, 0.87));
+    -fx-background-color:transparent;
+;
 }
 
 .card_hbox1{
+    -fx-border-color:transparent ;
+    -fx-width: 200px;
+
 
 }
 
