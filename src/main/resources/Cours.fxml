@@ -45,7 +45,7 @@
       </ImageView>
       <Button layoutX="70.0" layoutY="529.0" mnemonicParsing="false" onAction="#RetournerFormation" stylesheets="@styles.css" text="Retour vers Formation" />
       <Line endX="-95.00003051757812" endY="375.39996337890625" layoutX="468.0" layoutY="196.0" startX="-95.00003051757812" startY="-117.39999389648438" stroke="#8577e4" />
-      <HBox fx:id="affichagecoursvbox" layoutX="504.0" layoutY="332.0" prefHeight="215.0" prefWidth="545.0">
+      <HBox fx:id="affichagecoursvbox" layoutX="504.0" layoutY="332.0" prefHeight="215.0" prefWidth="412.0">
          <children>
             <ImageView fitHeight="104.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
             <VBox prefHeight="200.0" prefWidth="100.0">
@@ -77,12 +77,12 @@
          </image>
       </ImageView>
       <Button layoutX="112.0" layoutY="585.0" mnemonicParsing="false" onAction="#toggleBackgroundColor" stylesheets="@styles.css" text="Toggle Background Color" />
-      <AnchorPane layoutX="593.0" layoutY="411.0" prefHeight="231.0" prefWidth="399.0">
+      <AnchorPane layoutX="906.0" layoutY="407.0" prefHeight="231.0" prefWidth="399.0">
          <children>
             <BorderPane layoutX="-2.0" prefHeight="243.0" prefWidth="435.0">
-               <top>
+               <center>
                   <StackPane fx:id="centerPane" prefHeight="239.0" prefWidth="229.0" BorderPane.alignment="CENTER" />
-               </top>
+               </center>
             </BorderPane>
          </children>
       </AnchorPane>
