@@ -17,7 +17,10 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Panier.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AffichagePanier.fxml"));
+        //HomeFormation.fxml
+        //Panier.fxml
+        //AffichageFavoris.fxml
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);

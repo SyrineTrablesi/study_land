@@ -18,10 +18,13 @@ public class ServiceInscrit implements IService<Inscrit> {
 
     @Override
     public void ajouter(Inscrit inscrit) throws SQLException {
-        String req = "INSERT INTO inscrit (id_user, idFormation) VALUES (?, ?)";
+        String req = "INSERT INTO inscrit (id_user, idFormation, dateAjout) VALUES (?, ?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(req);
         pstmt.setInt(1, inscrit.getId_user());
         pstmt.setInt(2, inscrit.getIdFormation());
+
+        // Définir la date actuelle pour le paramètre dateAjout
+        pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
         pstmt.executeUpdate();
     }
 
@@ -107,4 +110,5 @@ public class ServiceInscrit implements IService<Inscrit> {
         }
         return inscrits;
     }
+
 }

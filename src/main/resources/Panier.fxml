@@ -6,30 +6,44 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="713.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PanierController">
+<AnchorPane fx:id="cardsContainer" prefHeight="691.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PanierController">
    <children>
-      <AnchorPane id="idPanier" layoutY="30.0" prefHeight="54.0" prefWidth="926.0">
+      <AnchorPane id="idPanier" layoutY="-6.0" prefHeight="40.0" prefWidth="926.0">
          <children>
-            <Label layoutX="7.0" layoutY="5.0" prefHeight="40.0" prefWidth="94.0" text="Panier" textFill="#2f2b6d">
+            <Label layoutY="11.0" prefHeight="23.0" prefWidth="100.0" text="Panier" textFill="#2f2b6d">
                <font>
                   <Font name="AdobeGothicStd-Bold" size="27.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane id="idFavoris" layoutY="116.0" prefHeight="449.0" prefWidth="909.0">
+      <AnchorPane id="id_Inscrit" fx:id="idListInscite" layoutX="3.0" layoutY="34.0" prefHeight="241.0" prefWidth="918.0">
          <children>
-            <Label id="idFfavoris" layoutX="16.0" layoutY="1.0" prefHeight="40.0" prefWidth="275.0" text="Formations favoris ">
+            <Label id="idInscrit" layoutX="-1.0" layoutY="1.0" prefHeight="24.0" prefWidth="189.0" text="Liste d'inscription  ">
                <font>
-                  <Font name="AdobeFangsongStd-Regular" size="24.0" />
+                  <Font name="AdobeFangsongStd-Regular" size="18.0" />
                </font>
             </Label>
-            <VBox layoutX="54.0" layoutY="79.0" prefHeight="317.0" prefWidth="786.0">
+            <VBox layoutX="45.0" layoutY="25.0" prefHeight="276.0" prefWidth="843.0">
                <children>
-                  <FlowPane fx:id="cardsFlowPane" prefHeight="371.0" prefWidth="838.0" />
+                  <FlowPane fx:id="cardsFlowPane" prefHeight="262.0" prefWidth="856.0" />
                </children>
             </VBox>
          </children>
       </AnchorPane>
+<!--      <AnchorPane id="id_Favoris" fx:id="idListFavoris" layoutX="3.0" layoutY="373.0" prefHeight="332.0" prefWidth="918.0">-->
+<!--         <children>-->
+<!--            <Label id="idFavoris" layoutX="2.0" layoutY="1.0" prefHeight="27.0" prefWidth="118.0" text="Liste d'envies">-->
+<!--               <font>-->
+<!--                  <Font name="AdobeFangsongStd-Regular" size="18.0" />-->
+<!--               </font>-->
+<!--            </Label>-->
+<!--            <VBox layoutX="66.0" layoutY="27.0" prefHeight="276.0" prefWidth="814.0">-->
+<!--               <children>-->
+<!--                  <FlowPane fx:id="cardsFlowPane2" prefHeight="276.0" prefWidth="754.0" />-->
+<!--               </children>-->
+<!--            </VBox>-->
+<!--         </children>-->
+<!--      </AnchorPane>-->
    </children>
 </AnchorPane>

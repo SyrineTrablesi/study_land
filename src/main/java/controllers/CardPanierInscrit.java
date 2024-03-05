@@ -1,8 +1,6 @@
 package controllers;
 
-import entities.Formation;
 import entities.Inscrit;
-import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,13 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import services.ServiceFormation;
 import services.ServiceInscrit;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class CardPanierFormation {
+public class CardPanierInscrit {
     @FXML
     private Button btn_supprimerInscrit;
 
@@ -37,10 +35,16 @@ public class CardPanierFormation {
 
     @FXML
     private Label prixLabel;
-    private Inscrit inscrit;
-    private FlowPane cardsFlowPane;
+
     @FXML
     private AnchorPane cardsContainer;
+
+    @FXML
+    private Label labelAjoutDate;
+
+    private Inscrit inscrit;
+    private FlowPane cardsFlowPane;
+
 
     public void setCardsFlowPane(FlowPane cardsFlowPane) {
         this.cardsFlowPane = cardsFlowPane;
@@ -49,27 +53,19 @@ public class CardPanierFormation {
     
 
     private ServiceInscrit serviceInscrit = new ServiceInscrit();
-    public void setData(String title, String description, String niveau, int duree, float prix, String categorie) {
+    public void setData(String title, String description, String niveau, int duree, float prix, String categorie, Date dateAjout) {
         idtitle.setText(title);
         idtext.setText(description);
         niveauLabel.setText(niveau);
         dureeLabel.setText(Integer.toString(duree));
         prixLabel.setText(Float.toString(prix));
         categorieLabel.setText(categorie);
-    }
+        // Si vous devez formater la date, vous pouvez le faire ici
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+        String formattedDate = sdf.format(dateAjout);
 
-
-    @FXML
-    void SupprimerFormationInscrit(ActionEvent event) {
-        try {
-            serviceInscrit.supprimer(inscrit);
-
-            if (cardsFlowPane != null) {
-                cardsFlowPane.getChildren().remove(cardsContainer);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        // Affichez la date d'ajout dans votre vue
+        labelAjoutDate.setText(formattedDate);
     }
 
     public void setInscrit(Inscrit inscrit) {
@@ -77,6 +73,24 @@ public class CardPanierFormation {
 
     }
 
+
+    public void supprimerFormationInscrit(ActionEvent actionEvent) {
+
+        if (inscrit != null) {
+            try {
+                serviceInscrit.supprimer(inscrit);
+                System.out.println("Formation supprimee avec succès");
+
+                // Supprimer l'élément visuel correspondant à l'objet supprimé
+                cardsFlowPane.getChildren().remove(cardsContainer);
+
+            } catch (SQLException e) {
+                throw new RuntimeException("Erreur lors de la suppression de la formation", e);
+            }
+        } else {
+            System.out.println("Aucune formation sélectionnée pour la suppression");
+        }
+    }
 }
 
 

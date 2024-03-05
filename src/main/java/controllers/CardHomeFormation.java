@@ -1,5 +1,6 @@
 package controllers;
 
+        import entities.Favoris;
         import entities.Formation;
         import entities.Inscrit;
         import entities.User;
@@ -7,14 +8,32 @@ package controllers;
         import javafx.fxml.FXML;
         import javafx.scene.control.Button;
         import javafx.scene.control.Label;
+        import javafx.scene.layout.AnchorPane;
+        import javafx.scene.layout.FlowPane;
         import javafx.scene.text.Text;
+        import services.ServiceFavoris;
         import services.ServiceFormation;
         import services.ServiceInscrit;
 
+        import java.sql.Date;
         import java.sql.SQLException;
         import java.text.Format;
 
 public class CardHomeFormation {
+    @FXML
+    private AnchorPane cardsContainer;
+
+    @FXML
+    private FlowPane cardsFlowPane;
+
+    @FXML
+    private FlowPane cardsFlowPane2;
+
+    @FXML
+    private AnchorPane idListFavoris;
+
+    @FXML
+    private AnchorPane idListInscite;
 
     @FXML
     private Button btn_AjoutFavoris;
@@ -49,6 +68,24 @@ public class CardHomeFormation {
     }
     @FXML
     void btn_AjouterFavoris(ActionEvent event) {
+        User user =new User();
+         user.setId(2);
+         ServiceFormation serviceFormation=new ServiceFormation();
+         try {
+             Formation formation= serviceFormation.rechercherParTitre(idtitle.getText());
+             //instance de formation type favoris
+             Favoris favoris = new Favoris( user.getId(),formation.getIdFormation());
+             favoris.setDescription(formation.getDescription());
+             favoris.setNiveau(formation.getNiveau());
+             favoris.setNomCategorie(formation.getNomCategorie());
+             favoris.setTitre(formation.getTitre());
+             favoris.setDuree(formation.getDuree());
+             ServiceFavoris serviceFavoris=new ServiceFavoris();
+             System.out.println(favoris);
+             serviceFavoris.ajouter(favoris);
+         } catch (SQLException e) {
+                throw new RuntimeException(e);
+         }
 
     }
 
@@ -59,7 +96,7 @@ public class CardHomeFormation {
         ServiceFormation serviceFormation=new ServiceFormation();
         try {
             Formation formation= serviceFormation.rechercherParTitre(idtitle.getText());
-        //instance de formation typr inscrit
+        //instance de formation type inscrit
         Inscrit inscrit = new Inscrit( user.getId(),formation.getIdFormation());
         inscrit.setDescription(formation.getDescription());
         inscrit.setNiveau(formation.getNiveau());

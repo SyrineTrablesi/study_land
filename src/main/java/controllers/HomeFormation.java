@@ -32,6 +32,7 @@ public class HomeFormation {
                 cardController.setData(formation.getTitre(), formation.getDescription(), formation.getNiveau(), formation.getDuree(), formation.getPrix(), formation.getNomCategorie());
                 cardsFlowPane.getChildren().add(cardNode);
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
