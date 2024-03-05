@@ -16,18 +16,18 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CoursApprenant">
    <children>
-      <AnchorPane layoutX="6.0" layoutY="6.0" prefHeight="584.0" prefWidth="1045.0">
+      <Button layoutX="76.0" layoutY="294.0" mnemonicParsing="false" onAction="#AfficherCours" prefHeight="26.0" prefWidth="202.0" stylesheets="@styles.css" text="Afficher les cours" />
+      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="37.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/panneau-daffichage.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="3.0" layoutY="2.0" prefHeight="584.0" prefWidth="1045.0">
          <children>
-            <Button layoutX="354.0" layoutY="18.0" mnemonicParsing="false" onAction="#AfficherCours" prefHeight="26.0" prefWidth="202.0" stylesheets="@styles.css" text="Afficher les cours" />
-            <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="315.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@src/panneau-daffichage.png" />
-               </image>
-            </ImageView>
-            <HBox fx:id="affichagecoursvbox" layoutX="350.0" layoutY="76.0" prefHeight="215.0" prefWidth="412.0">
+            <HBox fx:id="affichagecoursvbox" layoutX="334.0" layoutY="43.0" prefHeight="124.0" prefWidth="412.0">
                <children>
                   <ImageView fitHeight="104.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="105.0" prefWidth="100.0">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
@@ -44,13 +44,13 @@
                   </VBox>
                </children>
             </HBox>
-            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="334.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="334.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@src/youtube.png" />
                </image>
             </ImageView>
-            <Button layoutX="385.0" layoutY="318.0" mnemonicParsing="false" onAction="#consultervideo" prefHeight="26.0" prefWidth="147.0" stylesheets="@styles.css" text="Consulter les cours" />
-            <AnchorPane layoutX="355.0" layoutY="370.0" prefHeight="200.0" prefWidth="514.0">
+            <Button layoutX="385.0" layoutY="250.0" mnemonicParsing="false" onAction="#consultervideo" prefHeight="26.0" prefWidth="147.0" stylesheets="@styles.css" text="Consulter les cours" />
+            <AnchorPane layoutX="353.0" layoutY="292.0" prefHeight="192.0" prefWidth="445.0">
                <children>
                   <BorderPane layoutY="-1.0" prefHeight="202.0" prefWidth="514.0">
                      <center>
@@ -63,6 +63,13 @@
                   </BorderPane>
                </children>
             </AnchorPane>
+            <Button layoutX="659.0" layoutY="199.0" mnemonicParsing="false" onAction="#loadNextPage" prefHeight="26.0" prefWidth="112.0" stylesheets="@styles.css" text="Next Page" />
+            <Button layoutX="523.0" layoutY="199.0" mnemonicParsing="false" onAction="#loadPreviousPage" stylesheets="@styles.css" text="Previous Page" />
+            <Label layoutX="325.0" layoutY="14.0" prefHeight="27.0" prefWidth="254.0" text=" Les cours disponible:" textFill="#1f8a99">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <ImageView fitHeight="518.0" fitWidth="327.0" layoutX="18.0" layoutY="83.0" pickOnBounds="true">
