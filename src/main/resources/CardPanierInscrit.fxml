@@ -67,7 +67,7 @@
                 <children>
                     <VBox alignment="CENTER" prefHeight="100.0" prefWidth="91.0">
                         <children>
-                            <Button fx:id="btn_supprimerInscrit" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Supprimer" />
+                            <Button fx:id="btn_supprimerInscrit" mnemonicParsing="false" onAction="#SupprimerFormationInscrit" prefHeight="26.0" prefWidth="78.0" text="Supprimer" />
                         </children>
                     </VBox>
                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
