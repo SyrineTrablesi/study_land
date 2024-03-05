@@ -39,14 +39,14 @@ public class ServiceApprenant implements IUserService<Apprenant> {
     //Modifier sans MPdp:
     @Override
     public void modifier(Apprenant apprenant) throws SQLException {
-        String req = "UPDATE user SET nom=?, prenom=?, email=? WHERE id_user=?";
+        String req = "UPDATE user SET nom=?, prenom=? WHERE id_user=?";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setString(1, apprenant.getNom());
         pre.setString(2, apprenant.getPrenom());
-        pre.setString(3, apprenant.getEmail());
-        pre.setInt(4, apprenant.getId());
+        pre.setInt(3, apprenant.getId());
         pre.executeUpdate();
     }
+
 
     @Override
     public void supprimer(Apprenant apprenant) throws SQLException {

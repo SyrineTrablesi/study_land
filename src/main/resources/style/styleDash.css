@@ -120,13 +120,14 @@
 .button_inscrit{
     -fx-border-width: 0.75px;
     -fx-border-radius: 8px;
-    -fx-background-color: #367AFF;
+    -fx-background-color: #2F2B6D;
 }
 .button_inscrit:pressed
 {    -fx-background-color : rgba(42, 61, 155, 0.07);
     -fx-font-size: 13px;
 }
-.button_inscrit:hover {-fx-background-color :linear-gradient(to top left, rgb(229, 151, 10), #1451d7);
+.button_inscrit:hover {
+    -fx-background-color :linear-gradient(to top left, rgb(229, 151, 10), #1451d7);
 }
 .compte_user_side_bar{
     -fx-background-color: rgba(228, 228, 228, 0.49776);
@@ -163,8 +164,14 @@
     -fx-text-fill: #11142d;
 
 }
+.card_vBox{
+    -fx-background-color :linear-gradient(to top left, rgba(229, 151, 10, 0.42), rgba(20, 81, 215, 0.87));
+    -fx-border-color:#1451D7FF ;
+}
 
+.card_hbox1{
 
+}
 
 
 

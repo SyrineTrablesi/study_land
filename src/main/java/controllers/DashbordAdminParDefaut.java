@@ -84,6 +84,7 @@ public class DashbordAdminParDefaut {
                         AnchorPane card = loader.load();
                         CardUser controller = loader.getController();
                         controller.initData(selectUs);
+                        userDetailsContainer.getChildren().clear();
                         userDetailsContainer.getChildren().add(card);
                     } catch (IOException | SQLException e) {
                         e.printStackTrace();

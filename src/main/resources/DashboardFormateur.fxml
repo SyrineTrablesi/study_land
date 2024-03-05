@@ -16,7 +16,7 @@
    <children>
       <AnchorPane fx:id="profileFormateur" layoutY="-4.0" prefHeight="659.0" prefWidth="1286.0" style="-fx-background-color: #ffffff;" stylesheets="@style/styleDash.css">
          <children>
-            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="604.0" prefWidth="1076.0">
+            <AnchorPane layoutX="10.0" layoutY="2.0" prefHeight="642.0" prefWidth="1109.0">
                <children>
                   <BorderPane fx:id="rootPane" layoutX="165.0" layoutY="84.0" prefHeight="524.0" prefWidth="910.0">
                      <center>
@@ -109,17 +109,29 @@
                         <Image url="@src/not.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="849.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="id_image_nav" fitHeight="31.0" fitWidth="36.0" layoutX="857.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@src/77.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="id_nom1" layoutX="662.0" layoutY="19.0" prefHeight="31.0" prefWidth="148.0" styleClass="text" stylesheets="@style/styleDash.css" text="Hello,                     !" textFill="#06007b">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="combo_login" layoutX="892.0" layoutY="17.0" onAction="#onComboLoginSelected" prefHeight="26.0" prefWidth="47.0" stylesheets="@style/styleDash.css" />
+                  <ComboBox fx:id="combo_login" layoutX="970.0" layoutY="17.0" onAction="#onComboLoginSelected" prefHeight="26.0" prefWidth="82.0" stylesheets="@style/styleDash.css" />
+                  <Button fx:id="btn_refresh" contentDisplay="TOP" layoutX="900.0" layoutY="6.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="42.0" prefWidth="40.0" styleClass="button3" stylesheets="@style/styleDash.css" textFill="#2a3d9b">
+                     <graphic>
+                        <ImageView fx:id="btn_refrech" fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@src/refresh.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Poor Richard" size="12.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

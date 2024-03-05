@@ -1,8 +1,5 @@
 package controllers;
-
-import com.mysql.cj.util.StringInspector;
 import entities.User;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -20,10 +18,7 @@ import security.UserInfo;
 import services.ServiceUser;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class DashboardFormateur {
 
@@ -44,7 +39,8 @@ public class DashboardFormateur {
 
     @FXML
     private Button id_formation;
-
+    @FXML
+    private ImageView id_image_nav;
     @FXML
     private Button id_home;
 
@@ -59,7 +55,8 @@ public class DashboardFormateur {
         this.id_nom1 = id_nom1;
     }
 
-
+    @FXML
+    private Button  btn_refresh;
     @FXML
     private Button id_facture;
 
@@ -109,9 +106,23 @@ public class DashboardFormateur {
                 break;
         }
     }
-
+    User user=new User();
+    ServiceUser serviceUser=new ServiceUser();
     @FXML
     public void initialize() {
+        try {
+            user = serviceUser.rechercheUserParEmail(userInfo.email);
+            System.out.println(user);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (user.getImage() != null && !user.getImage().isEmpty()) {
+            Image image = new Image("file:" + user.getImage());
+            id_image_nav.setImage(image);
+        } else {
+            Image defaultImage = new Image("D:\\syrine_3A26\\pidev\\StudyLand\\src\\main\\resources\\src\\77.png");
+            id_image_nav.setImage(defaultImage);
+        }
         combo_login.getItems().addAll( "Modifier Email","Logout", "Aide");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashbordFormateurParDefaut.fxml"));
         try {
@@ -120,10 +131,8 @@ public class DashboardFormateur {
             centerPane.getChildren().add(defaultRoot);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-
         }
-        }
+    }
 
     @FXML
     void home(ActionEvent event) {
@@ -163,6 +172,21 @@ public class DashboardFormateur {
             centerPane.getChildren().add(defaultRoot);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    @FXML
+    void refreshData(ActionEvent event) {
+        loadData();
+    }
+    private void loadData() {
+        ServiceUser serviceUser = new ServiceUser();
+        try {
+            user = serviceUser.rechercheUserParEmail(userInfo.email);
+            Image image = new Image("file:" + user.getImage());
+            id_image_nav.setImage(image);
+            id_nom1.setText(user.getNom());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

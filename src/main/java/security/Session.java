@@ -24,7 +24,7 @@ public class Session {
         try {
             User user = serviceUser.connexion(email, password);
             if (user != null) {
-                userInfo = new UserInfo(user.getId(), user.getNom(), user.getPrenom(), user.getRole(), user.getEmail(), user.getPassword());
+                userInfo = new UserInfo(user.getId(), user.getNom(), user.getPrenom(), user.getRole(), user.getEmail(), user.getPassword(),user.getImage());
             } else {
                 userInfo = null;
             }

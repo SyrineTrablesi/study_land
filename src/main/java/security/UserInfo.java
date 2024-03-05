@@ -1,7 +1,7 @@
 package security;
 
 public class UserInfo {
-   public String nom, prenom,role,email,mdp;
+   public String nom, prenom,role,email,mdp,image;
   public Integer id;
 
    public UserInfo(int id,String nom, String prenom, String role, String email, String mdp) {
@@ -12,5 +12,14 @@ public class UserInfo {
       this.email = email;
       this.mdp = mdp;
    }
+    public UserInfo(int id,String nom, String prenom, String role, String email, String mdp,String image ) {
+        this.id=id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.role = role;
+        this.email = email;
+        this.image = image;
+        this.mdp = mdp;
+    }
 
 }

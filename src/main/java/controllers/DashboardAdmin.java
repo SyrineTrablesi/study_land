@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import javafx.event.ActionEvent;
@@ -25,15 +27,18 @@ import java.util.List;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
-public class DashboardAdmin implements Initializable {
+public class DashboardAdmin {
 
+    @FXML
+    private ImageView id_image_nav;
 
     @FXML
     private Button btn_Admin;
 
     @FXML
     private Button btn_App;
-
+    @FXML
+    private Button btn_refresh;
     @FXML
     private Button btn_formateur;
     @FXML
@@ -47,11 +52,15 @@ public class DashboardAdmin implements Initializable {
 
     @FXML
     private Button id_home;
+    @FXML
+    private ImageView btn_refrech;
 
     @FXML
     private Label id_nom1;
     //get et set
     UserInfo userInfo = Session.getInstance().userInfo;
+    ServiceUser serviceUser = new ServiceUser();
+    User user = new User();
 
 
     public void setId_nom1(Label id_nom1) {
@@ -76,9 +85,25 @@ public class DashboardAdmin implements Initializable {
 
     @FXML
     private BorderPane rootPane;
+    @FXML
+    private Label labelImage;
+    private ImageView imageView; // Assurez-vous que imageView est correctement injecté depuis votre fichier FXML
 
     @FXML
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
+        try {
+            user = serviceUser.rechercheUserParEmail(userInfo.email);
+            System.out.println(user);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (user.getImage() != null && !user.getImage().isEmpty()) {
+            Image image = new Image("file:" + user.getImage());
+            id_image_nav.setImage(image);
+        } else {
+            Image defaultImage = new Image("D:\\syrine_3A26\\pidev\\StudyLand\\src\\main\\resources\\src77.png");
+            id_image_nav.setImage(defaultImage);
+        }
         combo_login.getItems().addAll( "Modifier Email","Logout", "Aide");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashbordAdminParDefaut.fxml"));
         try {
@@ -88,6 +113,8 @@ public class DashboardAdmin implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        loadData();
+
     }
 
     @FXML
@@ -235,6 +262,23 @@ public class DashboardAdmin implements Initializable {
 
 
     }
+    @FXML
+    void refreshData(ActionEvent event) {
+        loadData();
+    }
+    private void loadData() {
+        ServiceUser serviceUser = new ServiceUser();
+        try {
+            user = serviceUser.rechercheUserParEmail(userInfo.email);
+            Image image = new Image("file:" + user.getImage());
+            id_image_nav.setImage(image);
+            id_nom1.setText(user.getNom());
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
 

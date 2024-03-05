@@ -42,16 +42,16 @@
          </font>
       </Label>
       <Line endX="-23.5999755859375" endY="246.79998779296875" layoutX="422.0" layoutY="97.0" startX="-23.599945068359375" startY="41.19999694824219" stroke="#2e19cf" strokeLineCap="BUTT" strokeWidth="0.5" />
-      <Button fx:id="btn_Modifier" layoutX="563.0" layoutY="348.0" mnemonicParsing="false" onAction="#ModifierUser" prefHeight="30.0" prefWidth="110.0" styleClass="button_inscrit" stylesheets="@style/styleDash.css" text="Modifier" textFill="#fffefe">
+      <Button fx:id="btn_Modifier" layoutX="628.0" layoutY="340.0" mnemonicParsing="false" onAction="#ModifierUser" prefHeight="30.0" prefWidth="110.0" styleClass="button_inscrit" stylesheets="@style/styleDash.css" text="Modifier" textFill="#fffefe">
          <font>
-            <Font name="Poppins Regular" size="20.0" />
+            <Font size="13.0" />
          </font></Button>
       <Label fx:id="erroMessage" contentDisplay="CENTER" layoutX="25.0" layoutY="348.0" prefHeight="58.0" prefWidth="410.0" textAlignment="CENTER" textFill="#e40b0b">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <ImageView fitHeight="299.0" fitWidth="262.0" layoutX="64.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="id_image" fitHeight="207.0" fitWidth="225.0" layoutX="110.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/Sync.gif" />
          </image>
@@ -98,5 +98,10 @@
             <Image url="@src/email.png" />
          </image>
       </ImageView>
+      <Button fx:id="btn_changer_image" layoutX="273.0" layoutY="346.0" mnemonicParsing="false" onAction="#modifierImage" prefHeight="30.0" prefWidth="110.0" styleClass="button_inscrit" stylesheets="@style/styleDash.css" text="changer Image" textFill="#fffefe">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

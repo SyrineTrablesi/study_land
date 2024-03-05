@@ -22,12 +22,11 @@ public class ServiceAdmin implements IUserService<Admin>{
     }
     @Override
     public void modifier(Admin admin) throws SQLException {
-        String req = "UPDATE user SET nom=?, prenom=?, email=? WHERE id_user=? ";
+        String req = "UPDATE user SET nom=?, prenom=? WHERE id_user=? ";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setString(1, admin.getNom());
         pre.setString(2, admin.getPrenom());
-        pre.setString(3, admin.getEmail());
-        pre.setInt(4, admin.getId());
+        pre.setInt(3, admin.getId());
         pre.executeUpdate();
     }
 

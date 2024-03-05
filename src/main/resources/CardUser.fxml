@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -8,53 +9,101 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style/styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CardUser">
+<AnchorPane prefHeight="442.0" prefWidth="1050.0" stylesheets="@style/styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CardUser">
    <children>
-      <HBox layoutX="38.0" layoutY="61.0" prefHeight="114.0" prefWidth="406.0" styleClass="combo-box" stylesheets="@style/styleDash.css">
+      <VBox layoutX="42.0" prefHeight="378.0" prefWidth="303.0" styleClass="card_vBox" stylesheets="@style/styleDash.css">
          <children>
-            <VBox alignment="CENTER" prefHeight="114.0" prefWidth="81.0">
+            <HBox alignment="CENTER" prefHeight="162.0" prefWidth="254.0" styleClass="card_hbox1" stylesheets="@style/styleDash.css">
                <children>
-                  <ImageView fitHeight="63.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="id_image_User" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@src/confusion.png" />
+                        <Image url="@src/iconeApprenant.png" />
                      </image>
                   </ImageView>
                </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="114.0" prefWidth="278.0">
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="254.0">
                <children>
-                  <Label fx:id="nom_user" prefHeight="30.0" prefWidth="136.0" textFill="#f2eeea">
+                  <Label fx:id="prenom_user" prefHeight="20.0" prefWidth="113.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="prenom_user" prefHeight="30.0" prefWidth="138.0" styleClass="text" stylesheets="@style/styleDash.css" textFill="#f2f2f2">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="email" prefHeight="35.0" prefWidth="186.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textFill="#f2ece6">
+                  <Label fx:id="nom_user" prefHeight="18.0" prefWidth="121.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="114.0" prefWidth="182.0">
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="254.0">
                <children>
-                  <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="98.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textAlignment="CENTER" textFill="#eae8e5">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
+                  <VBox alignment="CENTER" prefHeight="42.0" prefWidth="70.0">
+                     <children>
+                        <ImageView fitHeight="28.0" fitWidth="24.0">
+                           <image>
+                              <Image url="@src/email.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="42.0" prefWidth="238.0">
+                     <children>
+                        <Label fx:id="email" prefHeight="35.0" prefWidth="214.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textFill="#202020">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <ImageView fitHeight="55.0" fitWidth="42.0">
-               <image>
-                  <Image url="@src/logo.png" />
-               </image>
-            </ImageView>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="254.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="42.0" prefWidth="75.0">
+                     <children>
+                        <ImageView fitHeight="28.0" fitWidth="28.0">
+                           <image>
+                              <Image url="@src/mobile.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="42.0" prefWidth="176.0">
+                     <children>
+                        <Label fx:id="email2" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="92.0" styleClass="#hellow" stylesheets="@style/styleDash.css" text="27 907 074" textAlignment="CENTER" textFill="#202020">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="254.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="42.0" prefWidth="85.0">
+                     <children>
+                        <ImageView fitHeight="28.0" fitWidth="28.0">
+                           <image>
+                              <Image url="@src/reglages.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="42.0" prefWidth="176.0">
+                     <children>
+                        <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="92.0" styleClass="#hellow" stylesheets="@style/styleDash.css" textAlignment="CENTER" textFill="#202020">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
+      <Button fx:id="id_telecharger" layoutX="370.0" layoutY="338.0" mnemonicParsing="false" onAction="#telecharger" text="telecharger" />
    </children>
 </AnchorPane>

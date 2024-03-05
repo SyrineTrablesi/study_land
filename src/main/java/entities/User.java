@@ -7,6 +7,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 public class User {
    private static final String validationEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+private  String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     private int id;
     @NotBlank(message = "Le nom ne peut pas être vide")
@@ -106,6 +115,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", Role='" + role + '\'' +
                 ", id=" + id +
+                "image"+image+
                 '}';
     }
 
@@ -125,6 +135,16 @@ public class User {
         this.role = role;
     }
     //Apprenant:
+    public User(int id ,String nom, String prenom, String email, String password, String role, String confirmerPassword,String image) {
+        this.id=id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email=email;
+        this.password = password;
+        setConfirmerPassword(confirmerPassword);
+        this.role = role;
+        this.image=image;
+    }
     public User(int id ,String nom, String prenom, String email, String password, String role, String confirmerPassword) {
         this.id=id;
         this.nom = nom;
@@ -134,6 +154,7 @@ public class User {
         setConfirmerPassword(confirmerPassword);
         this.role = role;
     }
+
 //Constructeur Admin+Formateur (sans confirmerpass ==> pas de regeter))
     //constructeur avec id
     public User(int id, String nom, String prenom, String email, String password, String role) {

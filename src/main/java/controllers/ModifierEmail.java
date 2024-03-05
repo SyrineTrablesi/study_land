@@ -79,27 +79,23 @@ public class ModifierEmail {
 
         if (email.isEmpty() || newEmail.isEmpty() || !ValidationFormuaire.isEmail(email) || !ValidationFormuaire.isEmail(newEmail)) {
             showToastMessage("Veuillez remplir tous les champs et vérifier les adresses email.");
-            return;
         }
-
-        if (!isValidPhoneNumber(phoneNumberInput)) {
+       else if (!isValidPhoneNumber(phoneNumberInput)) {
             showToastMessage("Numéro de téléphone incorrect. Veuillez saisir un numéro valide.");
-            return;
         }
-
+       else {
         String phoneNumberCleaned = id_num.getText();
         String toPhoneNumber = "+216" + phoneNumberInput;
         System.out.println(toPhoneNumber);
         SmsSender.sendVerificationCode(toPhoneNumber);
-    }
+    }}
 
     @FXML
     void modifier_email(ActionEvent event) {
         if (!verifierCode()) {
-            return; // Ne pas exécuter le reste de la méthode si le code n'est pas valide
+            showToastMessage("le code n'est pas valide");
+            return;
         }
-
-        // Le code est valide, procéder à la modification de l'email
         ServiceUser serviceUser = new ServiceUser();
         try {
             User user1 = serviceUser.rechercheUserParEmail(id_email.getText());
@@ -107,7 +103,6 @@ public class ModifierEmail {
                 showToastMessage("Utilisateur introuvable avec cet email.");
                 return;
             }
-            System.out.println(id_email_new.getText());
             serviceUser.modifierEmail(user1, id_email_new.getText());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -115,7 +110,6 @@ public class ModifierEmail {
             return;
         }
 
-        // Si tout s'est bien passé, afficher un message de succès
         showToastMessage("Email modifié avec succès.");
     }
 

@@ -38,8 +38,10 @@ public class ServiceUser {
             String prenom = result.getString("prenom");
             String adresseEmail = result.getString("email");
             String password = result.getString("password");
+            String Confirme_password = result.getString("password");
             String role = result.getString("Role");
-            return new User(id, nom, prenom, adresseEmail, password,role);
+            String image=result.getString("image");
+            return new User(id, nom, prenom, adresseEmail, password,role,Confirme_password,image);
         } else {
             return null;
         }
@@ -142,5 +144,12 @@ public  User UpdateMdp(User user,String password) throws  Exception{
         pre.setInt(2, user.getId());
         pre.executeUpdate();
     }
-
+// uplode Image
+    public  void modifierImage(int id_user , String image)throws SQLException {
+        String req = "UPDATE user SET image=? WHERE id_user=? ";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, image);
+        pre.setInt(2, id_user);
+        pre.executeUpdate();
+    }
 }

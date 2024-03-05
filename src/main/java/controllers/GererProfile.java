@@ -9,6 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import security.Session;
 import security.UserInfo;
 import services.ServiceAdmin;
@@ -16,11 +19,15 @@ import services.ServiceApprenant;
 import services.ServiceFormateur;
 import services.ServiceUser;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.channels.FileChannel;
 import java.sql.SQLException;
 
 public class GererProfile {
-
+    @FXML
+    private ImageView id_image;
+    @FXML
+    private Button btn_changer_image;
     @FXML
     private Label erroMessage;
     @FXML
@@ -48,26 +55,35 @@ public class GererProfile {
         return id_prenom;
     }
 
+    String filepath = null, filename = null, fn = null; FileChooser fc = new FileChooser(); String uploads = "D:/syrine_3A26/pidev/StudyLand/src/main/resources/src";
+    UserInfo userInfo = Session.getInstance().userInfo;
+    @FXML
+    public void initialize() {
+        id_email.setDisable(true);
+        id_email.setOpacity(0.5);
+        ServiceUser serviceUser =new ServiceUser();
+        try {
+            User user = serviceUser.rechercheUserParEmail(userInfo.email);
+            Image image = new Image("file:" + user.getImage());
+            id_image.setImage(image);
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
     @FXML
     void ModifierUser(ActionEvent event) {
-        UserInfo userInfo = Session.getInstance().userInfo;
         String nouveauNom = id_nom.getText();
         String nouveauPrenom = id_prenom.getText();
         String nouvelEmail = id_email.getText();
 
-        if (nouveauNom.isEmpty() || nouveauPrenom.isEmpty() || nouvelEmail.isEmpty()) {
+        if (nouveauNom.isEmpty() || nouveauPrenom.isEmpty()) {
             showAlert("Erreur", "Veuillez remplir tous les champs.");
             return;
         }
 
-        if (!ValidationFormuaire.isEmail(nouvelEmail)) {
-            erroMessage.setText("Veuillez saisir une adresse email valide.");
-            return;
-        }
-
-        if (nouveauNom.equals(userInfo.nom) && nouveauPrenom.equals(userInfo.prenom) && nouvelEmail.equals(userInfo.email)) {
+        if (nouveauNom.equals(userInfo.nom) && nouveauPrenom.equals(userInfo.prenom)) {
             showAlert2("Information", "Aucune modification n'a été apportée.");
             return;
         }
@@ -80,9 +96,6 @@ public class GererProfile {
             if (!nouveauPrenom.equals(userInfo.prenom)) {
                 user1.setPrenom(nouveauPrenom);
             }
-            if (!nouvelEmail.equals(userInfo.email)) {
-                user1.setEmail(nouvelEmail);
-            }
 
             if (user1.getRole().equals("Apprenant")) {
                 Apprenant apprenant = new Apprenant(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
@@ -92,42 +105,34 @@ public class GererProfile {
                 if (!nouveauPrenom.equals(userInfo.prenom)) {
                     apprenant.setPrenom(user1.getPrenom());
                 }
-                if (!nouvelEmail.equals(userInfo.email)) {
-                    apprenant.setEmail(user1.getEmail());
-                }
                 ServiceApprenant serviceApprenant = new ServiceApprenant();
                 serviceApprenant.modifier(apprenant);
-            } else if (user1.getRole().equals("Formateur")) {
-                Formateur formateur = new Formateur(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
-                if (!nouveauNom.equals(userInfo.nom)) {
-                    formateur.setNom(user1.getNom());
-                }
-                if (!nouveauPrenom.equals(userInfo.prenom)) {
-                    formateur.setPrenom(user1.getPrenom());
-                }
-                if (!nouvelEmail.equals(userInfo.email)) {
-                    formateur.setEmail(user1.getEmail());
-                }
-                ServiceFormateur serviceFormateur = new ServiceFormateur();
-                serviceFormateur.modifier(formateur);
+             if (user1.getRole().equals("Formateur")) {
+                    Formateur formateur = new Formateur(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
+                    if (!nouveauNom.equals(userInfo.nom)) {
+                        formateur.setNom(user1.getNom());
+                    }
+                    if (!nouveauPrenom.equals(userInfo.prenom)) {
+                        formateur.setPrenom(user1.getPrenom());
+                    }
+                    ServiceFormateur serviceFormateur = new ServiceFormateur();
+                    serviceFormateur.modifier(formateur);
 
-            } else {
-                Admin admin = new Admin(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role,userInfo.id);
-                if (!nouveauNom.equals(userInfo.nom)) {
-                    admin.setNom(user1.getNom());
-                }
-                if (!nouveauPrenom.equals(userInfo.prenom)) {
-                    admin.setPrenom(user1.getPrenom());
-                }
-                if (!nouvelEmail.equals(userInfo.email)) {
-                    admin.setEmail(user1.getEmail());
-                }
-                ServiceAdmin serviceAdmin = new ServiceAdmin();
-                serviceAdmin.modifier(admin);
+                } else {
+                    Admin admin = new Admin(userInfo.nom, userInfo.prenom, userInfo.email, userInfo.role, userInfo.id);
+                    if (!nouveauNom.equals(userInfo.nom)) {
+                        admin.setNom(user1.getNom());
+                    }
+                    if (!nouveauPrenom.equals(userInfo.prenom)) {
+                        admin.setPrenom(user1.getPrenom());
+                    }
 
-            }
-            showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
-        } catch (SQLException e) {
+                    ServiceAdmin serviceAdmin = new ServiceAdmin();
+                    serviceAdmin.modifier(admin);
+
+                }
+                showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
+            }} catch (SQLException e) {
         }
     }
 
@@ -146,6 +151,21 @@ public class GererProfile {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
+    @FXML
+    void modifierImage(ActionEvent event)  throws SQLException, FileNotFoundException, IOException {
+        File file = fc.showOpenDialog(null);
+        if (file != null) {
+            id_image.setImage(new Image(file.toURI().toString()));
+            filename = file.getName();
+            filepath = file.getAbsolutePath();
+            fn = filename;
+            FileChannel source = new FileInputStream(filepath).getChannel();
+            FileChannel dest = new FileOutputStream(uploads + filename).getChannel();
+            dest.transferFrom(source, 0, source.size());
+            ServiceUser serviceUser = new ServiceUser();
+            serviceUser.modifierImage(userInfo.id, filepath);
+            String newImageURL = uploads + filename;
+            serviceUser.modifierImage(userInfo.id, filepath);
+        }
+    }
 }

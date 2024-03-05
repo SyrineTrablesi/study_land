@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import security.Session;
 import security.UserInfo;
 
+import javax.sound.midi.Soundbank;
 import java.io.IOException;
 
 public class SeConnecter {
@@ -84,9 +85,11 @@ public class SeConnecter {
             try {
                 Parent root = loader.load();
                 ProfileApprenant controller = loader.getController();
-                controller.getId_nom1().setText("Hello" + " , " + userinfo.nom);
+                controller.getId_nom1().setText(" Hello" + " ,  " + userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
+                System.out.println(e.getMessage());
+
                 System.out.println("exception from se connecter ");
             }
 
@@ -96,19 +99,21 @@ public class SeConnecter {
                 Parent root = loader1.load();
                 DashboardAdmin controller = loader1.getController();
                 controller.getId_nom1().setText(" Hello" + " ,  " + userinfo.nom);
-
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
+                System.out.println(e.getMessage());
                 System.out.println("exeption from se connecter  ya syrine");
             }
         } else if (userinfo.role.equals("Formateur")) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DashboardFormateur.fxml"));
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/DashboardFormateur.fxml"));
             try {
-                Parent root = loader.load();
-                DashboardFormateur controller = loader.getController();
+                Parent root = loader2.load();
+                DashboardFormateur controller = loader2.getController();
                 controller.getId_nom1().setText("Hello" + " , " + userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
+                System.out.println("errrrrrr");
+                System.out.println(e.getMessage());
                 System.out.println("exception from se connecter ");
             }
         }
