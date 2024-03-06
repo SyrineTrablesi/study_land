@@ -6,36 +6,55 @@ import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import services.ServiceFavoris;
 import services.ServiceInscrit;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import javafx.scene.layout.AnchorPane;
 
 public class PanierController {
-    @FXML
-    private FlowPane cardsFlowPane;
-    @FXML
-    private AnchorPane cardsContainer;
 
     @FXML
-    private FlowPane cardsFlowPane2;
+    private VBox idListeInscription;
 
     @FXML
-    private AnchorPane idListFavoris;
+    private FlowPane id_inscrit;
 
     @FXML
-    private AnchorPane idListInscite;
+    private VBox idListeFavoris;
+
+    @FXML
+    private FlowPane id_favoris;
+
+    @FXML
+    private AnchorPane panierAnchorPane;
+
+    @FXML
+    private AnchorPane favorisAnchorPane;
+
+    @FXML
+    public void showFavorisPage() {
+        panierAnchorPane.setVisible(false);
+        favorisAnchorPane.setVisible(true);
+    }
+
+    @FXML
+    public void showPanierPage() {
+        favorisAnchorPane.setVisible(false);
+        panierAnchorPane.setVisible(true);
+    }
+
+
     public void initialize() {
+        // Partie du contrôleur pour afficher les inscrits
         ServiceInscrit serviceInscrit = new ServiceInscrit();
-        ServiceFavoris serviceFavoris = new ServiceFavoris();
         List<Inscrit> listInscrit = null;
-        List<Favoris> listFavoris = null;
         User user = new User();
-        user.setId(2);
+        user.setId(2); // L'ID de l'utilisateur, remplacez-le par la valeur correcte
 
         try {
             listInscrit = serviceInscrit.afficherbyUser(user);
@@ -48,58 +67,41 @@ public class PanierController {
                 cardController.setInscrit(inscrit);
 
                 // Passer cardsFlowPane au contrôleur de carte
-                cardController.setCardsFlowPane(cardsFlowPane);
+                cardController.setCardsFlowPane(id_inscrit);
 
-                cardsFlowPane.getChildren().add(cardNode);
+                id_inscrit.getChildren().add(cardNode);
             }
 
-            listFavoris = serviceFavoris.afficherbyUser(user);
-            for (Favoris favoris : listFavoris) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardPanierFavoris.fxml"));
-                Parent cardNode = loader.load();
-                CardPanierFavoris cardController = loader.getController();
-                cardController.setData(favoris.getTitre(), favoris.getDescription(), favoris.getNiveau(), favoris.getDuree(), favoris.getPrix(), favoris.getNomCategorie(), favoris.getDateAjout());
-                // Définir le favoris associé à cette carte
-                cardController.setFavoris(favoris);
-
-                // Passer cardsFlowPane2 au contrôleur de carte
-                cardController.setCardsFlowPane2(cardsFlowPane2);
-
-                cardsFlowPane2.getChildren().add(cardNode);
-            }
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Gérer l'erreur de manière appropriée (affichage de message d'erreur, journalisation, etc.)
         }
 
+        // Partie du contrôleur pour afficher les favoris
+        ServiceFavoris serviceFavoris = new ServiceFavoris();
+        List<Favoris> listFavoris = null;
 
-//    public void initialize() {
-//        ServiceInscrit serviceInscrit = new ServiceInscrit();
-//        ServiceFavoris serviceFavoris = new ServiceFavoris();
-//        List<Inscrit> listInscrit = null;
-//        List<Favoris> listFavoris = null;
-//        User user = new User();
-//        user.setId(2);
-//        try {
-//            listInscrit = serviceInscrit.afficherbyUser(user);
-//            for (Inscrit inscrit : listInscrit) {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardPanierInscrit.fxml"));
-//                Parent cardNode = loader.load();
-//                CardPanierInscrit cardController = loader.getController();
-//                cardController.setData(inscrit.getTitre(), inscrit.getDescription(), inscrit.getNiveau(), inscrit.getDuree(), inscrit.getPrix(), inscrit.getNomCategorie());
-//                // Définir l'inscrit associé à cette carte
-//                cardController.setInscrit(inscrit);
-//
-//                // Passer cardsFlowPane au contrôleur de carte
-//                cardController.setCardsFlowPane(cardsFlowPane);
-//
-//                cardsFlowPane.getChildren().add(cardNode);
-//
-//            }
-//
-//        } catch (SQLException | IOException e) {
-//            throw new RuntimeException(e);
-//
-//        }
-
-
-    }}
+        try {
+            listFavoris = serviceFavoris.afficherbyUser(user);
+            if (listFavoris != null) {
+                for (Favoris favoris : listFavoris) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardPanierFavoris.fxml"));
+                    Parent cardNode = null;
+                    try {
+                        cardNode = loader.load();
+                        CardPanierFavoris cardController = loader.getController();
+                        cardController.setData(favoris.getTitre(), favoris.getDescription(), favoris.getNiveau(), favoris.getDuree(), favoris.getPrix(), favoris.getNomCategorie(), favoris.getDateAjout());
+                        cardController.setFavoris(favoris);
+                        cardController.setCardsFlowPane2(id_favoris); // Passer la référence au FlowPane
+                        id_favoris.getChildren().add(cardNode);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            } else {
+                System.out.println("La liste des favoris est vide.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
