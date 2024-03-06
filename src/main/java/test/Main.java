@@ -29,7 +29,7 @@ public class Main {
 
         // Création de deux objets Achat
 
-        Achat achat1 = new Achat(1, 6, new Date());
+        Achat achat1 = new Achat(2, 6, new Date());
         Achat achat2 = new Achat(13);
 
        // ServiceInscrit services = new ServiceInscrit();
@@ -66,11 +66,11 @@ public class Main {
 
         //supprimer
 
-        try {
-            services.supprimer(achat2);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            services.supprimer(achat2);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
 
 
     }
