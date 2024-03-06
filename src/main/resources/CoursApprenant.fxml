@@ -21,7 +21,7 @@
             <Image url="@src/panneau-daffichage.png" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="3.0" layoutY="2.0" prefHeight="584.0" prefWidth="1045.0">
+      <AnchorPane layoutX="3.0" layoutY="2.0" prefHeight="584.0" prefWidth="1045.0" style="-fx-background-color: #ffffff;">
          <children>
             <HBox fx:id="affichagecoursvbox" layoutX="334.0" layoutY="43.0" prefHeight="249.0" prefWidth="412.0">
                <children>

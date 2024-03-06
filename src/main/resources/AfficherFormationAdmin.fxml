@@ -73,6 +73,7 @@
       <Button layoutX="162.0" layoutY="536.0" mnemonicParsing="false" onAction="#toggleBackgroundColor" stylesheets="@styles.css" text="Mode Sombre" />
       <Button layoutX="776.0" layoutY="605.0" mnemonicParsing="false" onAction="#loadPreviousPage" prefHeight="26.0" prefWidth="83.0" stylesheets="@styles.css" text="Previous" />
       <Button layoutX="887.0" layoutY="604.0" mnemonicParsing="false" onAction="#loadNextPage" prefHeight="26.0" prefWidth="83.0" stylesheets="@styles.css" text="Next" />
+      <Button layoutX="73.0" layoutY="577.0" mnemonicParsing="false" onAction="#accederCategorie" stylesheets="@styles.css" text="Acceder au Categorie" />
 
     </children>
 </AnchorPane>

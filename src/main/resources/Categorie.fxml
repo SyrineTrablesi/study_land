@@ -35,11 +35,6 @@
             <Image url="@src/panneau-daffichage.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="768.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@src/bouton-modifier.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="142.0" fitWidth="102.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/thumbnail_logo.png" />
@@ -56,20 +51,7 @@
             <HBox fx:id="affichagecoursvbox" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <ImageView fitHeight="104.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="nomCategorie" text="Nom categorie" />
                   <VBox fx:id="afficherpdf" prefHeight="200.0" prefWidth="100.0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@src/supprimer.png" />
-                     </image>
-                  </ImageView>
-                  <!-- Add the Delete Button -->
-                  <Button mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
-                  <Button mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
                </children>
             </HBox>
          </children>
@@ -82,6 +64,19 @@
       <ImageView fitHeight="37.0" fitWidth="40.0" layoutX="24.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@src/fleches.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="574.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/supprimer.png" />
+         </image>
+      </ImageView>
+      <!-- Add the Delete Button -->
+      <Button layoutX="626.0" layoutY="383.0" mnemonicParsing="false" onAction="#supprimerCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Supprimer" />
+      <Button layoutX="798.0" layoutY="383.0" mnemonicParsing="false" onAction="#modifierCategorie" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles.css" text="Modifier" />
+      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="751.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/modifier.png" />
          </image>
       </ImageView>
 

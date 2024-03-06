@@ -3,9 +3,11 @@ package Controllers;
 import entities.Formation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import services.ServiceFormation;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -532,7 +535,16 @@ public class AfficherFormationAdmin implements Initializable {
     private int getTotalPages() {
         return (int) Math.ceil((double) allData.size() / itemsPerPage);
     }
-
+    public void accederCategorie(ActionEvent actionEvent) {
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Categorie.fxml"));
+        try {
+            Parent root = loader1.load();
+            CategorieController controller = loader1.getController();
+            NomC.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
 
 
