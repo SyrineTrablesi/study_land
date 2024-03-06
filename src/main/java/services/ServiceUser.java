@@ -1,10 +1,7 @@
 package services;
 
-import entities.Admin;
-import entities.Apprenant;
-import entities.Formateur;
 import entities.User;
-import utils.MyBD;
+import utils.MyDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +17,7 @@ public class ServiceUser {
     ServiceFormateur serviceFormateur=new ServiceFormateur();
     ServiceApprenant serviceApprenant=new ServiceApprenant();
     public ServiceUser() {
-        connection = MyBD.getInstance().getConnection();
+        connection = MyDB.getInstance().getConnection();
     }
 
 

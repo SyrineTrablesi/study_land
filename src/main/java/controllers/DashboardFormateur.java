@@ -26,6 +26,8 @@ public class DashboardFormateur {
 
 
     @FXML
+    private Button id_formation_admin;
+    @FXML
     private Button btn_parameter;
 
     @FXML
@@ -188,5 +190,19 @@ public class DashboardFormateur {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    void affichageFormatuer(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterFormation.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            AjouterFormationController controller = loader.getController();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 }

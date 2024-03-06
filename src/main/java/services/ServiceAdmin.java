@@ -1,8 +1,7 @@
 package services;
 import entities.Admin;
-import entities.Apprenant;
-import entities.User;
-import utils.MyBD;
+import utils.MyDB;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
 public class ServiceAdmin implements IUserService<Admin>{
     private Connection connection;
     public ServiceAdmin(){
-        connection=MyBD.getInstance().getConnection();
+        connection= MyDB.getInstance().getConnection();
     }
     @Override
     public void ajouter(Admin Admin) throws SQLException {

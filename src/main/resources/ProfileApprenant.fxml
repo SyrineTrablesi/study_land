@@ -45,7 +45,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="id_formation" contentDisplay="TOP" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="118.0" styleClass="button3" stylesheets="@style/styleDash.css" text="Formation" textFill="#2a3d9b">
+                  <Button fx:id="btn_formation" contentDisplay="TOP" layoutX="10.0" layoutY="76.0" mnemonicParsing="false" onAction="#formationApprenants" prefHeight="78.0" prefWidth="118.0" styleClass="button3" stylesheets="@style/styleDash.css" text="Formation" textFill="#2a3d9b">
                      <graphic>
                         <ImageView fitHeight="39.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

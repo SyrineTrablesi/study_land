@@ -1,9 +1,7 @@
 package services;
 
-import entities.Admin;
 import entities.Apprenant;
-import entities.Formateur;
-import utils.MyBD;
+import utils.MyDB;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ public class ServiceApprenant implements IUserService<Apprenant> {
     private static Connection connection;
 
     public ServiceApprenant() {
-        connection = MyBD.getInstance().getConnection();
+        connection = MyDB.getInstance().getConnection();
     }
 
     @Override

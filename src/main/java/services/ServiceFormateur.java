@@ -1,10 +1,7 @@
 package services;
 
-import entities.Admin;
-import entities.Apprenant;
 import entities.Formateur;
-import entities.User;
-import utils.MyBD;
+import utils.MyDB;
 
 import java.sql.*;
 import java.sql.Connection;
@@ -15,7 +12,7 @@ import java.util.List;
 public class ServiceFormateur implements IUserService<Formateur>{
     private Connection connection;
     public ServiceFormateur(){
-        connection= MyBD.getInstance().getConnection();
+        connection= MyDB.getInstance().getConnection();
     }
     private boolean estAdminConnecte() throws SQLException {
         String req = "SELECT Role FROM user WHERE id_user = ?";

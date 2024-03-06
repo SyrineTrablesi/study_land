@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 public class ProfileApprenant {
     Apprenant apprenant=new Apprenant();
     @FXML
+    private Button btn_formation;
+    @FXML
     private Button btn_refresh;
     @FXML
     private ImageView img;
@@ -196,5 +198,17 @@ public class ProfileApprenant {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    void formationApprenants(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherFormationApprenant.fxml"));
+        try {
+            Parent defaultRoot = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(defaultRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -34,7 +34,8 @@ public class DashboardAdmin {
 
     @FXML
     private Button btn_Admin;
-
+    @FXML
+    private Button id_formation_admin;
     @FXML
     private Button btn_App;
     @FXML
@@ -279,7 +280,20 @@ public class DashboardAdmin {
         }
     }
 
+    @FXML
+    void formationAdmin(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherFormationAdmin.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            AfficherFormationAdmin controller = loader.getController();
 
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 }
 
 
