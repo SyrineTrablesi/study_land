@@ -23,7 +23,7 @@ public class EmailSender {
     static {
         try {
             // Charger l'image en cache une seule fois
-            imageBytes = Files.readAllBytes(Paths.get("D:\\syrine_3A26\\pidev\\StudyLand\\src\\main\\resources\\src\\logo.png"));
+            imageBytes = Files.readAllBytes(Paths.get("C:\\pidev\\StudyLand\\src\\main\\resources\\src\\logo.png"));
         } catch (IOException e) {
             throw new RuntimeException("Erreur lors de la lecture de l'image : " + e.getMessage());
         }
@@ -31,7 +31,7 @@ public class EmailSender {
     static {
         try {
             // Charger l'image en cache une seule fois
-            imageBytesCov = Files.readAllBytes(Paths.get("D:\\syrine_3A26\\pidev\\StudyLand\\src\\main\\resources\\src\\covEmail.png"));
+            imageBytesCov = Files.readAllBytes(Paths.get("C:\\pidev\\StudyLand\\src\\main\\resources\\src\\covEmail.png"));
         } catch (IOException e) {
             throw new RuntimeException("Erreur lors de la lecture de l'image : " + e.getMessage());
         }

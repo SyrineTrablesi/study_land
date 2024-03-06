@@ -13,9 +13,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="1344.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashbordAdminParDefaut">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1586.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashbordAdminParDefaut">
    <content>
-      <AnchorPane prefHeight="1080.0" prefWidth="1315.0" style="-fx-background-color: #ffffff;" stylesheets="@style/styleDash.css">
+      <AnchorPane prefHeight="1093.0" prefWidth="1351.0" style="-fx-background-color: #ffffff;" stylesheets="@style/styleDash.css">
          <children>
             <AnchorPane fx:id="chartContainer" layoutX="14.0" layoutY="411.0" prefHeight="308.0" prefWidth="429.0" />
             <Line endX="-100.0" endY="296.1999816894531" layoutX="553.0" layoutY="398.0" startX="-100.00003051757812" startY="89.79999542236328" />
@@ -65,7 +65,7 @@
                   <Image url="@src/eye_open.png" />
                </image>
             </ImageView>
-            <TableView fx:id="id_tab_user" layoutX="47.0" layoutY="819.0" prefHeight="218.0" prefWidth="514.0" stylesheets="@style/styleDash.css">
+            <TableView fx:id="id_tab_user" layoutX="60.0" layoutY="868.0" prefHeight="218.0" prefWidth="514.0" stylesheets="@style/styleDash.css">
                <columns>
                   <TableColumn fx:id="nom_user" prefWidth="88.80000305175781" text="     nom" />
                   <TableColumn fx:id="pre_user" prefWidth="124.80001831054688" text="      prénom" />
@@ -73,8 +73,8 @@
                   <TableColumn fx:id="Role_user" prefWidth="135.20001220703125" text="         Role" />
                </columns>
             </TableView>
-            <ComboBox fx:id="com_try" layoutX="433.0" layoutY="775.0" prefHeight="26.0" prefWidth="128.0" />
-            <AnchorPane fx:id="userDetailsContainer" layoutX="575.0" layoutY="844.0" prefHeight="151.0" prefWidth="410.0" />
+            <ComboBox fx:id="com_try" layoutX="433.0" layoutY="830.0" prefHeight="26.0" prefWidth="128.0" />
+            <AnchorPane fx:id="userDetailsContainer" layoutX="596.0" layoutY="868.0" prefHeight="170.0" prefWidth="470.0" />
             <HBox alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="349.0" prefWidth="1319.0" style="-fx-background-color: #E6EEFF;">
                <children>
                   <ImageView fitHeight="376.0" fitWidth="811.0" pickOnBounds="true" preserveRatio="true">
@@ -91,6 +91,11 @@
             </ImageView>
             <Line endX="-100.0" endY="296.1999816894531" layoutX="804.0" layoutY="392.0" startX="-100.00003051757812" startY="89.79999542236328" />
             <AnchorPane fx:id="chartContainer1" layoutX="716.0" layoutY="407.0" prefHeight="314.0" prefWidth="525.0" />
+            <Label layoutX="68.0" layoutY="763.0" text="Analyser les différents profils d'utilisateurs" textFill="#440be1">
+               <font>
+                  <Font name="Calibri Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </content>

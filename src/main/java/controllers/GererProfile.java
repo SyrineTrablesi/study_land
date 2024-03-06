@@ -55,7 +55,7 @@ public class GererProfile {
         return id_prenom;
     }
 
-    String filepath = null, filename = null, fn = null; FileChooser fc = new FileChooser(); String uploads = "D:/syrine_3A26/pidev/StudyLand/src/main/resources/src";
+    String filepath = null, filename = null, fn = null; FileChooser fc = new FileChooser(); String uploads = "C:/pidev/StudyLand/src/main/resources/src";
     UserInfo userInfo = Session.getInstance().userInfo;
     @FXML
     public void initialize() {
@@ -126,10 +126,8 @@ public class GererProfile {
                     if (!nouveauPrenom.equals(userInfo.prenom)) {
                         admin.setPrenom(user1.getPrenom());
                     }
-
                     ServiceAdmin serviceAdmin = new ServiceAdmin();
                     serviceAdmin.modifier(admin);
-
                 }
                 showAlert2("Succès", "Les informations de l'utilisateur ont été modifiées avec succès.");
             }} catch (SQLException e) {

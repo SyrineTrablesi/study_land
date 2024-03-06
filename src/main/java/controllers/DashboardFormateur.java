@@ -120,7 +120,7 @@ public class DashboardFormateur {
             Image image = new Image("file:" + user.getImage());
             id_image_nav.setImage(image);
         } else {
-            Image defaultImage = new Image("D:\\syrine_3A26\\pidev\\StudyLand\\src\\main\\resources\\src\\77.png");
+            Image defaultImage = new Image("C:\\pidev\\StudyLand\\src\\main\\resources\\src\\77.png");
             id_image_nav.setImage(defaultImage);
         }
         combo_login.getItems().addAll( "Modifier Email","Logout", "Aide");

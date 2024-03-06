@@ -56,7 +56,7 @@ public class CardUser {
         if (image != null) {
             id_image_User.setImage(image);
         } else {
-            Image defaultImage = new Image("D:\\syrine_3A26\\pidev\\StudyLand\\src\\main\\resources\\src\\77.png");
+            Image defaultImage = new Image("C:\\pidev\\StudyLand\\src\\main\\resources\\src\\77.png");
             id_image_User.setImage(defaultImage);
         }
     }
