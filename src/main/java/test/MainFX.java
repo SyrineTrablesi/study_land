@@ -1,6 +1,14 @@
 package test;
+
+import controllers.AjoutProjetController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
+
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainFX extends Application {
 
@@ -10,6 +18,6 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        
+
     }
 }

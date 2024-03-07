@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
+<AnchorPane prefHeight="509.0" prefWidth="650.0" stylesheets="@src/Projet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetailProjetControllers">
+   <children>
+      <ImageView fitHeight="120.0" fitWidth="90.0" layoutX="264.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@src/lgfcopie.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelNom" layoutX="124.0" layoutY="231.0" prefHeight="30.0" prefWidth="204.0" text="Label" />
+      <Label fx:id="labelDesc" layoutX="426.0" layoutY="231.0" prefHeight="30.0" prefWidth="204.0" text="Label" />
+      <Label fx:id="labelDateDebut" layoutX="124.0" layoutY="299.0" prefHeight="30.0" prefWidth="193.0" text="Label" />
+      <Label fx:id="labelDateFin" layoutX="426.0" layoutY="299.0" prefHeight="30.0" prefWidth="204.0" text="Label" />
+      <Label fx:id="labelNbTaches" layoutX="124.0" layoutY="367.0" prefHeight="30.0" prefWidth="204.0" text="Label" />
+      <Label fx:id="labeltache" layoutX="426.0" layoutY="367.0" prefHeight="30.0" prefWidth="204.0" text="Label" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#retour" prefHeight="24.0" prefWidth="63.0" stylesheets="@src/Projet.css" text="Retour" />
+   </children>
 </AnchorPane>
