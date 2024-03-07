@@ -102,12 +102,7 @@
                   <Image url="@src/search.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="970.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@src/not.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="id_image_nav" fitHeight="31.0" fitWidth="57.0" layoutX="1013.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="id_image_nav" fitHeight="31.0" fitWidth="57.0" layoutX="1018.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@src/77.png" />
                </image>
@@ -117,8 +112,8 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <ComboBox fx:id="combo_login" layoutX="1130.0" layoutY="18.0" onAction="#onComboLoginSelected" prefHeight="26.0" prefWidth="81.0" stylesheets="@style/styleDash.css" />
-            <Button fx:id="btn_refresh" contentDisplay="TOP" layoutX="1061.0" layoutY="5.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="34.0" prefWidth="33.0" styleClass="button3" stylesheets="@style/styleDash.css" textFill="#2a3d9b">
+            <ComboBox fx:id="combo_login" layoutX="1135.0" layoutY="18.0" onAction="#onComboLoginSelected" prefHeight="26.0" prefWidth="81.0" stylesheets="@style/styleDash.css" />
+            <Button fx:id="btn_refresh" contentDisplay="TOP" layoutX="1066.0" layoutY="5.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="34.0" prefWidth="33.0" styleClass="button3" stylesheets="@style/styleDash.css" textFill="#2a3d9b">
                <graphic>
                   <ImageView fx:id="btn_refrech" fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -135,6 +130,18 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
+            <Button fx:id="btn_message" contentDisplay="TOP" layoutX="949.0" layoutY="4.0" mnemonicParsing="false" onAction="#AfficherMessage" prefHeight="48.0" prefWidth="59.0" styleClass="button3" stylesheets="@style/styleDash.css" textFill="#2a3d9b">
+               <graphic>
+                  <ImageView fx:id="btn_refrech1" fitHeight="23.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@src/messages.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Poor Richard" size="12.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

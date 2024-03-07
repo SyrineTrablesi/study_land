@@ -28,7 +28,11 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 public class DashboardAdmin {
+    @FXML
+    private Button btnQuestions;
 
+    @FXML
+    private Button btnReponses;
     @FXML
     private ImageView id_image_nav;
     @FXML
@@ -309,6 +313,21 @@ public class DashboardAdmin {
             System.out.println(e.getMessage());
         }
     }
+    @FXML
+    void AfficherMessage(ActionEvent event) {
+
+    }
+
+    @FXML
+    void Question(ActionEvent event) {
+
+    }
+
+    @FXML
+    void Reponses(ActionEvent event) {
+
+    }
+
 
 }
 

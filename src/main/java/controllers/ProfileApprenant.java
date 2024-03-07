@@ -226,4 +226,6 @@ public class ProfileApprenant {
 
     }
 
+    public void AfficherMessage(ActionEvent event) {
+    }
 }

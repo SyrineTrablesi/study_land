@@ -99,7 +99,7 @@ public class DashboardFormateur {
                 try {
                     Parent root = loader1.load();
                     SeConnecter controller = loader1.getController();
-                    id_evaluation.getScene().setRoot(root);
+                    btn_parameter.getScene().setRoot(root);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
@@ -220,4 +220,15 @@ public class DashboardFormateur {
         }
     }
 
+    public void EvaluationFormateur(ActionEvent event) {
+    }
+
+    public void Question(ActionEvent event) {
+    }
+
+    public void Reponses(ActionEvent event) {
+    }
+
+    public void AfficherMessage(ActionEvent event) {
+    }
 }
