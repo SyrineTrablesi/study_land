@@ -1,42 +1,43 @@
 package entities;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Panier {
-    private List<Inscrit> formationsInscrits;
-    private List<Favoris> formationsFavoris;
+    private List<Favoris> favorisList;
+    private List<Inscrit> inscritsList;
+    private List<Achat> achatsList;
 
     public Panier() {
-        this.formationsInscrits = new ArrayList<>();
-        this.formationsFavoris = new ArrayList<>();
+        favorisList = new ArrayList<>();
+        inscritsList = new ArrayList<>();
+        achatsList = new ArrayList<>();
     }
 
-    public List<Inscrit> getFormationsInscrits() {
-        return formationsInscrits;
+    public void addFavoris(Favoris favoris) {
+        favorisList.add(favoris);
     }
 
-    public void setFormationsInscrits(List<Inscrit> formationsInscrits) {
-        this.formationsInscrits = formationsInscrits;
+    public void addInscrit(Inscrit inscrit) {
+        inscritsList.add(inscrit);
     }
 
-    public List<Favoris> getFormationsFavoris() {
-        return formationsFavoris;
+    public void addAchat(Achat achat) {
+        achatsList.add(achat);
     }
 
-    public void setFormationsFavoris(List<Favoris> formationsFavoris) {
-        this.formationsFavoris = formationsFavoris;
+    public List<Favoris> getFavorisList() {
+        return favorisList;
     }
 
-    // Méthode pour ajouter une formation à la liste des inscrits
-    public void ajouterInscris (Inscrit inscrit) {
-        this.formationsInscrits.add(inscrit);
+    public List<Inscrit> getInscritsList() {
+        return inscritsList;
     }
 
-    // Méthode pour ajouter une formation à la liste des favoris
-    public void ajouterFavoris(Favoris favoris) {
-        this.formationsFavoris.add(favoris);
+    public List<Achat> getAchatsList() {
+        return achatsList;
     }
 
-    // Autres méthodes peuvent être ajoutées pour manipuler les formations dans le panier
+
 }

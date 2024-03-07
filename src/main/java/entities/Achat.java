@@ -6,6 +6,10 @@ public class Achat extends Formation {
     int idAchat;
     int id_user;
     private Date dateAjout;
+    private String cardNumber;
+    private String exprMonth;
+    private String exprYear;
+    private String cvv;
 
 
 
@@ -37,6 +41,43 @@ public class Achat extends Formation {
 
     public void setId_user(int id_user) {
         this.id_user = id_user;
+    }
+
+
+    // Getter et setter pour cardNumber
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    // Getter et setter pour exprMonth
+    public String getExprMonth() {
+        return exprMonth;
+    }
+
+    public void setExprMonth(String exprMonth) {
+        this.exprMonth = exprMonth;
+    }
+
+    // Getter et setter pour exprYear
+    public String getExprYear() {
+        return exprYear;
+    }
+
+    public void setExprYear(String exprYear) {
+        this.exprYear = exprYear;
+    }
+
+    // Getter et setter pour cvv
+    public String getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
     }
 
     @Override
@@ -96,4 +137,23 @@ public class Achat extends Formation {
         super(idFormation);
         this.id_user = id_user;
     }
+    public Achat (int id_user,int idFormation, String nomCategorie, String titre, String description, int duree, float prix, String niveau,Date  dateAjout, String cardNumber,String exprMonth, String exprYear, String cvv){
+        super(idFormation, description, titre,  duree, prix, niveau,nomCategorie);
+        this.id_user = id_user;
+        this.dateAjout = dateAjout;
+        this.cardNumber=cardNumber;
+        this.exprMonth=exprMonth;
+        this.exprYear=exprYear;
+        this.cvv=cvv;
+    }
+    public Achat(int id_user,int idFormation,  Date  dateAjout, String cardNumber,String exprMonth, String exprYear, String cvv) {
+        super(idFormation);
+        this.id_user = id_user;
+        this.dateAjout = dateAjout;
+        this.cardNumber=cardNumber;
+        this.exprMonth=exprMonth;
+        this.exprYear=exprYear;
+        this.cvv=cvv;
+    }
+
 }
