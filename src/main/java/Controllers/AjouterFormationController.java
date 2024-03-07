@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import services.ServiceFormation;
 
@@ -24,6 +25,16 @@ import javafx.scene.control.Alert;
 public class AjouterFormationController {
     @FXML
     private DatePicker DD;
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     @FXML
     private DatePicker DF;
@@ -201,16 +212,17 @@ public class AjouterFormationController {
         }}
     @FXML
     void AccederCours(ActionEvent event) {
+        centerPane.getChildren().clear();
         FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/Cours.fxml"));
         try {
             Parent root = loader1.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
             CoursController controller = loader1.getController();
-            Niveau.getScene().setRoot(root);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }
 
 
-
-}
+}}

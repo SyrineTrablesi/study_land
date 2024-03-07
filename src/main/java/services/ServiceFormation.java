@@ -4,9 +4,8 @@ import entities.Formation;
 import utils.MyDB;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 
 public class ServiceFormation implements IService<Formation> {
@@ -188,5 +187,17 @@ public class ServiceFormation implements IService<Formation> {
             // Or throw new IllegalArgumentException("Formation with ID " + id + " not found");
         }
     }
+    //Syrine statistique ::
 
+    public int statistiqueFormation(String catgorie) throws Exception {
+        String req = "SELECT COUNT(*) FROM formation WHERE nomCategorie=?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, catgorie);
+        ResultSet resultSet = pre.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt(1); // Retourne le nombre d'utilisateurs
+        } else {
+            throw new Exception("La requête n'a pas retourné de résultat");
+        }
+    }
 }

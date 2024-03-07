@@ -85,7 +85,7 @@ public class SeConnecter {
             try {
                 Parent root = loader.load();
                 ProfileApprenant controller = loader.getController();
-                controller.getId_nom1().setText(" Hello" + " ,  " + userinfo.nom);
+                controller.getId_nom1().setText( userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -98,7 +98,7 @@ public class SeConnecter {
             try {
                 Parent root = loader1.load();
                 DashboardAdmin controller = loader1.getController();
-                controller.getId_nom1().setText(" Hello" + " ,  " + userinfo.nom);
+                controller.getId_nom1().setText(userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -109,10 +109,9 @@ public class SeConnecter {
             try {
                 Parent root = loader2.load();
                 DashboardFormateur controller = loader2.getController();
-                controller.getId_nom1().setText("Hello" + " , " + userinfo.nom);
+                controller.getId_nom1().setText(userinfo.nom);
                 id_email.getScene().setRoot(root);
             } catch (IOException e) {
-                System.out.println("errrrrrr");
                 System.out.println(e.getMessage());
                 System.out.println("exception from se connecter ");
             }

@@ -199,10 +199,10 @@ public class DashboardFormateur {
             centerPane.getChildren().clear();
             centerPane.getChildren().add(root);
             AjouterFormationController controller = loader.getController();
+            controller.setCenterPane(centerPane);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
-
     }
+
 }

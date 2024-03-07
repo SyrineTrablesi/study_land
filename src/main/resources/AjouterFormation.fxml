@@ -8,11 +8,18 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="674.0" prefWidth="940.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterFormationController">
    <children>
+      <StackPane fx:id="centerPane" prefHeight="889.0" prefWidth="1425.0">
+         <children>
+            <BorderPane fx:id="rootPane1" prefHeight="817.0" prefWidth="1363.0" style="-fx-background-color: #ffffff;" />
+         </children>
+      </StackPane>
       <Button layoutX="558.0" layoutY="562.0" mnemonicParsing="false" onAction="#AjouterFormation" stylesheets="@styles.css" text="Ajouter" textFill="RED" />
       <TextField fx:id="NomF" layoutX="544.0" layoutY="82.0" prefHeight="30.0" prefWidth="210.0" promptText="Nom Formation">
          <stylesheets>

@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="443.0" prefWidth="596.0" style="-fx-background-color: #ffffff;" stylesheets="@style/styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InscriptionApprenant">
+<AnchorPane prefHeight="542.0" prefWidth="628.0" style="-fx-background-color: #ffffff;" stylesheets="@style/styleDash.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InscriptionApprenant">
    <children>
       <TextField fx:id="id_nom" alignment="CENTER" cacheShape="false" centerShape="false" layoutX="269.0" layoutY="120.0" prefHeight="42.0" prefWidth="139.0" promptText="Nom" scaleShape="false" styleClass="input-form" stylesheets="@style/styleDash.css" />
       <TextField fx:id="id_prenom" alignment="CENTER" layoutX="426.0" layoutY="117.0" prefHeight="42.0" prefWidth="139.0" promptText="Prenom" stylesheets="@style/styleDash.css" />
@@ -85,6 +85,7 @@
             <Image url="@src/mot-de-passe.png" />
          </image>
       </ImageView>
+      <AnchorPane fx:id="id_captcha" layoutX="33.0" layoutY="380.0" prefHeight="84.0" prefWidth="243.0" />
    </children>
    
 </AnchorPane>

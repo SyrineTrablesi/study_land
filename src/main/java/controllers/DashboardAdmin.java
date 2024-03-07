@@ -288,7 +288,6 @@ public class DashboardAdmin {
             centerPane.getChildren().clear();
             centerPane.getChildren().add(root);
             AfficherFormationAdmin controller = loader.getController();
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

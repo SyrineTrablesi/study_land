@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import services.ServiceFormateur;
+import services.ServiceFormation;
 import services.ServiceUser;
 
 import java.io.IOException;
@@ -111,6 +113,7 @@ public class DashbordAdminParDefaut {
 
     private void updatePieChart() {
         ServiceUser serviceUser = new ServiceUser();
+        ServiceFormation serviceFormation=new ServiceFormation();
         int nbApprenants = 0;
         try {
             nbApprenants = serviceUser.countApp();
@@ -129,11 +132,28 @@ public class DashbordAdminParDefaut {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        int nbFormationJava= 0;
+        try {
+            nbFormationJava = serviceFormation.statistiqueFormation("java");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        int nbFormationC = 0;
+        try {
+            nbFormationC =serviceFormation.statistiqueFormation("c++");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        int nbFormationPascal = 0;
+        try {
+            nbFormationPascal = serviceFormation.statistiqueFormation("pascal");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         nbAdmin.setText(String.valueOf(nbAdmins));
         nbFormateur.setText(String.valueOf(nbFormateurs));
         nbApp.setText(String.valueOf(nbApprenants));
-
         PieChart.Data apprenantsData = new PieChart.Data("Apprenants", nbApprenants);
         PieChart.Data formateursData = new PieChart.Data("Formateurs", nbFormateurs);
         PieChart.Data adminsData = new PieChart.Data("Admins", nbAdmins);
@@ -145,17 +165,18 @@ public class DashbordAdminParDefaut {
         AnchorPane.setRightAnchor(pieChart, 0.0);
         AnchorPane.setBottomAnchor(pieChart, 0.0);
         AnchorPane.setLeftAnchor(pieChart, 0.0);
+
         // formation
-        BarChart.Data apprenantsData1 = new BarChart.Data("Apprenants", nbApprenants);
-        BarChart.Data formateursData1 = new BarChart.Data("Formateurs", nbFormateurs);
-        BarChart.Data adminsData1 = new BarChart.Data("Admins", nbAdmins);
+        BarChart.Data nbFormationJava1 = new BarChart.Data("JAVA", nbFormationJava);
+        BarChart.Data nbFormationC1 = new BarChart.Data("c++", nbFormationC);
+        BarChart.Data nbFormationPascal1 = new BarChart.Data("Pascal", nbFormationPascal);
         // Créer des séries de données pour chaque catégorie
         XYChart.Series<String, Number> seriesApprenants = new XYChart.Series<>();
         XYChart.Series<String, Number> seriesFormateurs = new XYChart.Series<>();
         XYChart.Series<String, Number> seriesAdmins = new XYChart.Series<>();
-        seriesApprenants.getData().add(apprenantsData1);
-        seriesFormateurs.getData().add(formateursData1);
-        seriesAdmins.getData().add(adminsData1);
+        seriesApprenants.getData().add(nbFormationJava1);
+        seriesFormateurs.getData().add(nbFormationC1);
+        seriesAdmins.getData().add(nbFormationPascal1);
         BarChart<String, Number> barChart1 = new BarChart<>(new CategoryAxis(), new NumberAxis());
         barChart1.getData().addAll(seriesApprenants, seriesFormateurs, seriesAdmins);
         barChart1.setTitle("Répartition des formations");
@@ -164,6 +185,5 @@ public class DashbordAdminParDefaut {
         AnchorPane.setRightAnchor(barChart1, 0.0);
         AnchorPane.setBottomAnchor(barChart1, 0.0);
         AnchorPane.setLeftAnchor(barChart1, 0.0);
-
     }
 }

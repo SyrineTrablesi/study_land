@@ -1,4 +1,5 @@
 package controllers;
+import entities.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,15 +9,20 @@ import entities.Apprenant;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.ServiceApprenant;
+import services.ServiceUser;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 public class AffichageApprenant {
+    @FXML
+    private AnchorPane id_detailUser;
+
     @FXML
     private TableColumn<Apprenant, Void> modifierButton;
     @FXML
@@ -49,7 +55,28 @@ public class AffichageApprenant {
         nom_user.setCellValueFactory(new PropertyValueFactory<>("nom"));
         pre_user.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         email_user.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tab_Apprenant.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                User selectedUser = tab_Apprenant.getSelectionModel().getSelectedItem();
+                if (selectedUser != null) {
+                    ServiceUser serviceUser = new ServiceUser();
+                    try {
+                        User selectUs = serviceUser.rechercheUserParEmail(selectedUser.getEmail());
+                        int userId = selectUs.getId();
 
+                        System.out.println(selectUs);
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardUser.fxml"));
+                        AnchorPane card = loader.load();
+                        CardUser controller = loader.getController();
+                        controller.initData(selectUs);
+                        id_detailUser.getChildren().clear();
+                        id_detailUser.getChildren().add(card);
+                    } catch (IOException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         addActionColumn();
         initTable();
     }

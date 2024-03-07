@@ -104,23 +104,23 @@
                         <Image url="@src/search.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="33.0" layoutX="810.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="33.0" layoutX="931.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@src/not.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="id_image_nav" fitHeight="31.0" fitWidth="36.0" layoutX="857.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="id_image_nav" fitHeight="31.0" fitWidth="36.0" layoutX="978.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@src/77.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="id_nom1" layoutX="662.0" layoutY="19.0" prefHeight="31.0" prefWidth="148.0" styleClass="text" stylesheets="@style/styleDash.css" text="Hello,                     !" textFill="#06007b">
+                  <Label fx:id="id_nom1" layoutX="783.0" layoutY="19.0" prefHeight="31.0" prefWidth="148.0" styleClass="text" stylesheets="@style/styleDash.css" textFill="#06007b">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="combo_login" layoutX="970.0" layoutY="17.0" onAction="#onComboLoginSelected" prefHeight="26.0" prefWidth="82.0" stylesheets="@style/styleDash.css" />
-                  <Button fx:id="btn_refresh" contentDisplay="TOP" layoutX="900.0" layoutY="6.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="42.0" prefWidth="40.0" styleClass="button3" stylesheets="@style/styleDash.css" textFill="#2a3d9b">
+                  <ComboBox fx:id="combo_login" layoutX="1091.0" layoutY="20.0" onAction="#onComboLoginSelected" prefHeight="26.0" prefWidth="82.0" stylesheets="@style/styleDash.css" />
+                  <Button fx:id="btn_refresh" contentDisplay="TOP" layoutX="1021.0" layoutY="9.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="42.0" prefWidth="40.0" styleClass="button3" stylesheets="@style/styleDash.css" textFill="#2a3d9b">
                      <graphic>
                         <ImageView fx:id="btn_refrech" fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -132,6 +132,11 @@
                         <Font name="Poor Richard" size="12.0" />
                      </font>
                   </Button>
+                  <Label fx:id="id_nom11" layoutX="696.0" layoutY="17.0" prefHeight="31.0" prefWidth="73.0" styleClass="text" stylesheets="@style/styleDash.css" text="Hello," textFill="#06007b">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

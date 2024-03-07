@@ -3,6 +3,7 @@ import entities.ValidationFormuaire;
 import javafx.geometry.Pos;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.Notifications;
 import entities.Apprenant;
 import entities.EmailSender;
@@ -48,6 +49,9 @@ public class InscriptionApprenant {
     @FXML
     private PasswordField id_confirmer;
     User user = new User();
+
+    @FXML
+    private AnchorPane id_captcha;
     @FXML
     private Label errorMdpLabel;
     @FXML

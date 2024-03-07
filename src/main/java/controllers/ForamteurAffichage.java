@@ -4,6 +4,7 @@ import entities.EmailSender;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import entities.Formateur;
@@ -11,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import services.ServiceApprenant;
 import services.ServiceFormateur;
 import services.ServiceUser;
@@ -19,11 +21,14 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
 public class ForamteurAffichage {
+    @FXML
+    private AnchorPane id_detailUser;
     @FXML
     private Button btn_ajouter;
     @FXML
@@ -62,6 +67,29 @@ public class ForamteurAffichage {
         addActionColumn();
         id_mdp.setDisable(true);
         id_mdp.setOpacity(0.5);
+        tab_formateur.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                User selectedUser = tab_formateur.getSelectionModel().getSelectedItem();
+                if (selectedUser != null) {
+                    ServiceUser serviceUser = new ServiceUser();
+                    try {
+                        User selectUs = serviceUser.rechercheUserParEmail(selectedUser.getEmail());
+                        int userId = selectUs.getId();
+
+                        System.out.println(selectUs);
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardUser.fxml"));
+                        AnchorPane card = loader.load();
+                        CardUser controller = loader.getController();
+                        controller.initData(selectUs);
+                        id_detailUser.getChildren().clear();
+                        id_detailUser.getChildren().add(card);
+                    } catch (IOException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
         initTable();
     }
     private void addActionColumn() {
