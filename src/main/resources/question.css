@@ -104,4 +104,13 @@
     border-radius: 5px;
     background: #e8e8e8;
 }
+.buttonaudio{
 
+    -fx-background-color: transparent;
+}
+.buttonaudio:hover {
+    -fx-background-color :linear-gradient(to top left, rgb(229, 151, 10), #1451d7);
+}
+.boxresultat{
+    -fx-border-color: #E5970AFF;
+}

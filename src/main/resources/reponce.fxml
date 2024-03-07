@@ -28,10 +28,9 @@
                </font>
             </Text>
             <Button fx:id="btnchercher1" layoutX="952.0" layoutY="453.0" mnemonicParsing="false" onAction="#gererepense" style="-fx-background-color: #F8982A;" text="gérer réponse" />
-            <Button layoutX="1010.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnafficher" style="-fx-background-color: #F8982A;" text="afficher les questions" />
-            <AnchorPane layoutX="-13.0" layoutY="123.0" prefHeight="289.0" prefWidth="1162.0" style="-fx-background-image: #ffffff; -fx-background-color: #EAEDF0;">
+            <AnchorPane layoutX="-12.0" prefHeight="289.0" prefWidth="1162.0" style="-fx-background-image: #ffffff; -fx-background-color: #EAEDF0;">
                <children>
-                  <ImageView fitHeight="278.0" fitWidth="574.0" layoutX="584.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="278.0" fitWidth="574.0" layoutX="623.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@src/concept-test-enquete-education-ligne-rendu-3d-removebg-preview.png" />
                      </image>

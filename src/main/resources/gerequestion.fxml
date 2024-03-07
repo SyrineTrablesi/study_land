@@ -43,16 +43,14 @@
                </font>
             </Text>
             <Button layoutX="845.0" layoutY="1279.0" mnemonicParsing="false" onAction="#btnmodifier" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="Modifier" />
-            <Button layoutX="166.0" layoutY="1461.0" mnemonicParsing="false" onAction="#btnsupprimer" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="Supprimer" />
-            <Button layoutX="54.0" layoutY="1461.0" mnemonicParsing="false" onAction="#affichagequetion" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="Les questions" />
-            <Button layoutX="282.0" layoutY="1461.0" mnemonicParsing="false" onAction="#récupérer" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="récupérer" />
+            <Button layoutX="384.0" layoutY="1067.0" mnemonicParsing="false" onAction="#récupérer" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #F8982A;" text="récupérer" />
             <TableView fx:id="tab" layoutX="75.0" layoutY="1122.0" prefHeight="212.0" prefWidth="469.0">
                <columns>
                   <TableColumn fx:id="columnenonce" prefWidth="468.7998962402344" text="ènoncé" />
                </columns>
             </TableView>
             <TextField fx:id="idchercher" layoutX="96.0" layoutY="1063.0" prefHeight="36.0" prefWidth="232.0" />
-            <AnchorPane layoutY="68.0" prefHeight="290.0" prefWidth="1205.0" style="-fx-background-image: #ffffff; -fx-background-color: #EAEDF0;">
+            <AnchorPane layoutX="-3.0" layoutY="1.0" prefHeight="290.0" prefWidth="1205.0" style="-fx-background-image: #ffffff; -fx-background-color: #EAEDF0;">
                <children>
                   <ImageView fitHeight="278.0" fitWidth="316.0" layoutX="820.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -69,6 +67,15 @@
                         <Font size="30.0" />
                      </font>
                   </Label>
+                  <Button layoutX="8.0" layoutY="6.0" mnemonicParsing="false" onAction="#affichagequetion" prefHeight="26.0" prefWidth="32.0" style="-fx-background-color: #F8982A;">
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@src/icons8-flèche-gauche-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
             <ImageView fitHeight="48.0" fitWidth="54.0" layoutX="406.0" layoutY="944.0" pickOnBounds="true" preserveRatio="true">

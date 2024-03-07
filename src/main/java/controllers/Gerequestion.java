@@ -14,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import services.quesservice;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -71,19 +73,22 @@ public class Gerequestion {
 
             // Vérifier que les champs ne sont pas vides et respectent les types
             if (enonce.isEmpty() || domain.isEmpty()) {
-                showWarning("Veuillez remplir tous les champs.");
+                Notification("Veuillez remplir tous les champs.",NotificationType.WARNING);
                 return;
             }
 
             // Vérifier que les champs sont des chaînes de caractères
-            if (!enonce.matches("^[a-zA-Z0-9]+$") || !domain.matches("^[a-zA-Z0-9]+$")) {                showWarning("Veuillez saisir des chaînes de caractères valides.");
+            if (!enonce.matches("^[a-zA-Z0-9]+$") || !domain.matches("^[a-zA-Z0-9]+$")) {
+                Notification("Veuillez saisir des chaînes de caractères valides.",NotificationType.WARNING);
                 return;
             }
 
             // Ajouter la question dans la base de données
             sq.ajouter(new question(enonce, domain));
+            Notification ("L'ajout  a été effectuée avec succès.", NotificationType.SUCCESS)  ;
+
         } catch (SQLException e) {
-            showWarning("Erreur lors de l'ajout de la question.");
+            Notification("Erreur lors de l'ajout de la question.",NotificationType.WARNING);
             e.printStackTrace();
         }
     }
@@ -101,26 +106,23 @@ public class Gerequestion {
 
                 // Vérifier que les champs ne sont pas vides et respectent les types
                 if (newEnonce.isEmpty() || newDomain.isEmpty()) {
-                    showWarning("Veuillez remplir tous les champs de modification.");
+                    Notification("Veuillez remplir tous les champs de modification.",NotificationType.WARNING);
                     return;
                 }
 
                 // Modifier la question dans la base de données
                 sq.modifier(new question(questionIdToUpdate, newEnonce, newDomain));
+                Notification("La modification a été effectuée avec succès.", NotificationType.SUCCESS);
+
             } else {
-                showWarning("Aucune question sélectionnée.");
+                Notification("Aucune question sélectionnée.",NotificationType.WARNING);
             }
         } catch (SQLException e) {
-            showWarning("Erreur lors de la modification de la question.");
+            Notification("Erreur lors de la modification de la question.",NotificationType.WARNING);
             e.printStackTrace();
         }
     }
-    private void showWarning(String message) {
-        Notifications.create()
-                .title("Avertissement")
-                .text(message)
-                .showWarning();
-    }
+
 
     @FXML
     public void initialize() {
@@ -232,6 +234,13 @@ public class Gerequestion {
         } catch (SQLException e) {
             e.printStackTrace(); // Gérer l'exception de manière appropriée dans votre application
         }
+    }
+    private void Notification(String message, NotificationType type) {
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle("Avertissement");
+        tray.setMessage(message);
+        tray.setNotificationType(type);
+        tray.showAndWait();
     }
 
 }

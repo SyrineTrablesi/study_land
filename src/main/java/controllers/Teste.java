@@ -1,10 +1,8 @@
         package controllers;
+
         import com.mashape.unirest.http.HttpResponse;
         import com.mashape.unirest.http.JsonNode;
         import com.mashape.unirest.http.Unirest;
-        import tray.notification.NotificationType;
-
-        import com.mashape.unirest.http.exceptions.UnirestException;
         import entities.evaluation;
         import entities.question;
         import entities.response;
@@ -18,30 +16,27 @@
         import javafx.scene.Parent;
         import javafx.scene.Scene;
         import javafx.scene.control.*;
-        import javafx.scene.image.Image;
         import javafx.scene.image.ImageView;
         import javafx.scene.layout.VBox;
+        import javafx.scene.media.Media;
+        import javafx.scene.media.MediaPlayer;
         import javafx.scene.text.Text;
         import javafx.stage.Stage;
-        import okhttp3.*;
         import services.EvalService;
         import services.Reponseservice;
         import services.quesservice;
-        import com.google.cloud.translate.Translate;
-        import com.google.cloud.translate.TranslateOptions;
-        import com.google.cloud.translate.Translation;
+        import tray.notification.NotificationType;
         import tray.notification.TrayNotification;
 
+        import java.io.File;
         import java.io.IOException;
         import java.sql.SQLException;
         import java.sql.Time;
         import java.text.DecimalFormat;
         import java.text.SimpleDateFormat;
         import java.time.LocalTime;
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Timer;
-        import java.util.TimerTask;
+        import java.util.*;
+
         public class Teste {
             @FXML
             private ImageView gift;
@@ -89,7 +84,6 @@
         Reponseservice reponseservice=new Reponseservice();
     int getNb_questions;
 
-            private Translate translateService;
 
             private int retrievedId;  // Attribute to store the retrieved ID
 
@@ -100,11 +94,15 @@
             }
             private Timer timer;
             private LocalTime remainingTimeInSeconds;
-            private static final String GIPHY_API_KEY = "ckc2GVVSSA4HDWP0wwl71VPjfNSfdQmP";
-            private static final String GIPHY_API_URL = "https://api.giphy.com/v1/gifs/random?api_key=" + GIPHY_API_KEY;
+
             private TimerTask timerTask;
             private ActionEvent actionEvent;
             private ActionEvent finalActionEvent;
+            @FXML
+            private Text motivationalQuoteText;
+
+
+            private MediaPlayer mediaPlayer;
 
 
 
@@ -113,7 +111,14 @@
             public void initialize() throws SQLException {
                 try {
 
+                    String audioFilePath = "C:\\Users\\adelb\\OneDrive\\Bureau\\study_land\\src\\main\\resources\\src\\Y2meta.app - 1 Minute Timer Relaxing Music Lofi Fish Background (128 kbps).mp3";
+                    Media audioMedia = new Media(new File(audioFilePath).toURI().toString());
 
+                    // Initialisation du lecteur multimédia
+                    mediaPlayer = new MediaPlayer(audioMedia);
+
+
+                    fetchAndDisplayMotivationalQuote();
 
                     evaluation eval = getEvaluationWithQuestionsById(ids);
 
@@ -278,26 +283,7 @@
             }
 
 
-            private String fetchRandomSuccessGifUrl() {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url(GIPHY_API_URL + "&tag=success") // Append tag=success to get success-related GIFs
-                        .build();
 
-                try (Response response = client.newCall(request).execute()) {
-                    if (response.isSuccessful()) {
-                        String responseBody = response.body().string();
-                        // Print the response body to check if it contains the expected JSON
-
-                    } else {
-                        System.out.println("Error fetching success GIF from Giphy. HTTP Status: " + response.code());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-            }
 
 
 
@@ -419,6 +405,47 @@
                 System.out.println(formattedPercentage);
                 return Double.parseDouble(formattedPercentage); // I
             }
+            private void fetchAndDisplayMotivationalQuote() {
+                try {
+                    // Faire une requête GET à l'API des citations motivantes
+                    HttpResponse<JsonNode> response = Unirest.get("https://type.fit/api/quotes")
+                            .header("accept", "application/json")
+                            .asJson();
+
+                    // Vérifier si la requête a réussi (code de statut 200)
+                    if (response.getStatus() == 200) {
+                        // Récupérer la liste des citations motivantes
+                        JsonNode jsonResponse = response.getBody();
+
+                        // Choisir une citation aléatoire de la liste
+                        String motivationalQuote = getRandomQuote(jsonResponse);
+                        System.out.println(motivationalQuote);
+                        // Afficher la citation dans votre application JavaFX
+                        motivationalQuoteText.setText(motivationalQuote);
+                    } else {
+                        System.err.println("Erreur lors de la récupération des citations. Code de statut : " + response.getStatus());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            private String getRandomQuote(JsonNode jsonResponse) {
+                // Extraire une citation aléatoire de la liste
+                int numberOfQuotes = jsonResponse.getArray().length();
+                int randomIndex = (int) (Math.random() * numberOfQuotes);
+
+                // Récupérer la citation à l'index aléatoire
+                return jsonResponse.getArray().getJSONObject(randomIndex).getString("text");
+            }
+
+            public void playMusic(ActionEvent actionEvent) {
+                mediaPlayer.play();
+            }
+
+            public void pauseMusic(ActionEvent actionEvent) {
+                mediaPlayer.pause();
+            }
+
 
 
         }

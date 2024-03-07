@@ -4,8 +4,10 @@ import entities.evaluation;
 import utils.MyDB;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class EvalService implements EvaluationService<evaluation> {
     public Connection connection;
@@ -217,6 +219,22 @@ pre.executeUpdate(  );
         }
 
         return evaluationsTrouvees;
+    }
+    public Map<String, Long> getStatisticsByDomaine() throws SQLException {
+        Map<String, Long> statistics = new HashMap<>();
+
+        String req = "SELECT domaine, COUNT(*) as count FROM evaluation GROUP BY domaine";
+        try (PreparedStatement st = connection.prepareStatement(req)) {
+            try (ResultSet res = st.executeQuery()) {
+                while (res.next()) {
+                    String domaine = res.getString("domaine");
+                    long count = res.getLong("count");
+                    statistics.put(domaine, count);
+                }
+            }
+        }
+
+        return statistics;
     }
 
 }

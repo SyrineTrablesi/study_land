@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import services.Reponseservice;
 import services.quesservice;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -194,19 +196,19 @@ quesservice ques= new quesservice();
 
             // Vérifier que les champs ne sont pas vides
             if (newContenu.isEmpty()) {
-                showWarning("Champ réponse vide Le champ réponse est vide. Veuillez le remplir.");
+                Notification("Champ réponse vide Le champ réponse est vide. Veuillez le remplir.",NotificationType.WARNING);
                 return;
             }
 
             // Vérifier que le champ Réponse respecte le type de données attendu (chaine de caractères)
             if (!newContenu.matches("^[a-zA-Z0-9_ ]+$")) {
-                showWarning("Format invalide Le champ réponse doit contenir uniquement des caractères alphanumériques.");
+                Notification("Format invalide Le champ réponse doit contenir uniquement des caractères alphanumériques.",NotificationType.WARNING);
                 return;
             }
 
             // Vérifier qu'au moins une option CheckBox est sélectionnée
             if (!oui.isSelected() && !non.isSelected()) {
-                showWarning("Champ statut vide Le champ statut est vide. Veuillez le remplir.");
+                Notification("Champ statut vide Le champ statut est vide. Veuillez le remplir.",NotificationType.WARNING);
                 return;
             }
 
@@ -218,9 +220,9 @@ quesservice ques= new quesservice();
             // Ajouter la réponse dans la base de données
             reponseservice.ajouter(newResponse);
             System.out.println(newResponse);
-
+            Notification ("L'ajout  a été effectuée avec succès.", NotificationType.SUCCESS)  ;
         } catch (SQLException e) {
-            showWarning("Erreur lors de la modification de la réponse.");
+            Notification("Erreur lors de la modification de la réponse.",NotificationType.WARNING);
 
             throw new RuntimeException(e);
         }
@@ -238,19 +240,19 @@ quesservice ques= new quesservice();
 
             // Vérifier que les champs ne sont pas vides
             if (newContenu.isEmpty()) {
-                showWarning("Veuillez remplir le champ Réponse.");
+                Notification("Veuillez remplir le champ Réponse.",NotificationType.WARNING);
                 return;
             }
 
             // Vérifier que le champ Réponse respecte le type de données attendu (chaine de caractères)
             if (!newContenu.matches("^[a-zA-Z0-9_ ]+$")) {
-                showWarning("Le champ Réponse doit contenir uniquement des caractères alphanumériques.");
+                Notification("Le champ Réponse doit contenir uniquement des caractères alphanumériques.",NotificationType.WARNING);
                 return;
             }
 
             // Vérifier qu'au moins une option CheckBox est sélectionnée
             if (!oui1.isSelected() && !non1.isSelected()) {
-                showWarning("Veuillez sélectionner le statut.");
+                Notification("Veuillez sélectionner le statut.",NotificationType.WARNING);
                 return;
             }
 
@@ -261,8 +263,9 @@ quesservice ques= new quesservice();
 
             // Modifier la réponse dans la base de données
             reponseservice.modifier(updatedResponse);
+            Notification("La modification a été effectuée avec succès.", NotificationType.SUCCESS);
         } catch (SQLException e) {
-            showWarning("Erreur lors de la modification de la réponse.");
+            Notification("Erreur lors de la modification de la réponse.",NotificationType.WARNING);
             e.printStackTrace();
         }
     }
@@ -375,5 +378,13 @@ quesservice ques= new quesservice();
         catch (SQLException e) {
         e.printStackTrace(); // Gérez l'exception de manière appropriée dans votre application
     }
+    }
+
+    private void Notification(String message, NotificationType type) {
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle("Avertissement");
+        tray.setMessage(message);
+        tray.setNotificationType(type);
+        tray.showAndWait();
     }
 }

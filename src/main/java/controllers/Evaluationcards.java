@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -24,13 +25,28 @@ public class Evaluationcards {
 
     @FXML
     private FlowPane cardsFlowPane;
-
+    @FXML
+    private PieChart pieChart;
     EvalService eval = new EvalService();
 
     public void initialize() {
         try {
-            List<evaluation> evaluations = eval.afficher();
+            Map<String, Long> statistics = eval.getStatisticsByDomaine();
 
+            // Clear existing data in PieChart
+            pieChart.getData().clear();
+
+            // Populate PieChart with statistical data
+            for (Map.Entry<String, Long> entry : statistics.entrySet()) {
+                PieChart.Data slice = new PieChart.Data(entry.getKey(), entry.getValue());
+                pieChart.getData().add(slice);
+            }
+
+            // Clear existing cards in FlowPane
+            cardsFlowPane.getChildren().clear();
+
+            // Display evaluations in FlowPane
+            List<evaluation> evaluations = eval.afficher();
             for (evaluation eval : evaluations) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/evaluationcard.fxml"));
                 Parent cardNode = loader.load();
@@ -45,17 +61,16 @@ public class Evaluationcards {
                 // Add the card to the FlowPane
                 cardsFlowPane.getChildren().add(cardNode);
             }
-        } catch (IOException | SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-
-    public void recherche(ActionEvent actionEvent) {
+        public void recherche(ActionEvent actionEvent) {
             try {
                 String caractereRecherche = textrecherche.getText().trim();
-
-                // Clear existing cards before displaying new search results
                 cardsFlowPane.getChildren().clear();
 
                 if (!caractereRecherche.isEmpty()) {
@@ -65,7 +80,6 @@ public class Evaluationcards {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/evaluationcard.fxml"));
                         Parent cardNode = loader.load();
 
-                        // Access the controller of the Evaluationcard
                         Evaluationcard cardController = loader.getController();
 
                         cardController.setIdtitle(eval.getTitre_evaluation());
@@ -84,4 +98,6 @@ public class Evaluationcards {
         }
 
     }
+
+
 
