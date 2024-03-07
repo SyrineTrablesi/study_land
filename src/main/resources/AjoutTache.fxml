@@ -8,10 +8,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="430.0" prefWidth="628.0" stylesheets="@src/Projet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjoutTacheController">
    <children>
+      <StackPane fx:id="CenterPane" prefHeight="430.0" prefWidth="628.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
       <Label layoutX="53.0" layoutY="125.0" text="Nom de la tache:" />
       <Label layoutX="328.0" layoutY="129.0" text="Description de la tache :" />
       <Label layoutX="48.0" layoutY="187.0" text="Date debut Tache:" />

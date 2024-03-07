@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import services.ServiceProject;
 
 import java.io.IOException;
@@ -16,6 +17,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ProjetEtudController {
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
+
     @FXML
     private FlowPane cardsFlowPane;
 

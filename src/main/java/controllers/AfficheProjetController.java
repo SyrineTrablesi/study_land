@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import services.ServiceProject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AfficheProjetController {
+    @FXML
+    private StackPane CenterPane;
+
+    public StackPane getCenterPane() {
+        return CenterPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        CenterPane = centerPane;
+    }
 
     @FXML
     private Label labeldesc;
@@ -58,42 +69,64 @@ public class AfficheProjetController {
 
     @FXML
     void TachesP(ActionEvent event) {
+        CenterPane.getChildren().clear();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutTache.fxml"));
-        try {
-            Parent root = loader.load();
-            AjoutTacheController afficheTache = loader.getController();
 
-            labelnom.getScene().setRoot(root);
+        try {
+            //FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutTache.fxml"));
+            Parent root = loader.load();
+            CenterPane.getChildren().clear();
+            CenterPane.getChildren().add(root);
+            AjoutTacheController ajouterTach = loader.getController();
+            ajouterTach.setCenterPane(CenterPane);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
     @FXML
     void listeP(ActionEvent event) {
+        CenterPane.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeProjetsAnchorPane.fxml"));
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeProjetsAnchorPane.fxml"));
-            Parent listProjectsPane = loader.load();
-            ListeProjetsAnchorPaneController ListeProjet = loader.getController();
-            labeldesc.getScene().setRoot(listProjectsPane);
+            //FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutTache.fxml"));
+            Parent root = loader.load();
+            CenterPane.getChildren().clear();
+            CenterPane.getChildren().add(root);
+            ListeProjetsAnchorPaneController listProjectsPane = loader.getController();
+         //   labeldesc.getScene().setRoot(CenterPane);
+            listProjectsPane.setCenterPane(CenterPane);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
     @FXML
     void QRCode(ActionEvent event) {
+        CenterPane.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/QRCode.fxml"));
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/QRCode.fxml"));
-            Parent qrCodePane = loader.load();
-            QRCodeController Qrcode = loader.getController();
+            Parent root = loader.load();
+            CenterPane.getChildren().clear();
+            CenterPane.getChildren().add(root);
+            QRCodeController codeController = loader.getController();
+            //   labeldesc.getScene().setRoot(CenterPane);
+            codeController.setCenterPane(CenterPane);
+            codeController.setQrCodeURL(generatedQRCodeURL);
 
-            // Pass the generated QR code URL to QRCodeController
-            Qrcode.setQrCodeURL(generatedQRCodeURL);
-
-            labeldesc.getScene().setRoot(qrCodePane);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
+
+
+
+
     public void setGeneratedQRCodeURL(String generatedQRCodeURL) {
         this.generatedQRCodeURL = generatedQRCodeURL;
 

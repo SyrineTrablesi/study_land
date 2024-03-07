@@ -5,13 +5,20 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="card" prefHeight="362.0" prefWidth="251.0" styleClass="custom-card" stylesheets="@src/cardprojet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CardYassController">
     <children>
+      <StackPane fx:id="centerPane" prefHeight="371.0" prefWidth="295.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
         <VBox alignment="TOP_CENTER" prefHeight="314.0" prefWidth="288.0" spacing="10">
             <HBox alignment="CENTER">
                 <ImageView fitHeight="115.0" fitWidth="111.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">

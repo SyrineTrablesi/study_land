@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.ServiceProject;
@@ -28,6 +29,16 @@ import java.util.regex.Pattern;
 public class ListeProjetsAnchorPaneController {
     @FXML
     private Label labeldesc;
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     @FXML
     private Label labelfromdb;

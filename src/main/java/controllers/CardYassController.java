@@ -7,9 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,6 +21,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class CardYassController {
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     @FXML
     private Text idDesc;
@@ -47,44 +59,43 @@ public class CardYassController {
 
     @FXML
     public void consulter(ActionEvent actionEvent) {
-            System.out.println("Consulter clicked for Project ID: " + id);
-            try {
-                ServiceProject serviceProject = new ServiceProject();
-                Project project = serviceProject.findProjectById(id);
+        System.out.println("Consulter clicked for Project ID: " + id);
+        try {
+            ServiceProject serviceProject = new ServiceProject();
+            Project project = serviceProject.findProjectById(id);
 
-                // Load the FXML file for the detail page
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/DetailProjet.fxml"));
-                Parent root = loader.load();
+            // Create a string with project details
+            String projectDetails = "Nom Projet: " + project.getNomProjet() + "\n"
+                    + "Description: " + project.getDescProjet() + "\n"
+                    + "Date Début: " + project.getDate_D() + "\n"
+                    + "Date Fin: " + project.getDate_F() + "\n"
+                    + "Nombre de Taches: " + project.getNb_taches();
 
-                // Access the controller of DetailProjet after loading the FXML file
-                DetailProjetControllers detailController = loader.getController();
-
-                // Set the project details in the DetailProjet controller
-                detailController.setProjectDetails(project);
-
-                // Create a new scene with the loaded Parent
-                Scene scene = new Scene(root);
-
-                // Get the current stage from the button's scene
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-                // Replace the current scene with the new scene
-                currentStage.setScene(scene);
-            } catch (IOException | SQLException e) {
-                e.printStackTrace();
-            }
+            // Show an alert with project details
+            showAlert("Détails du Projet", projectDetails, Alert.AlertType.INFORMATION);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
+
+    private void showAlert(String title, String content, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
 
 
     public Text getIdDesc() {
-        return idDesc;
+        return idDesc ;
     }
 
     public void setIdDesc(Text idDesc) {
         this.idDesc = idDesc;
     }
-
+// comment for testing
     public Text getIdtache() {
         return idtache;
     }

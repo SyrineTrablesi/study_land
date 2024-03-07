@@ -6,10 +6,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@src/Projet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficheTacheController">
    <children>
+      <StackPane fx:id="centerPane" prefHeight="400.0" prefWidth="590.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
       <Label fx:id="NomT" layoutX="132.0" layoutY="56.0" text="Label" />
       <Label fx:id="DescT" layoutX="132.0" layoutY="95.0" text="Label" />
       <Label layoutX="32.0" layoutY="18.0" prefHeight="22.0" prefWidth="91.0" text="Tache crée :" textFill="#228d18" />

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.Parent;
+import javafx.scene.layout.StackPane;
 import services.ServiceProject;
 import services.ServiceTaches;
 
@@ -22,6 +23,17 @@ public class AjoutTacheController {
     ServiceTaches st = new ServiceTaches();
     @FXML
     private Text errorMessage;
+    @FXML
+    private StackPane CenterPane;
+
+    public StackPane getCenterPane() {
+        return CenterPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        CenterPane = centerPane;
+    }
+
     @FXML
     private DatePicker DateDT;
 
@@ -128,14 +140,15 @@ public class AjoutTacheController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficheTache.fxml"));
         try {
             Parent root = loader.load();
-            AfficheTacheController afficheTache = loader.getController();
-            afficheTache.setNomT(NomTache.getText());
-            afficheTache.setDescT(DescTache.getText());
-            DateDT.getScene().setRoot(root);
+            CenterPane.getChildren().clear();
+            CenterPane.getChildren().add(root);
+            AfficheTacheController controller = loader.getController();
+            controller.setCenterPane(CenterPane);
+            controller.setNomT(NomTache.getText());
+           controller.setDescT(DescTache.getText());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
 

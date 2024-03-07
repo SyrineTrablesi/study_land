@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import services.ServiceTaches;
 
 import java.io.IOException;
@@ -16,7 +17,16 @@ import java.util.List;
 
 public class DetailProjetControllers {
 
+    @FXML
+    private StackPane centerPane;
 
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
     @FXML
     private Label labelDateDebut;
 

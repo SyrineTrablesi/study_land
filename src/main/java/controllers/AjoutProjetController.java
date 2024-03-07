@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import services.ServiceProject;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +21,17 @@ import controllers.QRCodeController;
 public class AjoutProjetController {
 
     ServiceProject sp = new ServiceProject();
+    @FXML
+    private StackPane CenterPane;
+
+    public StackPane getCenterPane() {
+        return CenterPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        CenterPane = centerPane;
+    }
+
     @FXML
     private Text errorMessage;
     @FXML
@@ -38,10 +50,12 @@ public class AjoutProjetController {
 
     private String generatedQRCodeURL;
     //test
-     public  static  int id_projet_class;
+    public static int id_projet_class;
+
     private Date convertToUtilDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
+
     @FXML
     void AjouterProjet(ActionEvent event) {
         // Check for empty input fields
@@ -110,24 +124,36 @@ public class AjoutProjetController {
                     Integer.parseInt(nbtache.getText()));
             // Add the project to the database
             sp.ajouter(project);
-            id_projet_class=sp.recherche(nomp.getText());
+            id_projet_class = sp.recherche(nomp.getText());
             System.out.println(id_projet_class);
             generateQRCodeForProject(project);
-           // CalendarController.addEventToCalendar(id_projet_class, dateDebut, dateFin, nomp.getText());
+            // CalendarController.addEventToCalendar(id_projet_class, dateDebut, dateFin, nomp.getText());
             // Navigate to AfficheProjet.fxml
+
+            CenterPane.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficheProjet.fxml"));
-            Parent root = loader.load();
-            AfficheProjetController afficheProjet = loader.getController();
+            try {
+                Parent root = loader.load();
+                CenterPane.getChildren().clear();
+                CenterPane.getChildren().add(root);
+                AfficheProjetController afficheProjet = loader.getController();
+                afficheProjet.setGeneratedQRCodeURL(generatedQRCodeURL);
+                afficheProjet.setLabelnom(nomp.getText());
+                afficheProjet.setLabeldesc(DescP.getText());
+                afficheProjet.setCenterPane(getCenterPane());
+                //DateD.getScene().setRoot(root);
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+
             // Pass the generated QR code URL to AfficheProjetController
-            afficheProjet.setGeneratedQRCodeURL(generatedQRCodeURL);
-            afficheProjet.setLabelnom(nomp.getText());
-            afficheProjet.setLabeldesc(DescP.getText());
-            DateD.getScene().setRoot(root);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
-
     private void generateQRCodeForProject(Project project) throws IOException {
         // Assuming project.getId_Projet() returns the unique identifier for the project
         String dataToEncode = "Name: " + project.getNomProjet() +
@@ -135,7 +161,7 @@ public class AjoutProjetController {
                 ", Number of Tasks: " + project.getNb_taches();
 
         // Use the QRCodeController method to generate the QR code
-        generatedQRCodeURL = QRCodeController.generateQRCode("https://api.qrserver.com/v1/create-qr-code/",dataToEncode);
+        generatedQRCodeURL = QRCodeController.generateQRCode("https://api.qrserver.com/v1/create-qr-code/", dataToEncode);
 
         // Print or use the QR code image URL as needed
         System.out.println("QR Code Image URL: " + generatedQRCodeURL);
