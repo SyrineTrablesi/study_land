@@ -6,6 +6,7 @@ import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import services.ServiceFavoris;
@@ -14,7 +15,6 @@ import services.ServiceInscrit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import javafx.scene.layout.AnchorPane;
 
 public class PanierController {
 

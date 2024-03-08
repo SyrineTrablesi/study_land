@@ -5,7 +5,6 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.Token;
 import entities.Achat;
-import entities.Favoris;
 import entities.User;
 import utils.MyDB;
 
@@ -138,7 +137,7 @@ public class ServiceAchat implements IService<Achat> {
 
     public void effectuerPaiement(Achat achat) throws SQLException {
         // Créez un objet Stripe Charge avec les informations de la carte et le prix total
-        Stripe.apiKey = "sk_test_51OrKaRDOYVI5uEqTE8p6z8idDW3U03DPu84cAFKM3xJ7TadBHNE55nyAe1xrJBORV8saCYHBO1g57iPtJyk3f83c00t4i6bYvJ";
+        Stripe.apiKey = "sk_test_51OrWnL05RHyv6KAM7Bl1yjX041bX0Kqj09yQT8BsqA63xZcciBS3b5zArxusL1odi8uthLsg24VvahXJCDx5C4Ma00YuEnbTAX";
         Map<String, Object> chargeParams = new HashMap<>();
         int price = Math.round(achat.getPrix() * 100 / 10) * 10; // convertir en cents
         chargeParams.put("amount", price);
@@ -200,5 +199,16 @@ public class ServiceAchat implements IService<Achat> {
         }
         return achats;
     }
+    public float calculerFactureUtilisateur(User user) throws SQLException {
+        // Récupérer tous les achats de l'utilisateur
+        List<Achat> achatsUtilisateur = afficherbyUser(user);
 
+        // Calculer le total de la facture en additionnant les prix de chaque achat
+        float totalFacture = 0;
+        for (Achat achat : achatsUtilisateur) {
+            totalFacture += achat.getPrix();
+        }
+
+        return totalFacture;
+    }
 }

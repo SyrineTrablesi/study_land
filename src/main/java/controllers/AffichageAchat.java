@@ -1,16 +1,15 @@
 package controllers;
 
 import entities.Achat;
-import entities.Inscrit;
 import entities.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
-
+import javafx.stage.Stage;
 import services.ServiceAchat;
-import services.ServiceInscrit;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -47,5 +46,36 @@ public class AffichageAchat {
         } catch (SQLException | IOException e) {
             e.printStackTrace(); // Gérer l'erreur de manière appropriée (affichage de message d'erreur, journalisation, etc.)
         }
+
     }
+    @FXML
+    void btnFacture(ActionEvent event) {
+        try {
+            // Charger la nouvelle fenêtre FactureUtilisateur.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Facture.fxml"));
+            Parent root = loader.load();
+
+            // Accéder au contrôleur de la nouvelle fenêtre
+            FactureController controller = loader.getController();
+
+            // Définir les détails de la facture dans le contrôleur
+            ServiceAchat serviceAchat = new ServiceAchat();
+            User user = new User();
+            user.setId(2); // Remplacez par l'ID de l'utilisateur connecté
+            List<Achat> achats = serviceAchat.afficherbyUser(user); // Récupérer les achats de l'utilisateur
+            float facture = serviceAchat.calculerFactureUtilisateur(user);
+            controller.afficherFacture(user, achats, facture); // Utiliser la méthode afficherFacture
+
+            // Afficher la nouvelle fenêtre
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }

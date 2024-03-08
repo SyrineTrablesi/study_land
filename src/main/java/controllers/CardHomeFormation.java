@@ -20,11 +20,8 @@ import services.ServiceFavoris;
 import services.ServiceFormation;
 import services.ServiceInscrit;
 
-
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.Format;
 
 
 public class CardHomeFormation {
@@ -79,25 +76,37 @@ public class CardHomeFormation {
     }
     @FXML
     void btn_AjouterFavoris(ActionEvent event) {
-        User user =new User();
+        User user = new User();
         user.setId(2);
-        ServiceFormation serviceFormation=new ServiceFormation();
+        ServiceFormation serviceFormation = new ServiceFormation();
         try {
-             Formation formation= serviceFormation.rechercherParTitre(idtitle.getText());
-             //instance de formation type favoris
-             Favoris favoris = new Favoris( user.getId(),formation.getIdFormation());
-             favoris.setDescription(formation.getDescription());
-             favoris.setNiveau(formation.getNiveau());
-             favoris.setNomCategorie(formation.getNomCategorie());
-             favoris.setTitre(formation.getTitre());
-             favoris.setDuree(formation.getDuree());
-             ServiceFavoris serviceFavoris=new ServiceFavoris();
-             System.out.println(favoris);
-             serviceFavoris.ajouter(favoris);
-        } catch (SQLException e) {
-                throw new RuntimeException(e);
-        }
+            Formation formation = serviceFormation.rechercherParTitre(idtitle.getText());
 
+            if (formation != null) { // Vérifier si la formation existe
+                Favoris favoris = new Favoris(user.getId(), formation.getIdFormation());
+                favoris.setDescription(formation.getDescription());
+                favoris.setNiveau(formation.getNiveau());
+                favoris.setNomCategorie(formation.getNomCategorie());
+                favoris.setTitre(formation.getTitre());
+                favoris.setDuree(formation.getDuree());
+                ServiceFavoris serviceFavoris = new ServiceFavoris();
+
+                if (serviceFavoris.formationExisteDeja(favoris)) { // Vérifier si la formation est déjà ajoutée aux favoris
+                    // Afficher un message d'alerte
+                    showAlert(Alert.AlertType.INFORMATION, "Formation déjà ajoutée", "La formation est déjà dans vos favoris.");
+                } else {
+                    // Ajouter la formation aux favoris
+                    serviceFavoris.ajouter(favoris);
+                    // Afficher un message de succès
+                    showAlert(Alert.AlertType.INFORMATION, "Formation ajoutée", "La formation a été ajoutée à vos favoris avec succès.");
+                }
+            } else {
+                // Afficher un message d'alerte si la formation n'existe pas
+                showAlert(Alert.AlertType.ERROR, "Formation introuvable", "La formation que vous essayez d'ajouter n'existe pas.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -110,17 +119,24 @@ public class CardHomeFormation {
 
             // Vérifier si le prix de la formation est égal à zéro
             if (formation.getPrix() == 0) {
-                // Ajouter l'utilisateur à la liste des inscrits
+                // Vérifier si l'utilisateur est déjà inscrit à la formation
                 Inscrit inscrit = new Inscrit(user.getId(), formation.getIdFormation());
-                inscrit.setDescription(formation.getDescription());
-                inscrit.setNiveau(formation.getNiveau());
-                inscrit.setNomCategorie(formation.getNomCategorie());
-                inscrit.setTitre(formation.getTitre());
-                inscrit.setDuree(formation.getDuree());
                 ServiceInscrit serviceInscrit = new ServiceInscrit();
-                System.out.println(inscrit);
-                serviceInscrit.ajouter(inscrit);
+                if (serviceInscrit.formationExisteDeja(inscrit)) {
+                    // Afficher un message d'alerte si l'utilisateur est déjà inscrit à la formation
+                    showAlert(Alert.AlertType.INFORMATION, "Déjà inscrit", "Vous êtes déjà inscrit à cette formation.");
+                } else {
+                    // Ajouter l'utilisateur à la liste des inscrits
+                    inscrit.setDescription(formation.getDescription());
+                    inscrit.setNiveau(formation.getNiveau());
+                    inscrit.setNomCategorie(formation.getNomCategorie());
+                    inscrit.setTitre(formation.getTitre());
+                    inscrit.setDuree(formation.getDuree());
+                    System.out.println(inscrit);
+                    serviceInscrit.ajouter(inscrit);
+                }
             } else {
+                // Afficher l'écran de paiement
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TicketPayment.fxml"));
                 Parent root = loader.load();
                 TicketPaymentController controller = loader.getController();
@@ -136,25 +152,13 @@ public class CardHomeFormation {
         }
     }
 
-//    private void redirectToPaymentProcess(Formation formation) {
-//        // Implémentez ici votre processus de paiement
-//        // ouvrir une nouvelle fenêtre pour le processus de paiement
-//        // ou charger une autre vue qui gère le processus de paiement
-//
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketPayment.fxml"));
-//            Parent root = loader.load();
-//            TicketPaymentController controller = loader.getController();
-//            controller.setFormation(formation); // Passer la formation à la vue de paiement
-//            Stage stage = new Stage();
-//            stage.setScene(new Scene(root));
-//            stage.show();
-//        } catch (IOException e) {
-//                e.printStackTrace();
-//        }
-//
-//
-//
-//    }
+    // Méthode pour afficher une boîte de dialogue
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
 

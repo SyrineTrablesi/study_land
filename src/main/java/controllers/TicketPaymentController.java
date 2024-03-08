@@ -2,7 +2,6 @@ package controllers;
 
 import com.stripe.Stripe;
 import entities.Achat;
-import entities.Favoris;
 import entities.Formation;
 import entities.User;
 import javafx.event.ActionEvent;
@@ -12,9 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import services.ServiceAchat;
-import services.ServiceFormation;
-import services.ServiceFavoris;
-import services.ServiceFormation;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -44,11 +40,13 @@ public class TicketPaymentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        // this.achat = new Achat();
-        Stripe.apiKey = "sk_test_51OrKaRDOYVI5uEqTE8p6z8idDW3U03DPu84cAFKM3xJ7TadBHNE55nyAe1xrJBORV8saCYHBO1g57iPtJyk3f83c00t4i6bYvJ";
+        Stripe.apiKey = "sk_test_51OrWnL05RHyv6KAM7Bl1yjX041bX0Kqj09yQT8BsqA63xZcciBS3b5zArxusL1odi8uthLsg24VvahXJCDx5C4Ma00YuEnbTAX";
     }
 
     @FXML
     private void handlePayment(ActionEvent event) {
+
+
         String cardNumber = cardNumberField.getText();
         String expMonth = exprMonthField.getText();
         String expYear = exprYearField.getText();
@@ -85,6 +83,8 @@ public class TicketPaymentController implements Initializable {
             alert.showAndWait();
             e.printStackTrace();
         }
+
+
     }
     public void setAchat(Achat achat) {
         this.achat = achat;

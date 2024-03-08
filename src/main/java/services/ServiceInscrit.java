@@ -1,6 +1,5 @@
 package services;
 
-import entities.Favoris;
 import entities.Inscrit;
 import entities.User;
 import utils.MyDB;
@@ -143,4 +142,20 @@ public class ServiceInscrit implements IService<Inscrit> {
         return inscrits;
     }
 
+    public boolean formationExisteDeja(Inscrit inscrit) throws SQLException {
+        String req = "SELECT COUNT(*) AS count FROM inscrit WHERE id_user = ? AND idFormation = ?";
+        PreparedStatement pre = connection.prepareStatement(req);pre.setInt(1, inscrit.getId_user());
+        pre.setInt(2, inscrit.getIdFormation());
+        ResultSet resultSet = pre.executeQuery();
+
+        // Si le résultat de la requête retourne un nombre supérieur à zéro, cela signifie que l'utilisateur est déjà inscrit à la formation
+        if (resultSet.next()) {
+            int count = resultSet.getInt("count");
+            return count > 0;
+        } else {
+                return false;
+        }
+    }
 }
+
+

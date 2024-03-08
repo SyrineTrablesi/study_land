@@ -147,4 +147,22 @@ public class ServiceFavoris implements IService<Favoris> {
     }
 
 
+    public boolean formationExisteDeja(Favoris favoris) throws SQLException {
+        String req = "SELECT COUNT(*) AS count FROM favoris WHERE id_user = ? AND idFormation = ?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setInt(1, favoris.getId_user());
+        pre.setInt(2, favoris.getIdFormation());
+        ResultSet resultSet = pre.executeQuery();
+
+        // Si le résultat de la requête retourne un nombre supérieur à zéro, cela signifie que la formation existe déjà dans les favoris
+        if (resultSet.next()) {
+            int count = resultSet.getInt("count");
+            return count > 0;
+        } else {
+            return false;
+        }
+    }
+
+
+
 }
