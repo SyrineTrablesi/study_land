@@ -31,7 +31,7 @@ public class ServiceFormation implements IService<Formation> {
     @Override
     public void ajouter(Formation formation) throws SQLException {
 
-        String req = "INSERT INTO formation(nomCategorie,titre, description, duree, dateDebut, dateFin, prix, niveau) VALUES (?, ?, ?, ?, ?, ?,?, ?)";
+        String req = "INSERT INTO formation(nomCategorie,titre, description, duree, dateDebut, dateFin, prix, niveau,id_user) VALUES (?, ?, ?, ?, ?, ?,?, ?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(req);
         preparedStatement.setString(1, formation.getNomCategorie());
         preparedStatement.setString(2, formation.getTitre());
@@ -41,6 +41,8 @@ public class ServiceFormation implements IService<Formation> {
         preparedStatement.setDate(6, new java.sql.Date(formation.getDateFin().getTime()));
         preparedStatement.setFloat(7, formation.getPrix());
         preparedStatement.setString(8, formation.getNiveau());
+        preparedStatement.setInt(9, formation.getId_user());
+
 
         preparedStatement.executeUpdate();
     }
@@ -188,7 +190,6 @@ public class ServiceFormation implements IService<Formation> {
         }
     }
     //Syrine statistique ::
-
     public int statistiqueFormation(String catgorie) throws Exception {
         String req = "SELECT COUNT(*) FROM formation WHERE nomCategorie=?";
         PreparedStatement pre = connection.prepareStatement(req);
@@ -200,4 +201,17 @@ public class ServiceFormation implements IService<Formation> {
             throw new Exception("La requête n'a pas retourné de résultat");
         }
     }
+    public int statistiqueFormationFormateur(int id,String catgorie) throws Exception {
+        String req = "SELECT COUNT(*) FROM formation WHERE id_user=? and nomCategorie=? ";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setInt(1, id);
+        pre.setString(2, catgorie);
+        ResultSet resultSet = pre.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt(1); // Retourne le nombre d'utilisateurs
+        } else {
+            throw new Exception("La requête n'a pas retourné de résultat");
+        }
+    }
+
 }

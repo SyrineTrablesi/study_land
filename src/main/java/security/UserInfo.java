@@ -1,7 +1,12 @@
 package security;
 
 public class UserInfo {
-   public String nom, prenom,role,email,mdp,image;
+   public String nom;
+    public String prenom;
+    public String role;
+    public String email;
+    public String mdp;
+    public String image;
   public Integer id;
 
    public UserInfo(int id,String nom, String prenom, String role, String email, String mdp) {

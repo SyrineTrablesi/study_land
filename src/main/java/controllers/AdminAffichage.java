@@ -5,17 +5,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import services.ServiceAdmin;
 import services.ServiceApprenant;
 import services.ServiceUser;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 public class AdminAffichage {
 
+    @FXML
+    private AnchorPane id_detailUser;
 
     @FXML
     private TableColumn<Admin, String> email_user;
@@ -60,9 +65,33 @@ public class AdminAffichage {
         addActionColumn();
         id_mdp.setDisable(true);
         id_mdp.setOpacity(0.5);
+        tab_Admin.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                User selectedUser = tab_Admin.getSelectionModel().getSelectedItem();
+                if (selectedUser != null) {
+                    ServiceUser serviceUser = new ServiceUser();
+                    try {
+                        User selectUs = serviceUser.rechercheUserParEmail(selectedUser.getEmail());
+                        int userId = selectUs.getId();
 
+                        System.out.println(selectUs);
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardUser.fxml"));
+                        AnchorPane card = loader.load();
+                        CardUser controller = loader.getController();
+                        controller.initData(selectUs);
+                        id_detailUser.getChildren().clear();
+                        id_detailUser.getChildren().add(card);
+                    } catch (IOException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
         initTable();
     }
+
+
 
     private void addActionColumn() {
         supprimer_user.setCellFactory(param -> new TableCell<>() {
@@ -86,6 +115,7 @@ public class AdminAffichage {
                                     showAlert("Suppression réussie", "L'admin a été supprimé avec succès.");
                                 } catch (SQLException e) {
                                     System.out.println(e.getMessage());
+
                                 }
                             }
                         });

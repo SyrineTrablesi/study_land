@@ -80,8 +80,6 @@ public class DashbordAdminParDefaut {
                     try {
                         User selectUs = serviceUser.rechercheUserParEmail(selectedUser.getEmail());
                         int userId = selectUs.getId();
-
-                        System.out.println(selectUs);
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardUser.fxml"));
                         AnchorPane card = loader.load();
                         CardUser controller = loader.getController();

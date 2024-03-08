@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ForamteurAffichage {
+
     @FXML
     private AnchorPane id_detailUser;
     @FXML

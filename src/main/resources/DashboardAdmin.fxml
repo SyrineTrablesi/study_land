@@ -63,6 +63,15 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Button fx:id="categorieAd" contentDisplay="TOP" mnemonicParsing="false" onAction="#categoreisAdmin" prefHeight="74.0" prefWidth="122.0" styleClass="button3" stylesheets="@style/styleDash.css" text="Categorie" textFill="#2a3d9b">
+                     <graphic>
+                        <ImageView fx:id="categorie" fitHeight="33.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@src/search.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                   <Button fx:id="btn_projetAdmin" contentDisplay="TOP" mnemonicParsing="false" onAction="#projetAdmin" prefHeight="74.0" prefWidth="122.0" styleClass="button3" stylesheets="@style/styleDash.css" text="Projet" textFill="#2a3d9b">
                      <graphic>
                         <ImageView fitHeight="33.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">

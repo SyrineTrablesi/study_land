@@ -30,7 +30,8 @@ import java.util.ResourceBundle;
 public class DashboardAdmin {
     @FXML
     private Button btnQuestions;
-
+    @FXML
+    private Button categorieAd;
     @FXML
     private Button btnReponses;
     @FXML
@@ -325,6 +326,10 @@ public class DashboardAdmin {
 
     @FXML
     void Reponses(ActionEvent event) {
+
+    }
+    @FXML
+    void categoreisAdmin(ActionEvent event) {
 
     }
 

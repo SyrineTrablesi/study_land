@@ -47,6 +47,15 @@ public class CoursApprenant {
     private Hyperlink pdfLink;
     @FXML
     private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
+
     private ServiceCours serviceC = new ServiceCours();
     private int currentPageIndex = 0;
     private int itemsPerPage = 4;

@@ -59,6 +59,14 @@ public class CoursController {
     @FXML
     private StackPane centerPane;
 
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
+
     private boolean darkMode = false;
 
     @FXML

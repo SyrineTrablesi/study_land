@@ -1,5 +1,6 @@
 package controllers;
 
+import com.twilio.twiml.voice.Prompt;
 import entities.Formation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,10 +12,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import security.Session;
+import security.UserInfo;
 import services.ServiceFormation;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.Format;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -105,6 +109,13 @@ public class AjouterFormationController {
     }
 
     public void AjouterFormation(ActionEvent actionEvent) {
+        UserInfo userinfo = Session.getInstance().userInfo;
+        System.out.println("syrine++>>" + userinfo.id);
+
+
+
+
+
         {// Check for empty input fields
             if (NomF.getText().isEmpty() || Description.getText().isEmpty() || Duree.getText().isEmpty() || Prix.getText().isEmpty()
                     || Niveau.getText().isEmpty() || NomC.getText().isEmpty() || DD.getValue() == null || DF.getValue() == null) {
@@ -181,17 +192,9 @@ public class AjouterFormationController {
                     return;
                 }
                 float price = Float.parseFloat(priceText);
-
-                FS.ajouter(new Formation(
-                        NomF.getText(),
-                        Description.getText(),
-                        duration,
-                        dateDebut,
-                        dateFin,
-                        price,
-                        Niveau.getText(),
-                        NomC.getText()
-                ));
+                Formation formation =new Formation(NomF.getText(),Description.getText(),duration,dateDebut,dateFin,price,Niveau.getText(), NomC.getText(),userinfo.id);
+                FS.ajouter(formation);
+                System.out.println(userinfo);
 
                 // Display success message to user
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -219,7 +222,6 @@ public class AjouterFormationController {
             centerPane.getChildren().clear();
             centerPane.getChildren().add(root);
             CoursController controller = loader1.getController();
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

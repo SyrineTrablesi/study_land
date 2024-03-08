@@ -14,6 +14,18 @@ public class Formation {
     private float prix;
     private String niveau;
     private String nomCategorie;
+    private  int id_user;
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+
+    //Constructeur pour l'ajout par Id
+
 
     public String getNomCategorie() {
         return nomCategorie;
@@ -122,7 +134,17 @@ public class Formation {
         this.nomCategorie = nomCategorie;
 
     }
-
+    public Formation(String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau, String nomCategorie,int id_user) {
+        this.titre = titre;
+        this.description = description;
+        this.duree = duree;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.prix = prix;
+        this.id_user=id_user;
+        this.niveau = niveau;
+        this.nomCategorie = nomCategorie;
+    }
     public Formation(String titre, String description, int duree, Date dateDebut, Date dateFin, float prix, String niveau, String nomCategorie) {
         this.titre = titre;
         this.description = description;

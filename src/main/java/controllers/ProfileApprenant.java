@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -30,6 +31,13 @@ public class ProfileApprenant {
     private Button btn_formation;
     @FXML
     private Button btn_refresh;
+
+    @FXML
+    private AnchorPane id_detailUser;
+    @FXML
+    private Button forfaits;
+
+
     @FXML
     private ImageView img;
     @FXML
@@ -228,4 +236,16 @@ public class ProfileApprenant {
 
     public void AfficherMessage(ActionEvent event) {
     }
-}
+    @FXML
+    void Forfaits(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CoursApprenant.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            CoursController controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }}

@@ -15,6 +15,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CoursApprenant">
    <children>
+      <StackPane fx:id="centerPane" prefHeight="601.0" prefWidth="1050.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
       <Button layoutX="76.0" layoutY="294.0" mnemonicParsing="false" onAction="#AfficherCours" prefHeight="26.0" prefWidth="202.0" stylesheets="@styles.css" text="Afficher les cours" />
       <ImageView fitHeight="37.0" fitWidth="50.0" layoutX="37.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
          <image>
