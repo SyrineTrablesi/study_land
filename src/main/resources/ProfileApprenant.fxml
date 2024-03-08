@@ -16,7 +16,7 @@
    <children>
       <AnchorPane layoutX="10.0" prefHeight="644.0" prefWidth="1574.0">
          <children>
-            <BorderPane fx:id="rootPane" layoutX="165.0" layoutY="84.0" prefHeight="524.0" prefWidth="910.0">
+            <BorderPane fx:id="rootPane" layoutX="165.0" layoutY="84.0" prefHeight="734.0" prefWidth="1128.0">
                <center>
                   <StackPane fx:id="centerPane" prefHeight="524.0" prefWidth="1115.0" BorderPane.alignment="CENTER" />
                </center>
@@ -54,7 +54,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="id_evaluation" contentDisplay="TOP" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="122.0" styleClass="button3" stylesheets="@style/styleDash.css" text="Evaluation" textFill="#2a3d9b">
+                  <Button fx:id="id_evaluation" contentDisplay="TOP" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#EvaluationFormateur" prefHeight="74.0" prefWidth="122.0" styleClass="button3" stylesheets="@style/styleDash.css" text="Evaluation" textFill="#2a3d9b">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>

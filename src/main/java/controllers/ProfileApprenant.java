@@ -26,6 +26,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ProfileApprenant {
+
+  
     Apprenant apprenant=new Apprenant();
     @FXML
     private Button btn_formation;
@@ -233,7 +235,18 @@ public class ProfileApprenant {
         }
 
     }
-
+    public void EvaluationFormateur(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/evaluationcards.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            Evaluationcards controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void AfficherMessage(ActionEvent event) {
     }
     @FXML

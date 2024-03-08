@@ -321,11 +321,46 @@ public class DashboardAdmin {
 
     @FXML
     void Question(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterQuestion.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            AjouterQuestion controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
 
     }
 
     @FXML
     void Reponses(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/reponce.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            Reponce controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+    @FXML
+    void AfficherEvaluation(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lesevaluation.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            Lesevaluation controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
     @FXML

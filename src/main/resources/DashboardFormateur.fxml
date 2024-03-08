@@ -18,9 +18,9 @@
          <children>
             <AnchorPane layoutX="10.0" layoutY="2.0" prefHeight="642.0" prefWidth="1109.0">
                <children>
-                  <BorderPane fx:id="rootPane" layoutX="165.0" layoutY="84.0" prefHeight="524.0" prefWidth="910.0">
+                  <BorderPane fx:id="rootPane" layoutX="196.0" layoutY="84.0" prefHeight="682.0" prefWidth="1063.0">
                      <center>
-                        <StackPane fx:id="centerPane" prefHeight="524.0" prefWidth="959.0" BorderPane.alignment="CENTER" />
+                        <StackPane fx:id="centerPane" prefHeight="682.0" prefWidth="1058.0" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                   <AnchorPane layoutX="-18.0" layoutY="-16.0" prefHeight="650.0" prefWidth="186.0" style="-fx-background-color: #ffffff;" stylesheets="@style/styleDash.css" />

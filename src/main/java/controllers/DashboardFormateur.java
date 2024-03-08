@@ -25,7 +25,8 @@ public class DashboardFormateur {
     UserInfo userInfo = Session.getInstance().userInfo;
     @FXML
     private Button btn_projet;
-
+    @FXML
+    private Button btnReponses;
     @FXML
     private Button id_formation_admin;
     @FXML
@@ -221,12 +222,44 @@ public class DashboardFormateur {
     }
 
     public void EvaluationFormateur(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lesevaluation.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            Lesevaluation controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void Question(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterQuestion.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            AjouterQuestion controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void Reponses(ActionEvent event) {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/reponce.fxml"));
+        try {
+            Parent root = loader.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            Reponce controller = loader.getController();
+            controller.setCenterPane(centerPane);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void AfficherMessage(ActionEvent event) {
