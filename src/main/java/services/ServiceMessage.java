@@ -44,15 +44,17 @@ public class ServiceMessage implements IService<Message>{
     }
 
     @Override
-    public void supprimer(Message message) throws SQLException{
-
-        String req = " delete from message where id_message=?";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1,message.getId_message());
-        pre.executeUpdate();
-
-
+    public void supprimer(Message message) throws SQLException {
+        String query = "DELETE FROM message WHERE id_message = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, message.getId_message());
+            statement.executeUpdate();
+        }
     }
+
+
+
+
 
     /*@Override
     public List<Message> afficher() throws SQLException{

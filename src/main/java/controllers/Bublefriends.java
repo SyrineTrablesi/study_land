@@ -27,9 +27,9 @@ public class Bublefriends {
     private void initialize() {
         friendsList = new ArrayList<>();
         // Populate your friends list here, for example:
-        friendsList.add(new Friend("Alice", 25));
-        friendsList.add(new Friend("Bob", 30));
-        friendsList.add(new Friend("Charlie", 28));
+        friendsList.add(new Friend("Farah", 25));
+        friendsList.add(new Friend("Achref", 30));
+        friendsList.add(new Friend("Ahmed", 28));
         // Add more friends as needed...
 
         // Display all friends initially
@@ -73,7 +73,7 @@ public class Bublefriends {
             nameLabel.setFont(Font.font("System Bold", 13)); // Set font to bold
             nameLabel.setStyle("-fx-font-weight: bold;"); // Alternate way to set font to bold
 
-            Label ageLabel = new Label("Age: " + friend.getAge());
+            Label ageLabel = new Label("Age: " + friend.getId());
 
             friendPane.setOnMouseClicked(event -> {
                 System.out.println("Clicked on: " + friend.getName());
@@ -102,19 +102,19 @@ public class Bublefriends {
     // Define a class to represent a friend
     static class Friend {
         private String name;
-        private int age;
+        private int id;
 
-        public Friend(String name, int age) {
+        public Friend(String name, int id) {
             this.name = name;
-            this.age = age;
+            this.id = id;
         }
 
         public String getName() {
             return name;
         }
 
-        public int getAge() {
-            return age;
+        public int getId() {
+            return id;
         }
     }
 }

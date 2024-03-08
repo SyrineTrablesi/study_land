@@ -14,14 +14,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Alert?>
+<?import javafx.scene.control.Alert.AlertType?>
+<?import javafx.scene.control.ButtonType?>
 
+<?import javafx.scene.text.TextFlow?>
 <AnchorPane prefHeight="597.0" prefWidth="848.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SampleController">
     <children>
         <TextField fx:id="tf_message" layoutX="273.0" layoutY="541.0" prefHeight="36.0" prefWidth="550.0" promptText="Aa" style="-fx-background-radius: 20; -fx-background-color: #eeeeee;">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets></TextField>
-        <Button fx:id="button_emoji" layoutX="756.0" layoutY="546.0" onMouseClicked="#handleSendButtonAction" prefHeight="25.0" prefWidth="27.0" style="-fx-background-radius: 50; -fx-background-color: #949493;" text="😀" textFill="WHITE">
+        <Button fx:id="button_audio" layoutX="722.0" layoutY="546.0" onAction="#handleAudioButtonAction" prefHeight="25.0" prefWidth="27.0" style="-fx-background-radius: 50; -fx-background-color: #fc72ce;" text="🔊" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="9.0" />
+            </font>
+        </Button>
+        <Button fx:id="button_emoji" layoutX="756.0" layoutY="546.0" onMouseClicked="#handleSendButtonAction" prefHeight="25.0" prefWidth="27.0" style="-fx-background-radius: 50; -fx-background-color: #d955d5;" text="😀" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="9.0" />
             </font>
@@ -32,7 +41,8 @@
             </font></Button>
         <ScrollPane fx:id="sp_main" fitToWidth="true" layoutX="271.0" layoutY="85.0" prefHeight="428.0" prefWidth="574.0" style="-fx-background-color: #ffffff;">
             <content>
-                <VBox fx:id="vbox_messages" prefHeight="422.0" prefWidth="564.0" style="-fx-background-color: #ffffff;" />
+                <VBox fx:id="vbox_messages" onMouseClicked="#handleSentMessageClicked" prefHeight="422.0" prefWidth="564.0" style="-fx-background-color: #ffffff;" >
+                </VBox>
             </content>
         </ScrollPane>
         <Pane layoutX="236.0" layoutY="-12.0" prefHeight="82.0" prefWidth="615.0" style="-fx-border-color: #eeeeee; -fx-background-color: #ffffff;">
@@ -64,11 +74,9 @@
                     </font>
                 </Label>
                 <TextField fx:id="serchbyname" layoutX="11.0" layoutY="84.0" onKeyPressed="#searchByName" prefHeight="25.0" prefWidth="229.0" promptText="🔎 " style="-fx-background-color: #eeeeee; -fx-background-radius: 20;" />
-            <StackPane fx:id="rootPane" layoutX="8.0" layoutY="126.0" prefHeight="464.0" prefWidth="243.0" />
+                <StackPane fx:id="rootPane" layoutX="8.0" layoutY="126.0" prefHeight="464.0" prefWidth="243.0" />
             </children>
         </Pane>
-      <ListView fx:id="emojiListView" layoutX="609.0" layoutY="339.0" onMouseClicked="#handleEmojiClickedList" prefHeight="200.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="emojiListView" layoutX="609.0" layoutY="339.0" onMouseClicked="#handleEmojiClickedList" prefHeight="200.0" prefWidth="200.0" visible="false" />
     </children>
-
-
 </AnchorPane>

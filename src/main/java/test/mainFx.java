@@ -1,6 +1,6 @@
 package test;
 
-import controllers.ChatGPTAPIExample;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +24,7 @@ public class mainFx extends Application {
 
             Scene sc = new Scene(root);
             primaryStage.setScene(sc);
-            primaryStage.setTitle("apprenat");
+            primaryStage.setTitle("Chat");
             primaryStage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());

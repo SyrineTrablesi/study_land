@@ -71,4 +71,32 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public void sendAudioMessage(byte[] audioData) {
+        try {
+            // Récupérer le flux de sortie du socket
+            OutputStream outputStream = socket.getOutputStream();
+
+            // Envoyer la taille des données audio en premier
+            int audioDataLength = audioData.length;
+            outputStream.write(intToBytes(audioDataLength));
+
+            // Envoyer les données audio
+            outputStream.write(audioData);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gérer les erreurs d'envoi des données audio
+        }
+    }
+
+    // Méthode utilitaire pour convertir un entier en tableau de bytes
+    private byte[] intToBytes(int value) {
+        byte[] result = new byte[4];
+        result[0] = (byte) (value >> 24);
+        result[1] = (byte) (value >> 16);
+        result[2] = (byte) (value >> 8);
+        result[3] = (byte) (value);
+        return result;
+    }
 }

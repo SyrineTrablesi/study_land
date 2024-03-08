@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Bublefriends">
    <children>
       <Pane layoutX="412.0" layoutY="227.0" prefHeight="78.0" prefWidth="250.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20;">
@@ -17,10 +16,10 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="63.0" layoutY="39.0" text="age" />
+            <Label layoutX="63.0" layoutY="39.0" text="id" />
          </children>
       </Pane>
-      <StackPane fx:id="rootPane" layoutX="52.0" layoutY="138.0" prefHeight="387.0" prefWidth="214.0" style="-fx-border-color: #ffffff;" />
+      <StackPane fx:id="rootPane" layoutX="52.0" layoutY="144.0" prefHeight="387.0" prefWidth="214.0" style="-fx-border-color: #ffffff;" />
       <TextField fx:id="serchbyname" layoutX="52.0" layoutY="39.0" onKeyPressed="#searchByName" />
    </children>
 </AnchorPane>
