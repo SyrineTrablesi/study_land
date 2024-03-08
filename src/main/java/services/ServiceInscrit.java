@@ -1,5 +1,6 @@
 package services;
 
+import entities.Favoris;
 import entities.Inscrit;
 import entities.User;
 import utils.MyDB;
@@ -86,6 +87,37 @@ public class ServiceInscrit implements IService<Inscrit> {
                 "WHERE i.id_user = ?";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setInt(1, user.getId()); // Remplacer user.getId() par la méthode appropriée pour obtenir l'ID de l'utilisateur
+        ResultSet resultSet = pre.executeQuery();
+        List<Inscrit> inscrits = new ArrayList<>();
+        while (resultSet.next()) {
+            Inscrit inscrit = new Inscrit();
+            inscrit.setIdInscrit(resultSet.getInt("idInscrit"));
+            inscrit.setId_user(resultSet.getInt("id_user"));
+            inscrit.setIdFormation(resultSet.getInt("idFormation"));
+            inscrit.setType(resultSet.getString("type"));
+            inscrit.setDateAjout(resultSet.getDate("dateAjout"));
+
+            // Récupération des données de la formation
+            inscrit.setTitre(resultSet.getString("titre"));
+            inscrit.setDescription(resultSet.getString("description"));
+            inscrit.setDuree(resultSet.getInt("duree"));
+            inscrit.setDateDebut(resultSet.getDate("dateDebut"));
+            inscrit.setDateFin(resultSet.getDate("dateFin"));
+            inscrit.setPrix(resultSet.getFloat("prix"));
+            inscrit.setNiveau(resultSet.getString("niveau"));
+            inscrit.setNomCategorie(resultSet.getString("nomCategorie"));
+
+            inscrits.add(inscrit);
+        }
+        return inscrits;
+    }
+
+    public List<Inscrit> rechercherParTitre(String titre) throws SQLException {
+        String req = "SELECT i.idInscrit, i.id_user, i.idFormation, i.type, i.dateAjout, f.* " +
+                "FROM inscrit i INNER JOIN formation f ON i.idFormation = f.idFormation " +
+                "WHERE f.titre LIKE ?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, "%" + titre + "%"); // Utilisez le titre fourni avec des jokers % pour rechercher des correspondances partielles
         ResultSet resultSet = pre.executeQuery();
         List<Inscrit> inscrits = new ArrayList<>();
         while (resultSet.next()) {

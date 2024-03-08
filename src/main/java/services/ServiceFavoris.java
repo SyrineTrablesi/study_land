@@ -114,4 +114,37 @@ public class ServiceFavoris implements IService<Favoris> {
         return favorisList;
     }
 
+
+    public List<Favoris> rechercherParTitre(String titre) throws SQLException {
+        String req = "SELECT i.idFavoris, i.id_user, i.idFormation, i.type, i.dateAjout, f.* " +
+                "FROM favoris i INNER JOIN formation f ON i.idFormation = f.idFormation " +
+                "WHERE f.titre LIKE ?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, "%" + titre + "%"); // Utilisez le titre fourni avec des jokers % pour rechercher des correspondances partielles
+        ResultSet resultSet = pre.executeQuery();
+        List<Favoris> favorisList = new ArrayList<>();
+        while (resultSet.next()) {
+            Favoris favoris = new Favoris();
+            favoris.setIdFavoris(resultSet.getInt("idFavoris"));
+            favoris.setId_user(resultSet.getInt("id_user"));
+            favoris.setIdFormation(resultSet.getInt("idFormation"));
+            favoris.setType(resultSet.getString("type"));
+            favoris.setDateAjout(resultSet.getDate("dateAjout"));
+
+            // Récupération des données de la formation
+            favoris.setTitre(resultSet.getString("titre"));
+            favoris.setDescription(resultSet.getString("description"));
+            favoris.setDuree(resultSet.getInt("duree"));
+            favoris.setDateDebut(resultSet.getDate("dateDebut"));
+            favoris.setDateFin(resultSet.getDate("dateFin"));
+            favoris.setPrix(resultSet.getFloat("prix"));
+            favoris.setNiveau(resultSet.getString("niveau"));
+            favoris.setNomCategorie(resultSet.getString("nomCategorie"));
+
+            favorisList.add(favoris);
+        }
+        return favorisList;
+    }
+
+
 }

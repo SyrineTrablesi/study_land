@@ -96,7 +96,7 @@ public class CardHomeFormation {
              serviceFavoris.ajouter(favoris);
         } catch (SQLException e) {
                 throw new RuntimeException(e);
-         }
+        }
 
     }
 

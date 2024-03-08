@@ -5,6 +5,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.Token;
 import entities.Achat;
+import entities.Favoris;
 import entities.User;
 import utils.MyDB;
 
@@ -167,4 +168,37 @@ public class ServiceAchat implements IService<Achat> {
             throw new SQLException("Erreur lors de la création du jeton de carte: " + e.getMessage());
         }
     }
+
+
+
+    public List<Achat> rechercherParTitre(String titre) throws SQLException {
+        String req = "SELECT i.idAchat, i.id_user, i.idFormation, i.dateAjout, f.* " +
+                "FROM achat i INNER JOIN formation f ON i.idFormation = f.idFormation " +
+                "WHERE f.titre LIKE ?";
+        PreparedStatement pre = connection.prepareStatement(req);
+        pre.setString(1, "%" + titre + "%"); // Utilisez le titre fourni avec des jokers % pour rechercher des correspondances partielles
+        ResultSet resultSet = pre.executeQuery();
+        List<Achat> achats = new ArrayList<>();
+        while (resultSet.next()) {
+            Achat achat = new Achat();
+            achat.setIdAchat(resultSet.getInt("idAchat"));
+            achat.setId_user(resultSet.getInt("id_user"));
+            achat.setIdFormation(resultSet.getInt("idFormation"));
+            achat.setDateAjout(resultSet.getDate("dateAjout"));
+
+            // Récupération des données de la formation
+            achat.setTitre(resultSet.getString("titre"));
+            achat.setDescription(resultSet.getString("description"));
+            achat.setDuree(resultSet.getInt("duree"));
+            achat.setDateDebut(resultSet.getDate("dateDebut"));
+            achat.setDateFin(resultSet.getDate("dateFin"));
+            achat.setPrix(resultSet.getFloat("prix"));
+            achat.setNiveau(resultSet.getString("niveau"));
+            achat.setNomCategorie(resultSet.getString("nomCategorie"));
+
+            achats.add(achat);
+        }
+        return achats;
+    }
+
 }

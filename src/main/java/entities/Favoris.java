@@ -9,8 +9,6 @@ public class Favoris extends Formation {
     private Date dateAjout;
 
 
-
-
     // Getter et setter pour l'attribut type
 
     public int getIdFavoris() {
@@ -111,4 +109,6 @@ public class Favoris extends Formation {
         this.type="Favoris";
 
     }
+
+
 }
