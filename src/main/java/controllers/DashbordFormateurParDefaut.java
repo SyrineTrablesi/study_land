@@ -27,11 +27,13 @@ public class DashbordFormateurParDefaut {
     public void setChartContainer1(AnchorPane chartContainer1) {
         this.chartContainer1 = chartContainer1;
     }
-    UserInfo userInfo = Session.getInstance().userInfo;
-    User user=new User();
 
     @FXML
-    public void initialize() {updatePieChart();
+    public void initialize() {
+        UserInfo userInfo = Session.getInstance().userInfo;
+        User user=new User();
+
+        updatePieChart();
         ServiceUser serviceUser2=new ServiceUser();
         try {
             user=serviceUser2.rechercheUserParEmail(userInfo.email);
@@ -43,12 +45,15 @@ public class DashbordFormateurParDefaut {
             AnchorPane card = loader.load();
             id_userdetail.getChildren().add(card);
             CardUser controller = loader.getController();
-controller.initData(user);
+                controller.initData(user);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     private void updatePieChart() {
+        UserInfo userInfo = Session.getInstance().userInfo;
+        User user=new User();
+
         ServiceFormation serviceFormation=new ServiceFormation();
         int nbFormationJava= 0;
         try {
