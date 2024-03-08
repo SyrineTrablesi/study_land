@@ -13,7 +13,8 @@ public class Formation {
     private Date dateFin;
     private float prix;
     private String niveau;
-    private String nomCategorie;
+Categorie categorie = new Categorie();
+    private String nomCategorie=categorie.getNomCategorie();
 
     public String getNomCategorie() {
         return nomCategorie;

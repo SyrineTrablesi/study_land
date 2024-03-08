@@ -80,5 +80,17 @@ public class ServiceCategorie implements IService<Categorie> {
         System.out.println("Total rows processed: " + rowCount); // Print total rows processed
         return list;
     }
+    public String rechercherParId(int id) throws SQLException {
+        String nomCategorie = null;
+        String req = "SELECT nomCategorie FROM categorie WHERE idCategorie = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(req);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            // Si une ligne est trouvée, récupérer le nom de la catégorie
+            nomCategorie = resultSet.getString("nomCategorie");
+        }
+        return nomCategorie;
+    }
 }
 

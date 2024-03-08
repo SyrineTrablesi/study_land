@@ -43,6 +43,7 @@ public class ServiceFormation implements IService<Formation> {
         preparedStatement.setFloat(7, formation.getPrix());
         preparedStatement.setString(8, formation.getNiveau());
 
+
         preparedStatement.executeUpdate();
     }
 

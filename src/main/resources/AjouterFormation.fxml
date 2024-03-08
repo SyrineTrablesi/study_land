@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -25,7 +26,6 @@
       <TextField fx:id="Duree" layoutX="544.0" layoutY="184.0" prefHeight="30.0" prefWidth="210.0" promptText="Duree" stylesheets="@styles.css" />
       <TextField fx:id="Prix" layoutX="548.0" layoutY="347.0" prefHeight="30.0" prefWidth="210.0" promptText="Prix" stylesheets="@styles.css" />
       <TextField fx:id="Niveau" layoutX="549.0" layoutY="403.0" prefHeight="30.0" prefWidth="210.0" promptText="Niveau" stylesheets="@styles.css" />
-      <TextField fx:id="NomC" layoutX="549.0" layoutY="460.0" prefHeight="30.0" prefWidth="210.0" promptText="Nom Categorie" stylesheets="@styles.css" />
       <DatePicker fx:id="DD" layoutX="546.0" layoutY="238.0" prefHeight="30.0" prefWidth="243.0" promptText="DateDebut" stylesheets="@styles.css" />
       <DatePicker fx:id="DF" layoutX="546.0" layoutY="294.0" prefHeight="30.0" prefWidth="243.0" promptText="DateFin" stylesheets="@styles.css" />
       <AnchorPane layoutX="597.0" layoutY="600.0" prefHeight="39.0" prefWidth="113.0" />
@@ -73,6 +73,7 @@
          </image>
       </ImageView>
       <Button fx:id="toggleDarkModeButton" layoutX="186.0" layoutY="583.0" mnemonicParsing="false" onAction="#toggleDarkMode" text="Toggle Dark Mode" />
+      <ComboBox fx:id="NomCategorie" layoutX="549.0" layoutY="459.0" prefHeight="38.0" prefWidth="218.0" promptText="Nom categorie" />
 
    </children>
    <stylesheets>
