@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import services.quesservice;
 
@@ -21,7 +22,16 @@ import java.util.Optional;
 
 public class AjouterQuestion {
 
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
 
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
+
+    @FXML
+    private StackPane centerPane;
     @FXML
     private TableColumn<question, Void> supprimer;
     @FXML
@@ -82,23 +92,15 @@ public class AjouterQuestion {
     }
 
     public void gererquestion(ActionEvent actionEvent) {
+        centerPane.getChildren().clear();
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/gerequestion.fxml"));
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gerequestion.fxml"));
-            Parent root = loader.load();
-
-            // Obtenez le contrôleur après avoir chargé le fichier FXML
-            Gerequestion affichepre = loader.getController();
-
-            // Créez une nouvelle scène avec le Parent chargé
-            Scene scene = new Scene(root);
-
-            // Récupérez la scène actuelle à partir du bouton
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            // Remplacez la scène actuelle par la nouvelle scène
-            currentStage.setScene(scene);
+            Parent root = loader1.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            Gerequestion controller = loader1.getController();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }

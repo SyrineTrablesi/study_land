@@ -8,13 +8,20 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="992.0" prefWidth="1162.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Reponce">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1144.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Reponce">
    <content>
       <AnchorPane prefHeight="1034.0" prefWidth="1153.0" style="-fx-background-color: #ffffff;">
          <children>
+            <StackPane fx:id="centerPane" prefHeight="1014.0" prefWidth="1162.0">
+               <children>
+                  <BorderPane prefHeight="150.0" prefWidth="398.0" />
+               </children>
+            </StackPane>
             <TableView fx:id="tabreponse" layoutX="102.0" layoutY="535.0" prefHeight="446.0" prefWidth="982.0">
                <columns>
                   <TableColumn fx:id="reponse" prefWidth="698.4000091552734" text="La reponse" />
@@ -30,7 +37,7 @@
             <Button fx:id="btnchercher1" layoutX="952.0" layoutY="453.0" mnemonicParsing="false" onAction="#gererepense" style="-fx-background-color: #F8982A;" text="gérer réponse" />
             <AnchorPane layoutX="-12.0" prefHeight="289.0" prefWidth="1162.0" style="-fx-background-image: #ffffff; -fx-background-color: #EAEDF0;">
                <children>
-                  <ImageView fitHeight="278.0" fitWidth="574.0" layoutX="623.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="centerPane1" fitHeight="278.0" fitWidth="574.0" layoutX="623.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@src/concept-test-enquete-education-ligne-rendu-3d-removebg-preview.png" />
                      </image>

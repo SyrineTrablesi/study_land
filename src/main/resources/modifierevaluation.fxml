@@ -9,14 +9,21 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="551.0" prefWidth="992.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Modifierevaluation">
+<ScrollPane prefHeight="2056.0" prefWidth="1168.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Modifierevaluation">
    <content>
       <AnchorPane prefHeight="2058.0" prefWidth="1154.0" style="-fx-background-color: #ffffff;">
           <children>
+            <StackPane prefHeight="2138.0" prefWidth="1168.0">
+               <children>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </StackPane>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="339.0" layoutX="63.0" layoutY="807.0" stroke="#f8982a" strokeType="INSIDE" strokeWidth="1.7" width="981.0" />
               <Label layoutX="614.0" layoutY="876.0" prefHeight="34.0" prefWidth="144.0" text="La difficulté" textFill="#101010">
                   <font>
@@ -76,15 +83,6 @@
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <Button fx:id="ajouterevaluation1" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#lesevaluation" prefHeight="48.0" prefWidth="0.0" style="-fx-background-color: #F8982A;" stylesheets="@buttonevaluation.css" textFill="#2e2929">
-                     <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@src/icons8-flèche-gauche-50.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                </children>
             </AnchorPane>
             <Label layoutX="63.0" layoutY="408.0" prefHeight="46.0" prefWidth="394.0" text="choisir levaluation que tu vas modifier">

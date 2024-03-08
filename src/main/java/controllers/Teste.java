@@ -17,6 +17,7 @@
         import javafx.scene.Scene;
         import javafx.scene.control.*;
         import javafx.scene.image.ImageView;
+        import javafx.scene.input.MouseEvent;
         import javafx.scene.layout.VBox;
         import javafx.scene.media.Media;
         import javafx.scene.media.MediaPlayer;
@@ -111,7 +112,7 @@
             public void initialize() throws SQLException {
                 try {
 
-                    String audioFilePath = "C:\\Users\\adelb\\OneDrive\\Bureau\\study_land\\src\\main\\resources\\src\\Y2meta.app - 1 Minute Timer Relaxing Music Lofi Fish Background (128 kbps).mp3";
+                    String audioFilePath = "C:\\pidev\\StudyLand\\src\\main\\resources\\src\\Y2meta.app - 1 Minute Timer Relaxing Music Lofi Fish Background (128 kbps).mp3";
                     Media audioMedia = new Media(new File(audioFilePath).toURI().toString());
 
                     // Initialisation du lecteur multimédia
@@ -447,7 +448,41 @@
             }
 
 
+            public void lesevaluation(ActionEvent actionEvent) {
+                stopTimer();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
+                    Parent root = loader.load();
 
+                    // Access the controller of Teste after loading the FXML file
+                    ProfileApprenant testeController = loader.getController();
+
+
+                    Scene scene = new Scene(root);
+
+                    // Get the current stage from the button's scene
+                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+                    // Replace the current scene with the new scene
+                    currentStage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            private void stopTimer() {
+                if (timerTask != null) {
+                    timerTask.cancel();
+                }
+                if (timer != null) {
+                    timer.cancel();
+                }
+            }
+
+            public void retour(MouseEvent mouseEvent) {
+
+
+            }
         }
 
 

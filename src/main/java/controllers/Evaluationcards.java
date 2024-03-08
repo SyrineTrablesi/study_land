@@ -19,6 +19,16 @@ import java.util.*;
 public class Evaluationcards {
     @FXML
     private Button idbutton;
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     @FXML
     private TextField textrecherche;

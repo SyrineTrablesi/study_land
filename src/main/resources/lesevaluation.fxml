@@ -8,11 +8,19 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
+
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="1225.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Lesevaluation">
    <content>
       <AnchorPane prefHeight="1166.0" prefWidth="1122.0" style="-fx-background-color: #ffffff;">
          <children>
+            <StackPane fx:id="centerPane" layoutX="-8.0" prefHeight="803.0" prefWidth="1234.0">
+               <children>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </StackPane>
             <Button layoutX="946.0" layoutY="395.0" mnemonicParsing="false" onAction="#ajouterevaluation" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: #F8982A;" text="Ajouter " />
             <Button fx:id="modifier" layoutX="1092.0" layoutY="395.0" mnemonicParsing="false" onAction="#modifierevaluation" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: #F8982A;" text="Modifier " />
             <TableView fx:id="tableevaluation" layoutX="145.0" layoutY="461.0" prefHeight="482.0" prefWidth="998.0">

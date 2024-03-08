@@ -11,6 +11,7 @@
     import javafx.scene.control.*;
     import javafx.scene.control.cell.PropertyValueFactory;
     import javafx.scene.layout.AnchorPane;
+    import javafx.scene.layout.StackPane;
     import javafx.stage.Stage;
     import services.EvalService;
 
@@ -19,6 +20,17 @@
     import java.util.List;
 
     public class Lesevaluation {
+        @FXML
+        private StackPane centerPane;
+
+        public StackPane getCenterPane() {
+            return centerPane;
+        }
+
+        public void setCenterPane(StackPane centerPane) {
+            this.centerPane = centerPane;
+        }
+
         EvalService evalService = new EvalService();
         @FXML
         private TableView<evaluation> tableevaluation;
@@ -112,71 +124,36 @@
 
 
         public void ajouterevaluation(ActionEvent actionEvent) {
+            centerPane.getChildren().clear();
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/ajoutevaluation.fxml"));
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajoutevaluation.fxml"));
-                Parent root = loader.load();
-
-                // Obtenez le contrôleur après avoir chargé le fichier FXML
-                Ajoutevaluation affichepre = loader.getController();
-
-                // Créez une nouvelle scène avec le Parent chargé
-                Scene scene = new Scene(root);
-
-                // Récupérez la scène actuelle à partir du bouton
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-                // Remplacez la scène actuelle par la nouvelle scène
-                currentStage.setScene(scene);
+                Parent root = loader1.load();
+                centerPane.getChildren().clear();
+                centerPane.getChildren().add(root);
+                Ajoutevaluation controller = loader1.getController();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
 
         public void modifierevaluation(ActionEvent actionEvent) {
+            centerPane.getChildren().clear();
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/modifierevaluation.fxml"));
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifierevaluation.fxml"));
-                Parent root = loader.load();
-
-                // Obtenez le contrôleur après avoir chargé le fichier FXML
-                Modifierevaluation affichepre = loader.getController();
-
-                // Créez une nouvelle scène avec le Parent chargé
-                Scene scene = new Scene(root);
-
-                // Récupérez la scène actuelle à partir du bouton
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-                // Remplacez la scène actuelle par la nouvelle scène
-                currentStage.setScene(scene);
+                Parent root = loader1.load();
+                centerPane.getChildren().clear();
+                centerPane.getChildren().add(root);
+                Modifierevaluation controller = loader1.getController();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
 
-        public void gererquestion(ActionEvent actionEvent) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterQuestion.fxml"));
-                Parent root = loader.load();
 
-                // Obtenez le contrôleur après avoir chargé le fichier FXML
-                AjouterQuestion affichepre = loader.getController();
-
-                // Créez une nouvelle scène avec le Parent chargé
-                Scene scene = new Scene(root);
-
-                // Récupérez la scène actuelle à partir du bouton
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-                // Remplacez la scène actuelle par la nouvelle scène
-                currentStage.setScene(scene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
 
         public void supprimer(ActionEvent actionEvent) {
 
         }
+
 
     }

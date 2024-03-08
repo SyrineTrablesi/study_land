@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import services.Reponseservice;
 import entities.response.status;
@@ -22,11 +23,22 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Reponce {
+    @FXML
+    private StackPane centerPane;
     Reponseservice reponseservice =new Reponseservice();
     @FXML
     private TableColumn<response,Void> supprimer;
     @FXML
     private TextField idques;
+
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     @FXML
     private TableColumn<response, Integer> idquestion;
@@ -93,25 +105,16 @@ public class Reponce {
 
 
     public void gererepense(ActionEvent actionEvent) {
+        centerPane.getChildren().clear();
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/gerereponse.fxml"));
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gerereponse.fxml"));
-            Parent root = loader.load();
-
-            // Obtenez le contrôleur après avoir chargé le fichier FXML
-            Gerereponse affichepre = loader.getController();
-
-            // Créez une nouvelle scène avec le Parent chargé
-            Scene scene = new Scene(root);
-
-            // Récupérez la scène actuelle à partir du bouton
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            // Remplacez la scène actuelle par la nouvelle scène
-            currentStage.setScene(scene);
+            Parent root = loader1.load();
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(root);
+            Gerereponse controller = loader1.getController();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            System.out.println(e.getMessage());
+    }}
 
     public void btnafficher(ActionEvent actionEvent) {
 

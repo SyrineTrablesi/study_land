@@ -277,24 +277,28 @@ quesservice ques= new quesservice();
     }
 
     public void afficherrepense(ActionEvent actionEvent) {
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/reponce.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
             Parent root = loader.load();
 
-            // Obtenez le contrôleur après avoir chargé le fichier FXML
-            Reponce affichepre = loader.getController();
+            // Access the controller of Teste after loading the FXML file
+            ProfileApprenant testeController = loader.getController();
 
-            // Créez une nouvelle scène avec le Parent chargé
+
             Scene scene = new Scene(root);
 
-            // Récupérez la scène actuelle à partir du bouton
+            // Get the current stage from the button's scene
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            // Remplacez la scène actuelle par la nouvelle scène
+            // Replace the current scene with the new scene
             currentStage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
 
     public void récupérer(ActionEvent actionEvent) {

@@ -33,21 +33,24 @@ public class Opss {
     }    @FXML
     void reessayer(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Evaluationcards.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileApprenant.fxml"));
             Parent root = loader.load();
 
-            Evaluationcards affichepre = loader.getController();
+            // Access the controller of Teste after loading the FXML file
+            ProfileApprenant testeController = loader.getController();
+
 
             Scene scene = new Scene(root);
 
+            // Get the current stage from the button's scene
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            // Replace the current scene with the new scene
             currentStage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
-
-
         }
+
 
 
     }}
