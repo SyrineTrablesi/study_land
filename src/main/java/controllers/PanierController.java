@@ -2,12 +2,12 @@ package controllers;
 
 import entities.Favoris;
 import entities.Inscrit;
-import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import services.ServiceFavoris;
 import services.ServiceInscrit;
@@ -17,6 +17,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PanierController {
+
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     @FXML
     private VBox idListeInscription;

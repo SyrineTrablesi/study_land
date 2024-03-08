@@ -1,13 +1,13 @@
 package controllers;
 
 import entities.Achat;
-import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import services.ServiceAchat;
 
@@ -20,6 +20,17 @@ public class AffichageAchat {
 
     @FXML
     private FlowPane id_Achat;
+
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     public void initialize() {
         ServiceAchat serviceAchat = new ServiceAchat();

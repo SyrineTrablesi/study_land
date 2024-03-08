@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import okhttp3.OkHttpClient;
@@ -49,6 +50,18 @@ public class CardPanierFavoris {
     private AnchorPane cardsContainer;
     private Favoris favoris;
     private FlowPane cardsFlowPane;
+
+
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     public void setCardsFlowPane2(FlowPane cardsFlowPane) {
         this.cardsFlowPane = cardsFlowPane;

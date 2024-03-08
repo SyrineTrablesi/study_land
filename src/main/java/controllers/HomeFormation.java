@@ -1,14 +1,10 @@
 package controllers;
 
-import entities.Formation;
-import entities.Inscrit;
-import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.FlowPane;
-import services.ServiceFormation;
-import services.ServiceInscrit;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,6 +13,17 @@ import java.util.List;
 public class HomeFormation {
     @FXML
     private FlowPane cardsFlowPane;
+
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     public void initialize() {
         ServiceFormation serviceFormation = new ServiceFormation();

@@ -2,14 +2,13 @@ package controllers;
 
 import com.stripe.Stripe;
 import entities.Achat;
-import entities.Formation;
-import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import services.ServiceAchat;
 
 import java.net.URL;
@@ -21,7 +20,8 @@ public class TicketPaymentController implements Initializable {
     private final ServiceAchat serviceAchat = new ServiceAchat();
     private Achat achat;
     private Formation formation;
-
+    @FXML
+    private StackPane centerPane;
     @FXML
     private TextField cardNumberField;
     @FXML
@@ -32,6 +32,14 @@ public class TicketPaymentController implements Initializable {
     private TextField cvvField;
     @FXML
     private Button purchaseBtn;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     public void setFormation(Formation formation) {
         this.formation = formation;

@@ -5,7 +5,6 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.Token;
 import entities.Achat;
-import entities.User;
 import utils.MyDB;
 
 import java.sql.*;

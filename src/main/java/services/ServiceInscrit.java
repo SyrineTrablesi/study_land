@@ -1,7 +1,6 @@
 package services;
 
 import entities.Inscrit;
-import entities.User;
 import utils.MyDB;
 
 import java.sql.*;

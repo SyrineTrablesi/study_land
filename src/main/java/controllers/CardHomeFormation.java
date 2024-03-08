@@ -1,9 +1,7 @@
 package controllers;
 
 import entities.Favoris;
-import entities.Formation;
 import entities.Inscrit;
-import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.ServiceFavoris;
-import services.ServiceFormation;
 import services.ServiceInscrit;
 
 import java.io.IOException;
@@ -64,7 +62,16 @@ public class CardHomeFormation {
     @FXML
     private Label prixLabel;
 
+    @FXML
+    private StackPane centerPane;
 
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     public void setData(String title, String description, String niveau, int duree, float prix, String categorie) {
         idtitle.setText(title);

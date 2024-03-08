@@ -4,18 +4,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="368.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TicketPaymentController">
+<AnchorPane id="AnchorPane" prefHeight="368.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TicketPaymentController">
     <children>
+      <StackPane fx:id="centerPane" layoutY="-2.0" prefHeight="382.0" prefWidth="580.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
         <TextField fx:id="cardNumberField" layoutX="18.0" layoutY="144.0" prefHeight="34.0" prefWidth="421.0" promptText="Enter your card number" />
-        <Text layoutX="17.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acheter un ticket">
+        <Text layoutX="17.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acheter une Formation">
             <font>
                 <Font name="Leelawadee UI Semilight" size="33.0" />
             </font>
         </Text>
-        <Text layoutX="17.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remplissez le formulaire suivant afin d'acheter un ticket pour l'événement.">
+        <Text layoutX="17.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remplissez le formulaire suivant afin d'acheter la formation">
             <font>
                 <Font name="Leelawadee UI Semilight" size="15.0" />
             </font>
@@ -55,4 +62,3 @@
         </Label>
     </children>
 </AnchorPane>
-

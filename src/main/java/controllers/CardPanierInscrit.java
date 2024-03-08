@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import services.ServiceInscrit;
 
@@ -41,6 +42,17 @@ public class CardPanierInscrit {
 
     @FXML
     private Label labelAjoutDate;
+
+    @FXML
+    private StackPane centerPane;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
 
     private Inscrit inscrit;
     private FlowPane cardsFlowPane;

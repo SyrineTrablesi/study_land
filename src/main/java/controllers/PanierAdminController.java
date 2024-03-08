@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import services.ServiceAchat;
 import services.ServiceFavoris;
 import services.ServiceInscrit;
@@ -18,6 +19,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PanierAdminController {
+
+    @FXML
+    private StackPane centerPane;
     @FXML
     private ListView<Achat> ListeA;
 
@@ -35,6 +39,15 @@ public class PanierAdminController {
 
     @FXML
     private TextField tfTitreI;
+
+    public StackPane getCenterPane() {
+        return centerPane;
+    }
+
+    public void setCenterPane(StackPane centerPane) {
+        this.centerPane = centerPane;
+    }
+
     @FXML
     void Abtn(ActionEvent event) {
         ServiceAchat serviceAchat = new ServiceAchat();
